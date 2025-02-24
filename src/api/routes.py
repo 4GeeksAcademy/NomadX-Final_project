@@ -30,7 +30,7 @@ def create_user():
     nickname = request.json.get("nickname", None)
     password = request.json.get("password", None)
 
-    user = User(email = email,nickname = nickname is_active= True)
+    user = User(email = email,nickname = nickname, is_active= True)
     user.set_password(password)
 
     db.session.add(user)
