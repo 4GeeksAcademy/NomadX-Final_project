@@ -26,7 +26,7 @@ export const Login = () => {
         console.log(data);
         if(response.ok){
             localStorage.setItem("token",data.access_token)
-            navigate("/profile")
+            navigate("/ProfileFeed")
         }
     }
     return (

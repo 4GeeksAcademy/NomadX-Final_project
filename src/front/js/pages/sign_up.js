@@ -5,7 +5,7 @@ import "../../styles/home.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Sing_up = () => {
+export const Sign_up = () => {
 	const { store, actions } = useContext(Context);
 	const [email,setEmail] = useState("")
 	const [password,setPassword] = useState("")
