@@ -8,6 +8,13 @@ from flask_cors import CORS
 
 from flask_jwt_extended import create_access_token, jwt_required, current_user
 
+# Import the Cloudinary libraries
+# ==============================
+import cloudinary
+from cloudinary import CloudinaryImage
+import cloudinary.uploader
+import cloudinary.api
+import os
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -22,6 +29,8 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+#Autentication Routes
 
 @api.route('/sing_up', methods=['POST'])
 def create_user():
@@ -58,3 +67,19 @@ def generate_token():
 @jwt_required()
 def get_current_user():
     return jsonify(current_user.serialize()),200
+
+#Cloudinary routes
+
+cloudinary.config(
+    cloud_name = os.getenv('CLOUD_NAME'),
+    api_key = os.getenv('CLOUDINARY_API_KEY'),
+    api_secret = os.getenv('CLOUDINARY_API_SECRET'),
+    secure = True
+)
+
+@api.route('/img', methods=['POST'])
+def upload_image():
+    img = request.files["img"]
+    img_url = cloudinary.uploader.upload(img)
+    print(img_url)
+    return jsonify({"img": img_url["url"]}),200
