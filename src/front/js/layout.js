@@ -9,6 +9,7 @@ import { ProfileUserMap } from "./pages/profileUserMap";
 import { Faq } from "./pages/faq";
 import { ContactUs } from "./pages/contactUs";
 import { MeetTheTeam } from "./pages/meetTheTeam";
+import { CreatePost } from "./pages/createPost"
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -37,6 +38,7 @@ const Layout = () => {
                         <Route element={<Faq />} path="/faq" />
                         <Route element={<ContactUs />} path="/contact-us" />
                         <Route element={<MeetTheTeam />} path="/meet-the-team" />
+                        <Route element={<CreatePost />} path="/create-post" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                         <Route element={<Sing_up />} path="/sing_up" />
