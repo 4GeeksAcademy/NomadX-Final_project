@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 
 export const Single = props => {
 	const { store, actions } = useContext(Context);
@@ -11,7 +10,7 @@ export const Single = props => {
 	const [fileUrl, setFileUrl] = useState("");
 
 	const handleImgChange = (e) => {
-		if (e.target.files.lenght) {
+		if (e.target.files.length) {
 			setFile(e.target.files[0])
 		}
 	};
@@ -29,6 +28,8 @@ export const Single = props => {
 				method:"POST",
 				body: form
 			})
+			console.log(response);
+			
 			const data = await response.json()
 			setFileUrl(data.img);
 		} catch (error) {}
