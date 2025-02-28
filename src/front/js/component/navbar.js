@@ -41,5 +41,3 @@ export const Navbar = () => {
 		</nav>
 	);
 };
-
-// need to add a settings page of need to remove and replace with something else
