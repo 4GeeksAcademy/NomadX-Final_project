@@ -1,20 +1,18 @@
 .createPostView{
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     border: 20px;
+    max-width: 1350px;
+    max-height: 1450px;
 }
 .createPostView h1{
     text-align: center;
     margin-bottom: 20px;
 }
-.container{
+.container{ 
     display: flex;
-    max-width: 960px;
-    max-height: 1500px;
     margin: 20px auto;
-    border: 3px solid black;
-    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -24,11 +22,6 @@
     padding: 20px;
     overflow-y: auto;
 }
- 
-/* ^^ for writingTopics: max-height: 400px;
-  Might not need to use, depending on how many
-  topics we list */
-
 .writingTopics ul{
     list-style: none;
     padding: 0;
@@ -45,7 +38,12 @@
     flex: 1;
     padding: 20px;
 }
+.entry-container{
+    display: flex;
+}
 .entry{
+    flex: 1;
+    margin-right: 10px;
     margin-bottom: 20px;
 }
 .entry textarea{
@@ -56,6 +54,10 @@
     border-radius: 5px;
     box-sizing: border-box;
     resize: vertical;
+}
+.image-preview{
+    max-width: 200px;
+    max-height: 200px;
 }
 .nameOfTrip{
     margin-bottom: 20px;
@@ -85,14 +87,7 @@
     cursor: pointer;
     font-size: 20px;
     color: #ccc; 
-  }
-  
-  .star.active {
+}
+.star.active {
     color: gold; /* Color of selected stars */
-  }
-
-
-
-
-
- 
+}
