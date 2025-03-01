@@ -1,0 +1,49 @@
+.profileFeed{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.content{
+    flex-grow: 1;
+    padding: 20px;
+}
+.favorites-scroll{
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+.scroll{
+    font-size: 0.8em;
+    color: #888;
+}
+.favorites-title{
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.favorites-items{
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.favorite-item{
+    background: #f0f0f0;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    min-width: 100px;
+}
+.postsByCity{
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow-y: auto;
+}
+.post{
+    background: #f8f8f8;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
