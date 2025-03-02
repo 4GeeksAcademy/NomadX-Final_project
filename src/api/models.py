@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = 'user'
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     nickname = db.Column(db.String(120), unique=True, nullable=False)
@@ -25,3 +27,17 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.encoded_password, password)
+    
+# class Image(db.Model):
+#     __tablename__ = 'image'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     url = db.Column(db.String(200), unique=False, nullable=False)
+#     user_id = db.Column(Integer, ForeignKey('user.id'))
+
+# class Favourite(db.Model):
+#     __tablename__ = 'user'
+
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(Integer, ForeignKey('user.id'))
+#     urls = db.Column(db.String(200), ForeignKey('image.url'))
