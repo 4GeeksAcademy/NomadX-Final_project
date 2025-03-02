@@ -1,0 +1,28 @@
+.container_howToUse{
+    padding: 10px;
+    margin: 10px;
+}
+.same-height-cards{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.same-height-cards .card{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.same-height-cards .card-body{
+    flex-grow: 1;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+}
+  
+.card-body button {
+    display: block;
+    margin-top: auto;
+    margin: 10px auto;
+}

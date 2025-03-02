@@ -29,8 +29,8 @@ export const Navbar = () => {
 						<Link to="/profile-feed">
 							<li><a className="dropdown-item" href="#">Profile</a></li>
 						</Link>
-						<Link to="/">
-							<li><a className="dropdown-item" href="#">Settings</a></li>  
+						<Link to="/instructions">
+							<li><a className="dropdown-item" href="#">User Guide</a></li>  
 						</Link>
 						<Link to="/">
 							<li><a className="dropdown-item" href="#">Logout</a></li>
