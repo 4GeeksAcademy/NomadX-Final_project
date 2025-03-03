@@ -24,7 +24,7 @@ export const Navbar = () => {
 			</Link>
 			<span className="brandName">NomadX</span>
 				<form className="d-flex mx-auto col-lg-6 col-md-8"> 
-				<input className="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search" />
+				<input className="form-control me-2 search-bar" type="search" placeholder="Search Posts by City Here" aria-label="Search" />
 				</form>
 					<Link to="/create-post">
 						<button type="button" className="btn btn-secondary">Post</button>
