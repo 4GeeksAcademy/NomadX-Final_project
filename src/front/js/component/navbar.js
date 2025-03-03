@@ -26,6 +26,9 @@ export const Navbar = () => {
 				<form className="d-flex mx-auto col-lg-6 col-md-8"> 
 				<input className="form-control me-2 search-bar" type="search" placeholder="Search" aria-label="Search" />
 				</form>
+					<Link to="/create-post">
+						<button type="button" className="btn btn-secondary">Post</button>
+					</Link>
 				<div className="dropdown">
 					<button className="btn btn-secondary dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i className="fa-solid fa-ellipsis-vertical"></i>
@@ -37,8 +40,8 @@ export const Navbar = () => {
 						<Link to="/profile-feed">
 							<li><a className="dropdown-item" href="#">Profile</a></li>
 						</Link>
-						<Link to="/">
-							<li><a className="dropdown-item" href="#">Settings</a></li>  
+						<Link to="/instructions">
+							<li><a className="dropdown-item" href="#">User Guide</a></li>  
 						</Link>
 						<Link to="/">
 							<li><a className="dropdown-item" onClick={logout} href="#">Logout</a></li>
@@ -49,5 +52,3 @@ export const Navbar = () => {
 		</nav>
 	);
 };
-
-// need to add a settings page of need to remove and replace with something else

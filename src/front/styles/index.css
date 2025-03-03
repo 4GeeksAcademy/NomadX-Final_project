@@ -16,3 +16,9 @@ fixedFooter{
     padding-bottom: 60px;
 }
 */
+
+.fixedFooter{
+    position: fixed;
+    bottom: 0;
+    width: 100%; 
+}

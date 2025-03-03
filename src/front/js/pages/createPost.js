@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import "../../styles/home.css";
+import React, { useState, useEffect } from "react";
 import "../../styles/createPost.css";
 
 export const CreatePost = () => {
@@ -9,17 +8,27 @@ export const CreatePost = () => {
     const [tripName, setTripName] = useState("");
     const [file, setFile] = useState("")
     const [topics, setTopics] = useState([
-        "Nature", "Culture", "Attractions", "Accomodation",
-        "Goods & Services", "Weather", "Budget Friendly",
-        "Cost/Affordability", "Convenience", "History",
-        "Food", "Safety & Security", "Public Transportation",
-        "Season of the Year", "Religious Holiday", "Festival",
-        "Travel Companion", "Duration of Trip", "Bucket List", "Exchange Rate",
-        "Peak Season", "Off Season", "How to Book Your Trip", "Hidden Gems",
-        "Adventure & Exploration", "Easy of Travel", "Environmental & Ethical COnsiderations",
-        "Health & Well-Being", "Family Friendly",
-        "LGBTQIA2S+ Friendly", "Solo-Female Travel Friendly",
+        "Nature 🏞️🌳🌊", "Culture 💃🎶🌎", "Attractions 🗽🏰🎢 ",
+        "Accomodation 🏠🛌💤", "Goods & Services 🛒🛍️💇",
+        "Weather ☀️☁️🌩️❄️", "Budget Friendly 🤑💰👍",
+        "Cost/Affordability 💸 ", "Convenience 👍✅👌",
+        "History 🕰️🏛️📜", "Food 🍽️🥘😋", "Safety & Security 🔒👮",
+        "Public Transportation 🚊🚕🚌", "Season of the Year 🌸🏖️🍁⛄",
+        "Religious Holiday ✝️☪️✡️🕉️☸️ ", "Festival 💃🎉🥳🕺",
+        "Travel Companion 🫂❤️🧑‍🤝‍🧑", "Duration of Trip ⏳",
+        "Bucket List ✅✅✅", "Exchange Rate 💱💴💶💵💷",
+        "Peak Season 🔥📈👫👫👫", "Off Season 🏖️😴📉",
+        "How to Book Your Trip 🗓️🗺️🤔", "Hidden Gem 💎💎💎",
+        "Adventure & Exploration ⛰️🎒🤩",
+        "Environmental & Ethical Considerations ♻️💧☮️",
+        "Health & Well-Being 💆🧖💅🧘", "Family Friendly 👨‍👩‍👧‍👦✅",
+        "LGBTQIA2S+ Friendly 🏳️‍🌈🏳️‍⚧️👨‍❤️‍👨👩‍❤️‍👩⚧️", "Solo-Female Travel Friendly 👑🛡️✅",
+        "The Holidays Abroad 🎄🔔🧣",
     ]);
+
+    useEffect(() => {
+        setTopics(shuffledTopics(topics));
+    }, []);
 
     const handleRatingClick = (clickedRating) => {
         setRating(clickedRating);
@@ -41,22 +50,22 @@ export const CreatePost = () => {
     };
 
     const handleImgChange = (e) => {
-        if(e.target.files.length) {
+        if (e.target.files.length) {
             setFile(e.target.files[0])
         }
         try {
             const form = new FormData()
-            form.append ("img", file)
+            form.append("img", file)
 
-          //  const response = await fetch 
-          // need to connect this to the routes in the backend.
-        } catch (error){
+            //  const response = await fetch 
+            // need to connect this to the routes in the backend.
+        } catch (error) {
 
         }
     };
 
     const sendFile = async () => {
-        if(!file) {
+        if (!file) {
             alert("image/video field is required");
         }
         return false;
@@ -75,10 +84,6 @@ export const CreatePost = () => {
                 </aside>
                 <main className="writingArea">
                     <form onSubmit={handleSubmit}>
-                        <div className="entry">
-                            <label htmlFor="entry" aria-placeholder="What's on your mind today?"></label>
-                            <textarea id="entry" placeholder="What's on your mind today?" value={newEntry} onChange={(e) => setNewEntry(e.target.value)}></textarea>
-                        </div>
                         <div className="nameOfTrip">
                             <label htmlFor="nameOfTrip" />
                             <input type="text" id="nameOfTrip"
@@ -86,9 +91,22 @@ export const CreatePost = () => {
                                 value={tripName}
                                 onChange={(e) => setTripName(e.target.value)} />
                         </div>
+                        <div className="entry-container">
+                            <div className="entry">
+                                <label htmlFor="entry" aria-placeholder="What's on your mind today?"></label>
+                                <textarea id="entry" placeholder="What's on your mind today?" value={newEntry} onChange={(e) => setNewEntry(e.target.value)}></textarea>
+                            </div>
+                            {file && (
+                                <img
+                                    src={URL.createObjectURL(file)}
+                                    alt="Image Preview"
+                                    className="image-preview"
+                                />
+                            )}
+                        </div>
                         <div className="giveRating">
                             <div className="rating">
-                                <label> Rating :</label>
+                                <label> Rating:</label>
                                 <span className="stars">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <span
@@ -101,20 +119,19 @@ export const CreatePost = () => {
                                     ))}
                                 </span>
                             </div>
-                            <input type="file" 
-                            className="form-control mb-2" 
-                            accept="image/jpeg"
-                            onChange={handleImgChange}
+                            <input type="file"
+                                className="form-control mb-2"
+                                accept="image/jpeg"
+                                onChange={handleImgChange}
                             />
                             <button className="btn-btn primary"
-                            onClick={{sendFile}}>
+                                onClick={{ sendFile }}>
+                                Post
                             </button>
-                            <button type="file">Post</button>
-                                </div>
-                            </form>
-                        </main>
-
-                    </div>
+                        </div>
+                    </form>
+                </main>
             </div>
-            );
+        </div>
+    );
 };
