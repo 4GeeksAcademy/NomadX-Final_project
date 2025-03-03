@@ -3,9 +3,17 @@ import logo from "../../img/logo.jpeg";
 import { Link } from "react-router-dom";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "../../styles/navbar.css";
-
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+
+	const navigate = useNavigate()
+	const logout = () => {
+		localStorage.removeItem("access_token");
+	
+		navigate("/login");
+	}
+
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary"> 
 			<div className="container-fluid"> 
@@ -36,7 +44,7 @@ export const Navbar = () => {
 							<li><a className="dropdown-item" href="#">User Guide</a></li>  
 						</Link>
 						<Link to="/">
-							<li><a className="dropdown-item" href="#">Logout</a></li>
+							<li><a className="dropdown-item" onClick={logout} href="#">Logout</a></li>
 						</Link>
 					</ul>
 				</div>
