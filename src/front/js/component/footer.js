@@ -6,7 +6,7 @@ import "../../styles/index.css"
 export const Footer = () => (
 	<footer className="fixedFooter">
 		<div className="card text-center">
-			<div className="footer" style={{ display: 'inline-block', alignItems: 'center' }}>
+			<div className="footer">
 				<i className="fa-solid fa-globe"></i>
 				<h5 className="card-title"><i>Travel Reimagined</i></h5>
 			</div>

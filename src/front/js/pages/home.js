@@ -1,5 +1,4 @@
 import React from "react";
-import  world_map3 from "../../img/world_map3.jpeg";
 import "../../styles/home.css";
 import { Modal } from "../component/modal";
 import MyMap from "../component/leaflet";

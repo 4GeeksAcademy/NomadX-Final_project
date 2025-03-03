@@ -8,21 +8,22 @@ export const CreatePost = () => {
     const [tripName, setTripName] = useState("");
     const [file, setFile] = useState("")
     const [topics, setTopics] = useState([
-        "Nature 🏞️🌳🌊", "Culture 💃🎶🌎", "Attractions 🗽🏰🎢 ", 
-        "Accomodation 🏠🛌💤", "Goods & Services 🛒🛍️💇", 
+        "Nature 🏞️🌳🌊", "Culture 💃🎶🌎", "Attractions 🗽🏰🎢 ",
+        "Accomodation 🏠🛌💤", "Goods & Services 🛒🛍️💇",
         "Weather ☀️☁️🌩️❄️", "Budget Friendly 🤑💰👍",
-        "Cost/Affordability 💸 ", "Convenience 👍✅👌", 
-        "History 🕰️🏛️📜", "Food 🍽️🥘😋", "Safety & Security 🔒👮", 
-        "Public Transportation 🚊🚕🚌", "Season of the Year 🌸🏖️🍁⛄", 
+        "Cost/Affordability 💸 ", "Convenience 👍✅👌",
+        "History 🕰️🏛️📜", "Food 🍽️🥘😋", "Safety & Security 🔒👮",
+        "Public Transportation 🚊🚕🚌", "Season of the Year 🌸🏖️🍁⛄",
         "Religious Holiday ✝️☪️✡️🕉️☸️ ", "Festival 💃🎉🥳🕺",
-        "Travel Companion 🫂❤️🧑‍🤝‍🧑", "Duration of Trip ⏳", 
+        "Travel Companion 🫂❤️🧑‍🤝‍🧑", "Duration of Trip ⏳",
         "Bucket List ✅✅✅", "Exchange Rate 💱💴💶💵💷",
-        "Peak Season 🔥📈👫👫👫", "Off Season 🏖️😴📉", 
-        "How to Book Your Trip 🗓️🗺️🤔", "Hidden Gems 💎💎💎",
-        "Adventure & Exploration ⛰️🎒🤩", 
+        "Peak Season 🔥📈👫👫👫", "Off Season 🏖️😴📉",
+        "How to Book Your Trip 🗓️🗺️🤔", "Hidden Gem 💎💎💎",
+        "Adventure & Exploration ⛰️🎒🤩",
         "Environmental & Ethical Considerations ♻️💧☮️",
         "Health & Well-Being 💆🧖💅🧘", "Family Friendly 👨‍👩‍👧‍👦✅",
         "LGBTQIA2S+ Friendly 🏳️‍🌈🏳️‍⚧️👨‍❤️‍👨👩‍❤️‍👩⚧️", "Solo-Female Travel Friendly 👑🛡️✅",
+        "The Holidays Abroad 🎄🔔🧣",
     ]);
 
     useEffect(() => {
