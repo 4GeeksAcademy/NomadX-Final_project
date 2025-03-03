@@ -28,16 +28,22 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.encoded_password, password)
     
-# class Image(db.Model):
-#     __tablename__ = 'image'
+class Image(db.Model):
+    __tablename__ = 'image'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     url = db.Column(db.String(200), unique=False, nullable=False)
-#     user_id = db.Column(Integer, ForeignKey('user.id'))
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String(200), unique=False, nullable=False)
+    user_id = db.Column(Integer, ForeignKey('user.id'))
 
-# class Favourite(db.Model):
-#     __tablename__ = 'user'
+class Favourite(db.Model):
+    __tablename__ = 'user'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(Integer, ForeignKey('user.id'))
-#     urls = db.Column(db.String(200), ForeignKey('image.url'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(Integer, ForeignKey('user.id'))
+    urls = db.Column(db.String(200), ForeignKey('image.url'))
+
+class Login(db.Model):
+    __tablename__ = 'login'
+
+    id = db.Column(db.Integer, primary_key=True)
+    access_token = db.Column(db.String(500), unique=False, nullable=False)
