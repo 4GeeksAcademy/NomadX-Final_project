@@ -26,7 +26,7 @@ export const Login = () => {
         console.log(data);
         if(response.ok){
             localStorage.setItem("token",data.access_token)
-            navigate("/ProfileFeed")
+            navigate("/Profile-Feed")
         }
     }
     return (
@@ -40,7 +40,7 @@ export const Login = () => {
 					<label for="exampleInputPassword1" className="form-label">Password</label>
 					<input type="password" value={password} onChange={e=>setPassword(e.target.value)} className="form-control me-2" id="exampleInputPassword1"/>
 				</div>
-				<button type="submit" className="btn btn-primary">Registrate</button>
+				<button type="submit" className="btn btn-primary">Sing in!</button>
 			</form>
 		</div>
 	);
