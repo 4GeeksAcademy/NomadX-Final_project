@@ -6,6 +6,8 @@ export const CreatePost = () => {
     const [newEntry, setNewEntry] = useState("");
     const [rating, setRating] = useState(0);
     const [file, setFile] = useState("")
+    const [fileUrl, setFileUrl] = useState("");
+    const [title, setTitle] = useState("");
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
         "Accomodation 🛌💤", "Goods & Services 🛍️💇",
@@ -48,26 +50,54 @@ export const CreatePost = () => {
         return shuffledTopics;
     };
 
-    const handleImgChange = (e) => {
+    const handleImgChange = async (e) => {
         if (e.target.files.length) {
             setFile(e.target.files[0])
+            try {
+                const form = new FormData()
+                form.append("img", e.target.files[0])
+                const response = await fetch (`${process.env.BACKEND_URL}/api/img`,{
+                    method:"POST",
+                    body:form
+                })
+                const data = await response.json()
+                setFileUrl (data.img)
+                //  const response = await fetch 
+                // need to connect this to the routes in the backend.
+            } catch (error) {
+    
+            }
         }
-        try {
-            const form = new FormData()
-            form.append("img", file)
-
-            //  const response = await fetch 
-            // need to connect this to the routes in the backend.
-        } catch (error) {
-
-        }
+     
     };
 
-    const sendFile = async () => {
-        if (!file) {
+    const handlePost = async (e) => {
+        e.preventDefault()
+        if (!fileUrl) {
             alert("image/video field is required");
+            return 
         }
-        return false;
+        try {
+            const response = await fetch (`${process.env.BACKEND_URL}/api/post`,{
+                method:"POST",
+                body:JSON.stringify({
+                    image_url : fileUrl,
+                    title : title,
+                    comment : newEntry
+
+
+                }),
+                headers:{
+                    "Content-Type":"application/json",
+                    "Authorization":"Bearer " + localStorage.getItem("token")
+                }
+            })
+            const data = await response.json()
+            console.log(data);
+            
+        } catch (error) {
+            
+        }
     }
 
     return (
@@ -85,7 +115,7 @@ export const CreatePost = () => {
                 <main className="writingArea">
                     <div className="tripLocation">
                         <form className="d-flex mx-auto">
-                            <input className="form-control me-2 search-bar" type="search" placeholder="Where are you writing from today?" aria-label="Search" />
+                            <input className="form-control me-2 search-bar" onChange={e=>setTitle(e.target.value)} value={title} type="search" placeholder="Where are you writing from today?" aria-label="Search" />
                         </form>
                     </div>
                     <div className="entry-container">
@@ -122,7 +152,7 @@ export const CreatePost = () => {
                             onChange={handleImgChange}
                         />
                         <button className="btn-btn primary"
-                            onClick={{ sendFile }}>
+                            onClick={ handlePost }>
                             Post
                         </button>
                     </div>
