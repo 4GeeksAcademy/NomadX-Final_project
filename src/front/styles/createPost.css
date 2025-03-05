@@ -40,6 +40,7 @@
 }
 .entry-container{
     display: flex;
+    flex-direction: column;
 }
 .entry{
     flex: 1;
@@ -59,11 +60,11 @@
     max-width: 200px;
     max-height: 200px;
 }
-.nameOfTrip{
-    margin-bottom: 20px;
-}
-.nameOfTrip input{
+.tripLocation form{
     width: 100%;
+}
+.tripLocation input{
+    height: 50px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

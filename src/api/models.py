@@ -31,10 +31,12 @@ class Post(db.Model):
     __tablename__ = 'post'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(50), unique=False, nullable=False)
+    comment = db.Column(db.Text, unique=False, nullable=False)
     image_url = db.Column(db.String(1000), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    latitude = db.Column(db.String(200), unique=False, nullable=False)
-    longitude = db.Column(db.String(200), unique=False, nullable=False)
+    latitude = db.Column(db.String(200), unique=False, nullable=True)
+    longitude = db.Column(db.String(200), unique=False, nullable=True)
 
 class Favourite(db.Model):
     __tablename__ = 'favourite'
