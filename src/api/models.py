@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -11,7 +11,6 @@ class User(db.Model):
     nickname = db.Column(db.String(120), unique=True, nullable=False)
     encoded_password = db.Column(db.String(500), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -28,24 +27,24 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.encoded_password, password)
     
-# class Post(db.Model):
-#     __tablename__ = 'post'
+class Post(db.Model):
+    __tablename__ = 'post'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     url = db.Column(db.String(200), unique=False, nullable=False)
-#     user_id = db.Column(Integer, ForeignKey('user.id'))
-#     latitude = db.Column(db.String(200), unique=False, nullable=False)
-#     longitude = db.Column(db.String(200), unique=False, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    image_url = db.Column(db.String(1000), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    latitude = db.Column(db.String(200), unique=False, nullable=False)
+    longitude = db.Column(db.String(200), unique=False, nullable=False)
 
-# class Favourite(db.Model):
-#     __tablename__ = 'user'
+class Favourite(db.Model):
+    __tablename__ = 'favourite'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(Integer, ForeignKey('user.id'))
-#     urls = db.Column(db.String(200), ForeignKey('post.url'))
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
-# class Login(db.Model):
-#     __tablename__ = 'login'
+class Login(db.Model):
+    __tablename__ = 'login'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     access_token = db.Column(db.String(500), unique=False, nullable=False)
+    id = db.Column(db.Integer, primary_key=True)
+    access_token = db.Column(db.String(500), unique=False, nullable=False)

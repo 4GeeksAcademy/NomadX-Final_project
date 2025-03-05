@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Post
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -77,9 +77,12 @@ cloudinary.config(
     secure = True
 )
 
-@api.route('/img', methods=['POST'])
-def upload_image():
+@app.route('/posts/<int:posts_id>', methods=['PUT'])
+def update_posts_image(posts_id):
+    post = Post.query.get(posts.id)
     img = request.files["img"]
     img_url = cloudinary.uploader.upload(img)
+    post.image_url = img_url
+    db.session.commit
     print(img_url)
     return jsonify({"img": img_url["url"]}),200
