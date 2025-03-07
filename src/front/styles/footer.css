@@ -1,0 +1,11 @@
+.fixedFooter{
+    position: fixed;
+    bottom: 0;
+    width: 100%; 
+    background: linear-gradient(to right, black, #d0d0d0);
+    border: none;
+}
+.footer,
+.footer-links .btn{
+    color: whitesmoke;
+}

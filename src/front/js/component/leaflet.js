@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+
+
+import React, { useState,useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet/dist/leaflet.css";
@@ -127,6 +129,43 @@ const MapComponent = () => {
                   value={point.text}
                   onChange={(e) => setPoints(points.map(p => p.id === point.id ? { ...p, text: e.target.value } : p))}
                   style={{ width: "100%", height: "50px" }}
+    <Map center={[39.8283, -98.5795]} zoom={4} style={{ height: "79vh", width: "100%" }} onClick={handleMapClick}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {points.map((point) => (
+        <Marker key={point.id} position={[point.lat, point.lng]}>
+          <Popup>
+            <div style={{ textAlign: "center" }}>
+              <h3>{point.city}</h3>
+              {images[point.id] ? (
+                <img src={images[point.id]} alt={point.city} style={{ width: "100%", borderRadius: "5px" }} />
+              ) : (
+                <p>No image uploaded</p>
+              )}
+              <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, point.id)} />
+              <textarea
+                value={point.text}
+                onChange={(e) => handleTextChange(point.id, e.target.value)}
+                style={{ width: "100%", height: "50px" }}
+              />
+              <p>
+                Rating: 
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <span 
+                    key={num} 
+                    style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
+                    onClick={() => handleRatingChange(point.id, num)}
+                  >
+                    ★
+                  </span>
+                ))}
+              </p>
+              <div>
+                <input
+                  type="text"
+                  value={commentInputs[point.id] || ""}
+                  onChange={(e) => handleCommentChange(point.id, e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleAddComment(point.id)}
+                  placeholder="Escribe un comentario"
                 />
                 <p>
                   Rating: 

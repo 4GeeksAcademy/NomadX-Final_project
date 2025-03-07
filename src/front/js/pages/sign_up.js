@@ -34,20 +34,20 @@ export const Sign_up = () => {
 	return (
 		<div className="text-center mt-5">
 			<form onSubmit={handdlesubmmit} >
-				<div className="mb-3">
+				<div className="d-flex mx-auto col-lg-6 col-md-8">
 					<label for="exampleInputEmail1" className="form-label">Email address</label>
-					<input type="email" value={email} onChange={e=>setEmail(e.target.value)} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+					<input type="email" value={email} onChange={e=>setEmail(e.target.value)} className="form-control me-2" id="exampleInputEmail1" aria-describedby="emailHelp"/>
 						<div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
 				</div>
-				<div className="mb-3">
+				<div className="d-flex mx-auto col-lg-6 col-md-8">
 					<label for="exampleInputPassword1" className="form-label">Nickname</label>
-					<input type="nickname" value={nickname} onChange={e=>setNickname(e.target.value)} className="form-control" id="exampleInputNickname1"/>
+					<input type="nickname" value={nickname} onChange={e=>setNickname(e.target.value)} className="form-control me-2" id="exampleInputNickname1"/>
 				</div>
-                <div className="mb-3">
+                <div className="d-flex mx-auto col-lg-6 col-md-8">
 					<label for="exampleInputPassword1" className="form-label">Password</label>
-					<input type="password" value={password} onChange={e=>setPassword(e.target.value)} className="form-control" id="exampleInputPassword1"/>
+					<input type="password" value={password} onChange={e=>setPassword(e.target.value)} className="form-control me-2" id="exampleInputPassword1"/>
 				</div>
-				<button type="submit" className="btn btn-primary">Registrate</button>
+				<button type="submit" className="btn btn-primary m-2">Registrate</button>
 			</form>
 		</div>
 	);
