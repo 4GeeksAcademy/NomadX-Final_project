@@ -1,8 +1,29 @@
-/*
-.navbar brand,
-.brandName
-{
-    display: flex;
-    align-items: center;
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, black, #d0d0d0);
+    color: whitesmoke;
+    z-index: 1000;
 }
+.span.brandName{
+    font-size: large;
+}
+
+.search-bar{
+    background-color: #d0d0d0;
+    border: 2px solid black;
+}
+.btn.btn-nav,
+.btn-dropdown{
+    background: linear-gradient(to right, #CD7F32, #A97142);
+    color:whitesmoke;
+    border: 3px solid black ;
+    margin: 2px;
+    
+}
+
+/* metalic bronze: background: linear-gradient(to right, #CD7F32, #A97142);
+metalic gold: background: linear-gradient(to right, #ffd700, #ccad00, #daa520); 
 */

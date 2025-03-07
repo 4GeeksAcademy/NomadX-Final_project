@@ -2,23 +2,14 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 
-/*
-fixedFooter{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
+html{
+    background: linear-gradient(to right, black, #d0d0d0);
 }
-.h-100{
-    min-height: 100vh;
-    padding-bottom: 60px;
-}
-*/
-
-.fixedFooter{
-    position: fixed;
-    bottom: 0;
-    width: 100%; 
+body{
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
 }

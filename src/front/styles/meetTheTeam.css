@@ -1,0 +1,26 @@
+.headingTeam{
+    margin-top: 70px;
+    background: linear-gradient(to right, black, #d0d0d0);
+    min-height: 100vh;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: whitesmoke;
+}
+.member{
+    color: whitesmoke;
+    padding-left: 8px;
+}
+.coFounder{
+    color:  #CD7F32
+}
+.team-member-img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+.team-member-img.female{
+    border-radius: 70%;
+}
+.team-member-img.male{
+    border-radius: 50%;
+}

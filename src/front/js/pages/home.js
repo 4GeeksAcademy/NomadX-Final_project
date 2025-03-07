@@ -9,10 +9,12 @@ export const Home = () => {
 	//const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<Modal/>
-			<MyMap/>
-			<Tutorial/>
+		<div className="text-center homePage">
+			<div className="divForModals">
+				<Modal/>
+				<MyMap/>
+				<Tutorial/>
+			</div>
 		</div>
 	);
 };

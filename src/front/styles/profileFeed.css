@@ -1,14 +1,17 @@
 .profileFeed{
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 70px;
+    background: linear-gradient(to right, black, #d0d0d0);
+    color: whitesmoke;
+    padding-bottom: 80px;
 }
 .content{
     flex-grow: 1;
     padding: 20px;
 }
 .favorites-scroll{
-    border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 20px;
 }
@@ -46,12 +49,10 @@
 }
 .postsByCity{
     flex-grow: 1;
-    border: 1px solid #ccc;
     padding: 10px;
     overflow-y: auto;
 }
 .post{
-    background: #f8f8f8;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -65,7 +66,7 @@
     object-fit: cover;
 }
 .cardByCity{
-    border: 1px solid #ccc;
+    border: 1px solid gold;
     text-align: center;
     border-radius: 5px;
     overflow: hidden;
