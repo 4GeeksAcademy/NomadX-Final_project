@@ -74,7 +74,7 @@ const MapComponent = () => {
   };
 
   return (
-    <Map center={[39.8283, -98.5795]} zoom={4} style={{ height: "500px", width: "100%" }} onClick={handleMapClick}>
+    <Map center={[39.8283, -98.5795]} zoom={4} style={{ height: "79vh", width: "100%" }} onClick={handleMapClick}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       {points.map((point) => (
         <Marker key={point.id} position={[point.lat, point.lng]}>

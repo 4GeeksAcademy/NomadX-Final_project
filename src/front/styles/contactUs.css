@@ -3,13 +3,18 @@
     align-items: center;
     justify-content: space-between;
     padding: 20px;
+    background: linear-gradient(to right, black, #d0d0d0);
+    min-height: 100vh;
+    color: whitesmoke;
 }
 .leftSection{
-    width: 40%;
+    width: 30%;
+    padding: 30px;
 }
 
 .rightSection{
-    width: 55%;
+    width: 65%;
+    padding-right: 30px;
 }
 
 .leftSection h1{
@@ -41,13 +46,15 @@ form textarea{
     margin-bottom: 15px;
     border: 1px solid black;
     border-radius: 5px;
+    background-color: #d0d0d0;
 }
 .messageBox{
     height: 200px;
+    background-color: #d0d0d0;
 }
 form button{
-    background-color: grey;
-    color: white;
+    background: linear-gradient(to right, #CD7F32, #A97142);
+    color: whitesmoke;
     padding: 12px 20px;
     border: none;
     border-radius: 5px;

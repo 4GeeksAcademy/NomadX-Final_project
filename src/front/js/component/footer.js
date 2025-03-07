@@ -1,30 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import "../../styles/index.css"
+import "../../styles/footer.css"
 
 export const Footer = () => (
 	<footer className="fixedFooter">
 		<div className="card text-center">
 			<div className="footer">
 				<i className="fa-solid fa-globe"></i>
-				<h5 className="card-title"><i>Travel Reimagined</i></h5>
+				<h5 className="card-title"><i>Travel the World Anonymously</i></h5>
 			</div>
 			<div className="footer-links">
-			<Link to="/instructions">
-					<a className="btn" href="#" role="button">User Guide</a>
+				<Link to="/instructions">
+					<button className="btn" type="button" role="button">User Guide</button>
 				</Link>
 				<Link to="/faq">
-					<a className="btn" href="#" role="button">FAQ</a>
+					<button className="btn" type="button" role="button">FAQ</button>
 				</Link>
 				<Link to="/contact-us">
-					<a className="btn" href="#" role="button">Contact Us</a>
+					<button className="btn" type="button" role="button">Contact Us</button>
 				</Link>
 				<Link to="/meet-the-team">
-					<a className="btn" href="#" role="button">Meet the Team</a>
+					<button className="btn" type="button" role="button">Meet the Team</button>
 				</Link>
 			</div>
 		</div>
 	</footer>
 );
-[]

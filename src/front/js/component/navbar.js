@@ -30,9 +30,10 @@ export const Navbar = () => {
 						<button type="button" className="btn btn-secondary m-2">Login!</button>
 				</Link>
 					<Link to="/create-post">
-						<button type="button" className="btn btn-secondary">Post</button>
+						<button type="button" className="btn btn-nav">Post</button>
 					</Link>
 				<div className="dropdown">
+					<button className="btn btn-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						<i className="fa-solid fa-ellipsis-vertical"></i>
 					</button>

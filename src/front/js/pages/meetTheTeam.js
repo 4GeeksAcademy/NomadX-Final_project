@@ -1,21 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "../../styles/meetTheTeam.css";
+import "../../styles/index.css";
 import femaleTemp from "../../img/femaleTemp.jpeg";
 import maleTemp from "../../img/maleTemp.jpeg";
 
 export const MeetTheTeam = () => {
     return (
-        <div className="heading">
+        <div className="headingTeam">
             <h1 className="heading text-center">Meet the Team</h1>
             <br></br>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={femaleTemp}
-                        style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '70%' }} />
+                    <img src={femaleTemp} className="team-member-img female" />
                 </div>
-                <div className="member1">
+                <div className="member">
                     <h4>Alynne Trujillo</h4>
-                    <p><i>  Co-Founder</i></p>
+                    <p className="coFounder"><i>  Co-Founder</i></p>
                     <br></br>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Sed euismod, arcu ornare finibus lacinia, quam felis semper enim,
@@ -28,12 +29,11 @@ export const MeetTheTeam = () => {
             <hr class="featurette-divider"></hr>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={maleTemp}
-                        style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '50%' }} />
+                    <img src={maleTemp} className="team-member-img male" />
                 </div>
-                <div className="member2">
+                <div className="member">
                     <h4>Lucas Sánchez Magán</h4>
-                    <p><i>  Co-Founder</i></p>
+                    <p className="coFounder"><i>  Co-Founder</i></p>
                     <br></br>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Sed euismod, arcu ornare finibus lacinia, quam felis semper enim,
@@ -46,12 +46,11 @@ export const MeetTheTeam = () => {
             <hr class="featurette-divider"></hr>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={maleTemp}
-                        style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '50%' }} />
+                    <img src={maleTemp} className="team-member-img male" />
                 </div>
-                <div className="member3">
+                <div className="member">
                     <h4>Carlos Gutierrez </h4>
-                    <p><i>  Co-Founder</i></p>
+                    <p className="coFounder"><i>  Co-Founder</i></p>
                     <br></br>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Sed euismod, arcu ornare finibus lacinia, quam felis semper enim,
