@@ -37,6 +37,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     latitude = db.Column(db.String(200), unique=False, nullable=True)
     longitude = db.Column(db.String(200), unique=False, nullable=True)
+    # user_nickname = db.Column(db.Sting(120), db.ForeignKey('user.nickname'))
 
 class Favourite(db.Model):
     __tablename__ = 'favourite'
