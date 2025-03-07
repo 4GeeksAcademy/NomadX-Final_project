@@ -100,7 +100,14 @@ const MapComponent = () => {
 
   return (
     <div>
-
+<input 
+        type="text" 
+        value={searchQuery} 
+        onChange={(e) => setSearchQuery(e.target.value)} 
+        placeholder="Buscar ciudad, país..." 
+      />
+      <button onClick={handleSearch}>Buscar</button>
+      
       <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
