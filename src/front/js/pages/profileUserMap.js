@@ -12,5 +12,6 @@ export const ProfileUserMap = () => {
         <div className="profileUserMapDiv">
             <h1>This is the Profile User Map View</h1>
         </div>
+        </div>
     );
 };

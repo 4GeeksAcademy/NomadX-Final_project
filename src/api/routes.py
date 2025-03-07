@@ -32,7 +32,7 @@ def handle_hello():
 
 #Autentication Routes
 
-@api.route('/sing_up', methods=['POST'])
+@api.route('/sign_up', methods=['POST'])
 def create_user():
 
     email = request.json.get("email", None)
@@ -83,7 +83,7 @@ cloudinary.config(
 def update_posts_image():
     user_id = get_jwt_identity()
     request_body = request.get_json()
-    newPost = Post(user_id = user_id, image_url= request_body["image_url"],title = request_body["title"], comment = request_body["comment"])
+    newPost = Post(user_id = user_id, user_nickname = User.nickname, image_url= request_body["image_url"],title = request_body["title"], comment = request_body["comment"], latitude = request_body["points.lat"], longitude = request_body["points.lng"])
     db.session.add(newPost)
     db.session.commit()
     return jsonify({"msg":"post created!"}),200
@@ -98,3 +98,4 @@ def upload_image():
 
     return jsonify({"img": img_url["url"]}), 200
     
+# @api.route('/fav',)
