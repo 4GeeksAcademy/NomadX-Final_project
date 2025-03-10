@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Post
+from api.models import db, User, Post,Favourite
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 
@@ -47,7 +47,7 @@ def create_user():
 
     return jsonify({"msg": "User has been created"}), 201
 
-@api.route('/sing_in', methods=['POST'])
+@api.route('/sign_in', methods=['POST'])
 def generate_token():
 
     email = request.json.get("email", None)
@@ -67,6 +67,8 @@ def generate_token():
 @api.route('/profile', methods=['GET'])
 @jwt_required()
 def get_current_user():
+    user_id= get_jwt_identity()
+    current_user = User.query.filter_by(id = user_id).first()
     return jsonify(current_user.serialize()),200
 
 #Cloudinary routes
@@ -83,7 +85,7 @@ cloudinary.config(
 def update_posts_image():
     user_id = get_jwt_identity()
     request_body = request.get_json()
-    newPost = Post(user_id = user_id, user_nickname = User.nickname, image_url= request_body["image_url"],title = request_body["title"], comment = request_body["comment"], latitude = request_body["points.lat"], longitude = request_body["points.lng"])
+    newPost = Post(user_id = user_id, image_url= request_body["image_url"],title = request_body["title"], comment = request_body["comment"], latitude = request_body["latitude"], longitude = request_body["longitude"])
     db.session.add(newPost)
     db.session.commit()
     return jsonify({"msg":"post created!"}),200
@@ -98,4 +100,23 @@ def upload_image():
 
     return jsonify({"img": img_url["url"]}), 200
     
-# @api.route('/fav',)
+@api.route('/fav', methods = ["POST"])
+@jwt_required()
+def set_fav():
+    user_id = get_jwt_identity()
+    post_id = request.json.get("post_id")
+    exist = Favourite.query.filter_by(user_id = user_id, post_id = post_id).first()
+    if exist : 
+        return jsonify({"msg":"ya existe este fav"}),400
+    favourite = Favourite(user_id = user_id, post_id = post_id )
+    db.session.add(favourite)
+    db.session.commit()
+    return jsonify({"msg":"favorito agregado correctamente"}),201
+    
+    
+# @api.route('/img', methods=["GET"])
+# def get_image():
+#     user_id = request.Post.user_id
+#     img= request.json.get("img:url", None)
+    
+# return jsonify({"img": img_url["url"]}),200
