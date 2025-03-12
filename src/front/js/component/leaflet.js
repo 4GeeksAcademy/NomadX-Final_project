@@ -3,11 +3,8 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../styles/leaflet.css"
 
-const MapComponent = ({mapCenter, mapZoom}) => {
+const MapComponent = ({ mapCenter, mapZoom }) => {
 
-
-
-const MapComponent = () => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
@@ -20,6 +17,8 @@ const MapComponent = () => {
   const [images, setImages] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
+
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -98,19 +97,7 @@ const MapComponent = () => {
   return (
     <div>
 
-      <Map center={mapCenter} zoom={mapZoom} style={{ height: "86vh", width: "100%" }} onClick={handleMapClick}>
-
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Buscar ciudad, país..."
-      />
-      <button onClick={handleSearch}>Buscar</button>
-
-      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
-
-      <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
+      <Map center={mapCenter} zoom={mapZoom} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
@@ -171,9 +158,13 @@ const MapComponent = () => {
         ))}
       </Map>
     </div>
+
   );
 };
 export default MapComponent;
+
+
+
 
 
 

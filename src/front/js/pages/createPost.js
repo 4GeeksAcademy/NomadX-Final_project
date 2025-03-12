@@ -89,16 +89,8 @@ export const CreatePost = () => {
                     comment: newEntry,
                     topic: selectedTopic,
                     rating: rating,
-            const response = await fetch (`${process.env.BACKEND_URL}/api/post`,{
-                method:"POST",
-                body:JSON.stringify({
-                    image_url : fileUrl,
-                    title : title,
-                    comment : newEntry,
                     latitude : "",
                     longitude : ""
-
-
                 }),
                 headers: {
                     "Content-Type": "application/json",
