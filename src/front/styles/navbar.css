@@ -1,5 +1,5 @@
 .navbar {
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -7,23 +7,28 @@
     color: whitesmoke;
     z-index: 1000;
 }
-.span.brandName{
-    font-size: large;
+.brandName{
+    font-size: x-large;
+}
+.navbar-brand{
+    size: 50px;
 }
 
 .search-bar{
     background-color: #d0d0d0;
     border: 2px solid black;
 }
-.btn.btn-nav,
-.btn-dropdown{
-    background: linear-gradient(to right, #CD7F32, #A97142);
-    color:whitesmoke;
-    border: 3px solid black ;
-    margin: 2px;
-    
-}
+.dropdown-item:focus {
+    background-color: black; 
+  }
+/* Media query for smaller screens */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .metallic-button {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
 
-/* metalic bronze: background: linear-gradient(to right, #CD7F32, #A97142);
-metalic gold: background: linear-gradient(to right, #ffd700, #ccad00, #daa520); 
-*/
+    .dropdown-menu {
+        font-size: 14px;
+    }
+}

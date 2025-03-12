@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import Select from "react-select";
+import "../../styles/leaflet.css"
 
 const MapComponent = ({mapCenter, mapZoom}) => {
+
+
+
 const MapComponent = () => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
@@ -104,6 +107,9 @@ const MapComponent = () => {
         placeholder="Buscar ciudad, país..."
       />
       <button onClick={handleSearch}>Buscar</button>
+
+      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
+
       <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

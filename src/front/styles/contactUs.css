@@ -25,16 +25,6 @@
 .leftSection p{
     margin-bottom: 5px;
 }
-
-.email-info{
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-}
-.email-icon{
-    font-size: 1.5em;
-    margin-right: 10px;
-}
 .right-section h2{
     font-size: 1.8em;
     margin-bottom: 20px;

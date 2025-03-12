@@ -1,19 +1,21 @@
 .container_howToUse{
-    padding-top: 70px;
+    padding-top: 110px;
     background: linear-gradient(to right, black, #d0d0d0);
-    min-height: 100vh;
+    height: calc(100vh - 160px);
     color: whitesmoke;
 }
 .same-height-cards{
     display: flex;
     flex-wrap: wrap;
-    align-items: stretch;  
+    align-items: stretch;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 .same-height-cards .card{
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: #333333;
+    background: #666666;
     color: whitesmoke;
 }
 .same-height-cards .card-body{
@@ -23,7 +25,14 @@
 .card-body {
     display: flex;
     flex-direction: column;
-    min-height: 200px;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 250px;
+}
+.card-body p{
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-bottom: 10px;
 }
 .card-body .btn {
     display: block;
@@ -32,6 +41,6 @@
     background: linear-gradient(to right, #CD7F32, #A97142);
     color: whitesmoke
 }
-btn a{
-    text-decoration: none !important;
+.button-wrapper{
+    margin-top: 80px;
 }

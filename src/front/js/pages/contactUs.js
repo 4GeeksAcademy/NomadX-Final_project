@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/contactUs.css"
+import "../../styles/index.css"
 import '@fortawesome/fontawesome-svg-core/styles.css';
 
 export const ContactUs = () => {
@@ -18,7 +19,7 @@ export const ContactUs = () => {
                     <input type="text" placeholder="Email Address"/>
                     <input type="text" className="subject" placeholder="Subject"/>
                     <textarea className="messageBox" placeholder="Please tell us how we can help you today."></textarea>
-                    <button type="submit">Send Message</button>
+                    <button type="submit" className="metallic-button ">Send Message</button>
                 </form>
             </div>
         </div>
