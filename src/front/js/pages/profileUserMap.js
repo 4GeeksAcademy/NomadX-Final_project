@@ -10,6 +10,5 @@ export const ProfileUserMap = ({mapCenter, mapZoom}) => {
         <div>
             <MyMap mapCenter={mapCenter} mapZoom={mapZoom} />
         </div>
-        </div>
     );
 };
