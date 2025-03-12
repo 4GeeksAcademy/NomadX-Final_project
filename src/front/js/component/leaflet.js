@@ -1,17 +1,13 @@
-
-
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet/dist/leaflet.css";
-
+import "../../styles/leaflet.css"
 const MapComponent = () => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
     { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
   ]);
-  
   const [userLocation, setUserLocation] = useState(null);
   const [mapCenter, setMapCenter] = useState([39.8283, -98.5795]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,7 +15,6 @@ const MapComponent = () => {
   const [images, setImages] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -35,7 +30,6 @@ const MapComponent = () => {
       );
     }
   }, []);
-
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -46,7 +40,6 @@ const MapComponent = () => {
       return "Ubicación desconocida";
     }
   };
-
   const handleMapClick = async (e) => {
     const cityName = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
@@ -58,7 +51,6 @@ const MapComponent = () => {
     };
     setPoints([...points, newPoint]);
   };
-
   const handleSearch = async () => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`);
@@ -70,11 +62,9 @@ const MapComponent = () => {
       console.error("Error buscando la ubicación:", error);
     }
   };
-
   const handleDeletePoint = (id) => {
     setPoints(points.filter(point => point.id !== id));
   };
-
   const handleImageUpload = (e, id) => {
     const file = e.target.files[0];
     if (file) {
@@ -85,26 +75,27 @@ const MapComponent = () => {
       reader.readAsDataURL(file);
     }
   };
-
   const handleRatingChange = (id, rating) => {
     setRatings({ ...ratings, [id]: rating });
   };
-
   const handleCommentChange = (id, text) => {
     setCommentInputs({ ...commentInputs, [id]: text });
   };
-
   const handleAddComment = (id) => {
     if (!commentInputs[id]) return;
     setComments({ ...comments, [id]: [...(comments[id] || []), commentInputs[id]] });
     setCommentInputs({ ...commentInputs, [id]: "" });
   };
-
   return (
     <div>
-<input 
-       
-      <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Buscar ciudad, país..."
+      />
+      <button onClick={handleSearch}>Buscar</button>
+      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lng]}>
@@ -129,49 +120,12 @@ const MapComponent = () => {
                   value={point.text}
                   onChange={(e) => setPoints(points.map(p => p.id === point.id ? { ...p, text: e.target.value } : p))}
                   style={{ width: "100%", height: "50px" }}
-    <Map center={[39.8283, -98.5795]} zoom={4} style={{ height: "79vh", width: "100%" }} onClick={handleMapClick}>
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {points.map((point) => (
-        <Marker key={point.id} position={[point.lat, point.lng]}>
-          <Popup>
-            <div style={{ textAlign: "center" }}>
-              <h3>{point.city}</h3>
-              {images[point.id] ? (
-                <img src={images[point.id]} alt={point.city} style={{ width: "100%", borderRadius: "5px" }} />
-              ) : (
-                <p>No image uploaded</p>
-              )}
-              <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, point.id)} />
-              <textarea
-                value={point.text}
-                onChange={(e) => handleTextChange(point.id, e.target.value)}
-                style={{ width: "100%", height: "50px" }}
-              />
-              <p>
-                Rating: 
-                {[1, 2, 3, 4, 5].map((num) => (
-                  <span 
-                    key={num} 
-                    style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
-                    onClick={() => handleRatingChange(point.id, num)}
-                  >
-                    ★
-                  </span>
-                ))}
-              </p>
-              <div>
-                <input
-                  type="text"
-                  value={commentInputs[point.id] || ""}
-                  onChange={(e) => handleCommentChange(point.id, e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && handleAddComment(point.id)}
-                  placeholder="Escribe un comentario"
                 />
                 <p>
-                  Rating: 
+                  Rating:
                   {[1, 2, 3, 4, 5].map((num) => (
-                    <span 
-                      key={num} 
+                    <span
+                      key={num}
                       style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
                       onClick={() => handleRatingChange(point.id, num)}
                     >
@@ -203,5 +157,10 @@ const MapComponent = () => {
     </div>
   );
 };
-
 export default MapComponent;
+
+
+
+
+
+
