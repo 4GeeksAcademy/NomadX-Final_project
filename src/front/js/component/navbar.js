@@ -43,54 +43,54 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 
 		<nav className="navbar navbar-expand-lg bg-body-tertiary">
 
-				<div className="container-fluid">
-					<Link to="/">
-						<a className="navbar-brand" href="#">
-							<img src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
-						</a>
-					</Link>
-					<span className="brandName">NomadX</span>
+			<div className="container-fluid">
+				<Link to="/">
+					<a className="navbar-brand" href="#">
+						<img src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
+					</a>
+				</Link>
+				<span className="brandName">NomadX</span>
 
-					{countries && <Select
-						options={countries}
-						value={selectedCountry}
-						onChange={handleSelectCountry}
-						placeholder="Search Posts by City Here"
-						isSearchable={true}
-						isClearable={true}
-						classNamePrefix="select"
-						className="form-control me-2 search-bar"
-					/>}
-					
-					<Link to="/login">
-						<button type="button" className="metallic-button">Login!</button>
-					</Link>
-					<Link to="/create-post">
-						<button type="button" className="metallic-button">Post</button>
-					</Link>
-					<div className="dropdown">
-						<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<i className="fa-solid fa-ellipsis-vertical"></i>
-						</button>
-						<ul className="dropdown-menu dropdown-menu-end">
-							<Link to="/" className="dropdown-item">
-								Home
+				{countries && <Select
+					options={countries}
+					value={selectedCountry}
+					onChange={handleSelectCountry}
+					placeholder="Search Posts by City Here"
+					isSearchable={true}
+					isClearable={true}
+					classNamePrefix="select"
+					className="form-control me-2 search-bar"
+				/>}
 
-							</Link>
-							<Link to="/profile-feed" className="dropdown-item">
-								Profile
-							</Link>
+				<Link to="/login">
+					<button type="button" className="metallic-button">Login!</button>
+				</Link>
+				<Link to="/create-post">
+					<button type="button" className="metallic-button">Post</button>
+				</Link>
+				<div className="dropdown">
+					<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i className="fa-solid fa-ellipsis-vertical"></i>
+					</button>
+					<ul className="dropdown-menu dropdown-menu-end">
+						<Link to="/" className="dropdown-item">
+							Home
 
-							<Link to="/instructions" className="dropdown-item">
-								User Guide
+						</Link>
+						<Link to="/profile-feed" className="dropdown-item">
+							Profile
+						</Link>
 
-							</Link>
-							<Link to="/" className="dropdown-item" onClick={logout}>
-								Logout
-							</Link>
-						</ul>
-					</div>
+						<Link to="/instructions" className="dropdown-item">
+							User Guide
+
+						</Link>
+						<Link to="/" className="dropdown-item" onClick={logout}>
+							Logout
+						</Link>
+					</ul>
 				</div>
-			</nav>
-			);
+			</div>
+		</nav>
+	);
 };
