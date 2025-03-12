@@ -158,7 +158,6 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
         ))}
       </Map>
     </div>
-
   );
 };
 export default MapComponent;

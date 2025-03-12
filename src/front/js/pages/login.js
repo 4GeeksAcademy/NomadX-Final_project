@@ -13,7 +13,7 @@ export const Login = () => {
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`${process.env.BACKEND_URL}/api/sing_in`, {
+        const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`,{
             method: "POST",
             body: JSON.stringify({
                 email: email,

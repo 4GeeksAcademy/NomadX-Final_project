@@ -91,6 +91,6 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 					</ul>
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 };

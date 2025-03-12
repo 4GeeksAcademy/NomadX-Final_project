@@ -90,7 +90,10 @@ export const CreatePost = () => {
                     topic: selectedTopic,
                     rating: rating,
                     latitude : "",
-                    longitude : ""
+                    longitude : "",
+                    city_name : ""
+
+
                 }),
                 headers: {
                     "Content-Type": "application/json",

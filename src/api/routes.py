@@ -85,7 +85,16 @@ cloudinary.config(
 def update_posts_image():
     user_id = get_jwt_identity()
     request_body = request.get_json()
-    newPost = Post(user_id = user_id, image_url= request_body["image_url"],title = request_body["title"], comment = request_body["comment"], latitude = request_body["latitude"], longitude = request_body["longitude"], city_name = request_body["city_name"], user_nickname = user_id)
+    newPost = Post(
+        user_id = user_id, 
+        image_url= request_body["image_url"],
+        title = request_body["title"],
+        comment = request_body["comment"],
+        latitude = request_body["latitude"], 
+        longitude = request_body["longitude"], 
+        city_name = request_body["city_name"]
+        )
+    
     db.session.add(newPost)
     db.session.commit()
     return jsonify({"msg":"post created!"}),200
@@ -133,8 +142,10 @@ def get_favs():
 
 
 
-@api.route('/post', methods=["GET"])
+@api.route('/user/post', methods=["GET"])
+@jwt_required()
 def get_image():
-    post = request.json.get("Post")
-       
-    return jsonify({"post": Post["url"]}),200
+    user_id = get_jwt_identity()
+    posts = Post.query.filter_by(user_id = user_id).all() 
+    post_list = [post.serialize() for post in posts]
+    return jsonify(post_list),200

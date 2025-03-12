@@ -39,8 +39,8 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     latitude = db.Column(db.String(200), unique=False, nullable=True)
     longitude = db.Column(db.String(200), unique=False, nullable=True)
-    user_nickname = db.Column(db.Sting(120), db.foreignKey('user.nickname'))
     city_name = db.Column(db.String(50), unique = True, nullable= True)
+    user=db.relationship("User", backref="posts", lazy=True)
 
     def __repr__(self):
         return f'<Post {self.title}>'
@@ -53,7 +53,8 @@ class Post(db.Model):
             "image_url": self.image_url,
             "user_id": self.user_id,
             "latitude": self.latitude,
-            "longitude": self.longitude
+            "longitude": self.longitude,
+            "user_nickname":self.user.nickname if self.user else None
             # do not serialize the password, its a security breach
         }
 class Favorite(db.Model):
