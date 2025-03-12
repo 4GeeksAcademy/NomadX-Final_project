@@ -1,0 +1,83 @@
+.container-signUp{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(to right, black, #d0d0d0);
+    min-height: 100vh;
+    color: whitesmoke;
+}
+.leftSectionSignUp{
+    width: 30%;
+    padding: 30px;
+}
+.rightSectionSignUp{
+    width: 65%;
+    padding-right: 30px;
+}
+.leftSectionSignUp h2{
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+.leftSectionSignUp p{
+    margin-bottom: 5px;
+}
+.rightSectionSignUp h3{
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+.signUpForm{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 3px double darkgrey;
+    border-radius: 5px;
+}
+
+.metallic-button {
+    background: linear-gradient(135deg, #aaa, #bbb, #888);
+    border: 1px solid #666; 
+    border-radius: 5px; /* Slightly rounded corners */
+    padding: 10px 20px; /* Padding for button size */
+    color: #333; /* Darker text for contrast */
+    font-weight: bold; /* Bold text */
+    text-shadow: 1px 1px 1px #fff; /* Subtle text shadow */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    cursor: pointer; /* Change cursor on hover */
+    position: relative; /* Needed for pseudo-element highlights */
+    overflow: hidden; /* Hide overflow from pseudo-elements */
+  }
+  
+.metallic-button::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1)); /* Highlight effect */
+    border-radius: 3px;
+    pointer-events: none; /* Prevent highlight from interfering with clicks */
+  }
+  
+.metallic-button:hover {
+    background: linear-gradient(135deg, #bbb, #ccc, #999);
+  }
+  
+.metallic-button:active {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Smaller shadow on click */
+    transform: translateY(1px); /* Slight downward push on click */
+}
+.avatar-options {
+    display: flex; /* Make the container a flex container */
+    flex-direction: row; /* Align items in a row */
+}
+  
+.avatar-options img {
+    width: 50px; /* Set the width of each avatar */
+    height: 50px; /* Set the height of each avatar */
+    margin-right: 10px; /* Add some space between avatars */
+}
+.avatar-options img.selected {
+    border: 2px solid blue; /* Example: Add a blue border */
+}

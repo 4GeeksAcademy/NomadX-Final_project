@@ -9,31 +9,31 @@ export const Tutorial = () => {
     const steps = [
         {
             title: "Welcome to NomadX 🌍",
-            content: "1. Feel free to create an account or browse without one. Dont worry, youll always remain anonymous.",
+            content: "Get started your way! Create an account to unlock all features, or explore NomadX anonymously. Your privacy is always protected.",
         },
         {
             title: "2: Browse Content by City",
-            content: "In the search bar above, type the name of a city and you'll instantly be able to see posts from that city.",
+            content: "Explore travel stories by location! Discover posts from your current city on the homepage, or use the search bar to find content from anywhere in the world. Simply click to view the feed.",
         },
         {
             title: "3. Like, Comment & Mark Posts as Favorites",
-            content: "No matter if you like, comment or mark a post as a favorite, it'll always be done anonymously.",
+            content: "Engage with content anonymously! Like, comment, or save your favorite posts without revealing your identity.",
         },
         {
             title: "4. Profile Section",
-            content: "In your profile, you'll be able to see your own posts categorized by city, along with the posts you've marked as favorites.",
+            content: "Your profile is your personal travel journal! View your posts organized by city and access your saved favorites.",
         },
         {
             title: "5. Profile User Map",
-            content: "In this other section of your profile, you'll be able to interact with you're individualized map and see everywhere you've been in the world!",
+            content: "Visualize your travels! Explore your personalized map and see all the places you've visited.",
         },
         {
             title: "6. Create a Post",
-            content: "Use one of our writing topics, search for the city you visited & write whatever you'd like about it!",
+            content: "Share your travel stories. Choose a topic and write about your experience. Don't forget to rate the location!",
         },
         {
-            title: "Any questions?",
-            content: "If you have any questions, feel free to check out our FAQ page.",
+            title: "Still have questions?",
+            content: "Find answers on our FAQ page.",
         },
     ];    
 

@@ -33,6 +33,7 @@
 		"@babel/preset-env": "^7.16.4",
 		"@babel/preset-react": "^7.16.0",
 		"@babel/runtime": "^7.16.3",
+		"@types/react-leaflet": "^2.8.3",
 		"babel-eslint": "^10.1.0",
 		"babel-loader": "^8.2.3",
 		"babel-plugin-transform-class-properties": "^6.24.1",
@@ -73,10 +74,10 @@
 		]
 	},
 	"dependencies": {
-		"leaflet": "^1.9.4",
 		"@fortawesome/fontawesome-svg-core": "^6.7.2",
 		"@fortawesome/free-solid-svg-icons": "^6.7.2",
 		"@fortawesome/react-fontawesome": "^0.2.2",
+		"leaflet": "^1.9.4",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
