@@ -11,6 +11,7 @@ class User(db.Model):
     nickname = db.Column(db.String(120), unique=True, nullable=False)
     encoded_password = db.Column(db.String(500), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    favorites = db.relationship("Favorite",backref="user",lazy=True)
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -18,6 +19,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "favorite": [fav.serialize() for fav in self.favorites]
             # do not serialize the password, its a security breach
         }
 
@@ -37,14 +39,42 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     latitude = db.Column(db.String(200), unique=False, nullable=True)
     longitude = db.Column(db.String(200), unique=False, nullable=True)
-    # user_nickname = db.Column(db.Sting(120), db.ForeignKey('user.nickname'))
+    user_nickname = db.Column(db.Sting(120), db.foreignKey('user.nickname'))
+    city_name = db.Column(db.String(50), unique = True, nullable= True)
 
-class Favourite(db.Model):
-    __tablename__ = 'favourite'
+    def __repr__(self):
+        return f'<Post {self.title}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "comment": self.comment,
+            "image_url": self.image_url,
+            "user_id": self.user_id,
+            "latitude": self.latitude,
+            "longitude": self.longitude
+            # do not serialize the password, its a security breach
+        }
+class Favorite(db.Model):
+    __tablename__ = 'favorite'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    post = db.relationship("Post", backref="favorites", lazy=True)
+
+    def __repr__(self):
+        return f'<Favorite {self.id}>'
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "post": self.post.serialize()
+
+            # do not serialize the password, its a security breach
+        }
 
 class Login(db.Model):
     __tablename__ = 'login'
