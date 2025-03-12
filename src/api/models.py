@@ -57,7 +57,7 @@ class Post(db.Model):
             # do not serialize the password, its a security breach
         }
 class Favorite(db.Model):
-    __tablename__ = 'favourite'
+    __tablename__ = 'favorite'
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
