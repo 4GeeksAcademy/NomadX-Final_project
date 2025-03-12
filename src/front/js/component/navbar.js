@@ -5,55 +5,92 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import "../../styles/navbar.css";
 import "../../styles/index.css";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
-export const Navbar = () => {
+export const Navbar = ({ setMapCenter, setMapZoom }) => {
 
 	const navigate = useNavigate()
+	const [countries, setCountries] = React.useState([]);
+	const [selectedCountry, setSelectedCountry] = React.useState(null);
+
+
+
 	const logout = () => {
 		localStorage.removeItem("access_token");
 
 		navigate("/login");
 	}
-
+	const handleSelectCountry = (selectedOption) => {
+		setSelectedCountry(selectedOption);
+		setMapCenter([selectedOption.value.lat, selectedOption.value.lon]);
+		setMapZoom(5);
+	};
+	React.useEffect(() => {
+		fetch("https://restcountries.com/v3.1/all")
+			.then(response => response.json())
+			.then(data => {
+				console.log("data", data)
+				const countryList = data.map(country => ({
+					label: country.name.common,
+					value: { lat: country.latlng[0], lon: country.latlng[1] },
+				})).sort((a, b) => a.label.localeCompare(b.label));
+				console.log("countries", countryList)
+				setCountries(countryList);
+			})
+			.catch(error => console.error("Error fetching countries:", error));
+	}, []);
 	return (
-		<nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-			<div className="container-fluid">
-				<Link to="/">
-					<a className="navbar-brand" href="#">
-						<img src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
-					</a>
-				</Link>
-				<span className="brandName">NomadX</span>
-				<form className="d-flex mx-auto col-lg-6 col-md-8">
-					<input className="form-control me-2 search-bar" type="search" placeholder="Search Posts by City Here" aria-label="Search" />
-				</form>
-				<Link to="/login">
-					<button type="button" className="metallic-button">Login!</button>
-				</Link>
-				<Link to="/create-post">
-					<button type="button" className="metallic-button">Post</button>
-				</Link>
-				<div className="dropdown">
+
+		<nav className="navbar navbar-expand-lg bg-body-tertiary">
+
+				<div className="container-fluid">
+					<Link to="/">
+						<a className="navbar-brand" href="#">
+							<img src={logo} alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
+						</a>
+					</Link>
+					<span className="brandName">NomadX</span>
+
+					{countries && <Select
+						options={countries}
+						value={selectedCountry}
+						onChange={handleSelectCountry}
+						placeholder="Search Posts by City Here"
+						isSearchable={true}
+						isClearable={true}
+						classNamePrefix="select"
+						className="form-control me-2 search-bar"
+					/>}
 					
-					<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-						<i className="fa-solid fa-ellipsis-vertical"></i>
-					</button>
-					<ul className="dropdown-menu dropdown-menu-end">
-						<Link to="/" className="dropdown-item">
-							Home
-						</Link>
-						<Link to="/profile-feed" className="dropdown-item">
-							Profile
-						</Link>
-						<Link to="/instructions" className="dropdown-item">
-							User Guide
-						</Link>
-						<Link to="/" className="dropdown-item" onClick={logout}>
-							Logout
-						</Link>
-					</ul>
+					<Link to="/login">
+						<button type="button" className="metallic-button">Login!</button>
+					</Link>
+					<Link to="/create-post">
+						<button type="button" className="metallic-button">Post</button>
+					</Link>
+					<div className="dropdown">
+						<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<i className="fa-solid fa-ellipsis-vertical"></i>
+						</button>
+						<ul className="dropdown-menu dropdown-menu-end">
+							<Link to="/" className="dropdown-item">
+								Home
+
+							</Link>
+							<Link to="/profile-feed" className="dropdown-item">
+								Profile
+							</Link>
+
+							<Link to="/instructions" className="dropdown-item">
+								User Guide
+
+							</Link>
+							<Link to="/" className="dropdown-item" onClick={logout}>
+								Logout
+							</Link>
+						</ul>
+					</div>
 				</div>
-				</div>
-		</nav>
-	);
+			</nav>
+			);
 };

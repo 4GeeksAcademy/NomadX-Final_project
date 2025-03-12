@@ -5,7 +5,7 @@ import MyMap from "../component/leaflet";
 import { Tutorial } from "../component/tutorial.js";
 
 
-export const Home = () => {
+export const Home = ({mapCenter, mapZoom}) => {
 	//const { store, actions } = useContext(Context);
 
 	return (
@@ -13,7 +13,7 @@ export const Home = () => {
 		<div className="text-center homePage">
 			<div className="divForModals">
 				<Modal/>
-				<MyMap/>
+				<MyMap mapCenter={mapCenter} mapZoom={mapZoom} />
 				<Tutorial/>
 			</div>
 		</div>
