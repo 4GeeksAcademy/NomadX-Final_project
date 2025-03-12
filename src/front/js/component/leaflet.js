@@ -97,7 +97,7 @@ const MapComponent = () => {
       />
       <button onClick={handleSearch}>Buscar</button>
 
-      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
+      
 
       <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
 
@@ -160,6 +160,7 @@ const MapComponent = () => {
         ))}
       </Map>
     </div>
+    
   );
 };
 export default MapComponent;

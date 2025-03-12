@@ -35,7 +35,7 @@ export const Navbar = () => {
 				</Link>
 
 				<div className="dropdown">
-					<button className="metallic-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<button className="metallic-button" type="button" data-bs-toggle="dropdown" aria-expanded="false"/>
 
 					<Link to="/create-post">
 						<button type="button" className="btn btn-nav">Post</button>
@@ -62,6 +62,7 @@ export const Navbar = () => {
 						</Link>
 					</ul>
 				</div>
+			</div>
 			</div>
 		</nav>
 	);
