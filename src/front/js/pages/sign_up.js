@@ -29,7 +29,9 @@ export const Sign_up = () => {
 
 	const handdlesubmmit = async (e) => {
 		e.preventDefault()
-		const response = await fetch(`${process.env.BACKEND_URL}/api/sing_up`, {
+    
+		const response = await fetch(`${process.env.BACKEND_URL}/api/sign_up`,{
+
 			method: "POST",
 			body: JSON.stringify({
 				email: email,

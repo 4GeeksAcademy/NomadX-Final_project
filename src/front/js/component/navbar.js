@@ -33,8 +33,18 @@ export const Navbar = () => {
 				<Link to="/create-post">
 					<button type="button" className="metallic-button">Post</button>
 				</Link>
+
 				<div className="dropdown">
 					<button className="metallic-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+					<Link to="/create-post">
+						<button type="button" className="btn btn-nav">Post</button>
+					</Link>
+					
+				<div className="dropdown">
+					
+					<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+
 						<i className="fa-solid fa-ellipsis-vertical"></i>
 					</button>
 					<ul className="dropdown-menu dropdown-menu-end">
