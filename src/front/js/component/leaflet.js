@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import Select from "react-select";
+import "../../styles/leaflet.css"
 
 const MapComponent = ({mapCenter, mapZoom}) => {
+
+
+
+const MapComponent = () => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
     { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
   ]);
 
+
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
   const [images, setImages] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -31,7 +35,6 @@ const MapComponent = ({mapCenter, mapZoom}) => {
       );
     }
   }, []);
-
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -42,7 +45,6 @@ const MapComponent = ({mapCenter, mapZoom}) => {
       return "Ubicación desconocida";
     }
   };
-
   const handleMapClick = async (e) => {
     const cityName = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
@@ -55,10 +57,23 @@ const MapComponent = ({mapCenter, mapZoom}) => {
     setPoints([...points, newPoint]);
   };
 
+
+
+  const handleSearch = async () => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`);
+      const data = await response.json();
+      if (data.length > 0) {
+        setMapCenter([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
+      }
+    } catch (error) {
+      console.error("Error buscando la ubicación:", error);
+    }
+  };
+
   const handleDeletePoint = (id) => {
     setPoints(points.filter(point => point.id !== id));
   };
-
   const handleImageUpload = (e, id) => {
     const file = e.target.files[0];
     if (file) {
@@ -69,24 +84,34 @@ const MapComponent = ({mapCenter, mapZoom}) => {
       reader.readAsDataURL(file);
     }
   };
-
   const handleRatingChange = (id, rating) => {
     setRatings({ ...ratings, [id]: rating });
   };
-
   const handleCommentChange = (id, text) => {
     setCommentInputs({ ...commentInputs, [id]: text });
   };
-
   const handleAddComment = (id) => {
     if (!commentInputs[id]) return;
     setComments({ ...comments, [id]: [...(comments[id] || []), commentInputs[id]] });
     setCommentInputs({ ...commentInputs, [id]: "" });
   };
-
   return (
     <div>
+
       <Map center={mapCenter} zoom={mapZoom} style={{ height: "86vh", width: "100%" }} onClick={handleMapClick}>
+
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        placeholder="Buscar ciudad, país..."
+      />
+      <button onClick={handleSearch}>Buscar</button>
+
+      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
+
+      <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
+
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lng]}>
@@ -148,5 +173,10 @@ const MapComponent = ({mapCenter, mapZoom}) => {
     </div>
   );
 };
-
 export default MapComponent;
+
+
+
+
+
+

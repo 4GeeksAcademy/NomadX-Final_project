@@ -7,21 +7,34 @@
     min-height: 100vh;
     color: whitesmoke;
     margin-top: 70px;
+    padding-bottom: 40px;
 }
 .text-center.faq{
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+.questionsAndAnswers{
     padding-bottom: 30px;
 }
 .questionsAndAnswers h4,
 .questionsAndAnswers p,
 .questionsAndAnswers ul,
-.questionsAndAnswers li{
+.questionsAndAnswers li
+.questionsAndAnswers button{
     padding-left: 30px;
     padding-right: 30px;
 }
-
 .questionsAndAnswers h4{
     padding-bottom: 10px;
 }
 .questionsAndAnswers ul{
     padding-top: 10px;
+}
+.questionsAndAnswers .button-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.button-wrapper{
+    margin-top: 80px;
 }

@@ -7,7 +7,7 @@ import maleTemp from "../../img/maleTemp.jpeg";
 
 export const MeetTheTeam = () => {
     return (
-        <div className="headingTeam">
+        <div className="container_meetTheTeam">
             <h1 className="heading text-center">Meet the Team</h1>
             <br></br>
             <div className="d-md-flex justify-content-start">
