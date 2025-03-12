@@ -1,15 +1,47 @@
-/* 
-    General Styles used on every website (Don't Repeat Yourself)
-*/
 
-html{
+#app{
     background: linear-gradient(to right, black, #d0d0d0);
 }
 body{
-    font-family: "Roboto", serif;
+    font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
     font-variation-settings:
       "wdth" 100;
 }
+
+.metallic-button {
+    background: linear-gradient(135deg, #ddd, #eee, #bbb);
+    border: 1px solid #999; 
+    border-radius: 3px; /* Slightly rounded corners */
+    padding: 10px 20px; /* Padding for button size */
+    margin: 3px;
+    font-weight: 300; /* Bold text */
+    text-shadow: 1px 1px 1px #fff; /* Subtle text shadow */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    cursor: pointer; /* Change cursor on hover */
+    position: relative; /* Needed for pseudo-element highlights */
+    overflow: hidden; /* Hide overflow from pseudo-elements */
+  }
+  
+  .metallic-button::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1)); /* Highlight effect */
+    border-radius: 3px;
+    pointer-events: none; /* Prevent highlight from interfering with clicks */
+  }
+  
+  .metallic-button:hover {
+    background: linear-gradient(135deg, #bbb, #ccc, #999);
+  }
+  
+  .metallic-button:active {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Smaller shadow on click */
+    transform: translateY(1px); /* Slight downward push on click */
+  }

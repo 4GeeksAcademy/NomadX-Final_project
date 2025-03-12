@@ -1,8 +1,4 @@
 .text-center{
     background: linear-gradient(to right, black, #d0d0d0);
-    
-}
-.divForModals{
-    padding-bottom: 80px;
-    margin-top: 70px;
+    border-color: black;
 }

@@ -48,7 +48,7 @@ export const ProfileFeed = () => {
             <div className="content">
                 <div className="favorites-scroll">
                     <div className="favorites-title">
-                        <h1>My Favorites</h1>
+                        <h2>My Favorites</h2>
                         <span className="scroll"></span>
                     </div>
                     <div className="favorites-items">
@@ -83,7 +83,7 @@ export const ProfileFeed = () => {
                 </div>
 
                 <div className="postsByCity">
-                    <h1>Posts by City</h1>
+                    <h2>Posts by City</h2>
                     <div className="city">
                         <h3>Madrid</h3>
                         <div className="row">

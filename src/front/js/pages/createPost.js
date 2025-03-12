@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/createPost.css";
+import "../../styles/index.css";
+
 
 export const CreatePost = () => {
     //const { store, actions } = useContext(Context);
@@ -8,6 +10,7 @@ export const CreatePost = () => {
     const [file, setFile] = useState("")
     const [fileUrl, setFileUrl] = useState("");
     const [title, setTitle] = useState("");
+    const [selectedTopic, setSelectedTopic] = useState("");
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
         "Accomodation 🛌💤", "Goods & Services 🛍️💇",
@@ -37,7 +40,6 @@ export const CreatePost = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // This will shuffle topics on submit
         setTopics(shuffledTopics(topics));
     }
 
@@ -56,28 +58,37 @@ export const CreatePost = () => {
             try {
                 const form = new FormData()
                 form.append("img", e.target.files[0])
-                const response = await fetch (`${process.env.BACKEND_URL}/api/img`,{
-                    method:"POST",
-                    body:form
+                const response = await fetch(`${process.env.BACKEND_URL}/api/img`, {
+                    method: "POST",
+                    body: form
                 })
                 const data = await response.json()
-                setFileUrl (data.img)
+                setFileUrl(data.img)
                 //  const response = await fetch 
                 // need to connect this to the routes in the backend.
             } catch (error) {
-    
+
             }
         }
-     
+
     };
 
     const handlePost = async (e) => {
         e.preventDefault()
         if (!fileUrl) {
-            alert("image/video field is required");
-            return 
+            alert("image/video is required");
+            return
         }
         try {
+
+            const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
+                method: "POST",
+                body: JSON.stringify({
+                    image_url: fileUrl,
+                    title: title,
+                    comment: newEntry,
+                    topic: selectedTopic,
+                    rating: rating,
             const response = await fetch (`${process.env.BACKEND_URL}/api/post`,{
                 method:"POST",
                 body:JSON.stringify({
@@ -88,41 +99,47 @@ export const CreatePost = () => {
                     longitude : "",
                     city_name : ""
 
+
                 }),
-                headers:{
-                    "Content-Type":"application/json",
-                    "Authorization":"Bearer " + localStorage.getItem("token")
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 }
             })
             const data = await response.json()
             console.log(data);
-            
+
         } catch (error) {
-            
+            console.error("Error creating post:", error)
         }
-    }
+    };
 
     return (
         <div className="createPostView">
             <h1>Create a New Post</h1>
             <div className="container">
                 <aside className="writingTopics">
-                    <h5>Travel Categories</h5>
-                    <ul>
+                    <h5><u>Travel Categories</u></h5>
+                    <div className="categoriesAndButtons">
                         {topics.slice(0, 7).map((topic, index) => (
-                            <li key={index}>{topic}</li>
+                            <button
+                                className={`topic-buttons ${selectedTopic === topic ? 'active' : ''}`}
+                                key={index}
+                                onClick={() => setSelectedTopic(topic)}
+                            >
+                                {topic}
+                            </button>
                         ))}
-                    </ul>
+                    </div>
                 </aside>
                 <main className="writingArea">
                     <div className="tripLocation">
                         <form className="d-flex mx-auto">
-                            <input className="form-control me-2 search-bar" onChange={e=>setTitle(e.target.value)} value={title} type="search" placeholder="Where are you writing from today?" aria-label="Search" />
+                            <input className="tripLocTextBox me-2" onChange={e => setTitle(e.target.value)} value={title} type="text" placeholder="Where are you writing from today?" aria-label="Search" />
                         </form>
                     </div>
                     <div className="entry-container">
                         <div className="entry">
-                            <label htmlFor="entry" aria-placeholder="What's on your mind today?"></label>
                             <textarea id="entry" placeholder="Choose a topic from the column on the left and jot down your thoughts today 🙂" value={newEntry} onChange={(e) => setNewEntry(e.target.value)}></textarea>
                         </div>
                         {file && (
@@ -133,7 +150,7 @@ export const CreatePost = () => {
                             />
                         )}
                     </div>
-                    <div className="giveRating">
+                    <div className="ratingFilePostRow">
                         <div className="rating">
                             <label> Rating:</label>
                             <span className="stars">
@@ -149,21 +166,17 @@ export const CreatePost = () => {
                             </span>
                         </div>
                         <input type="file"
-                            className="form-control mb-2"
-                            accept="image/jpeg"
+                            className="chooseFile"
+                            accept=".jpg, .jpeg, .png, .mp4"
                             onChange={handleImgChange}
                         />
-                        <button className="btn-btn primary"
-                            onClick={ handlePost }>
+                        <button className="metallic-button"
+                            onClick={handlePost}>
                             Post
                         </button>
                     </div>
-            </main>
-        </div>
+                </main>
+            </div>
         </div >
     );
 };
-
-//might need to use useState to for location.. 
-// to house it and change it on the page, from 
-// there being none, to attaching one to the post?
