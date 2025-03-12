@@ -10,16 +10,12 @@ export const Home = ({mapCenter, mapZoom}) => {
 
 	return (
 
-		<div className="text-center_homePage">
-
-		<div>
 		<div className="text-center homePage">
 
 			<div className="divForModals">
 				<MyMap mapCenter={mapCenter} mapZoom={mapZoom} />
 				<Tutorial/>
 			</div>
-		</div>
 		</div>
 
 
