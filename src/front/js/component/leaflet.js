@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "../../styles/leaflet.css"
 
-const MapComponent = () => {
+
+const MapComponent = ({mapCenter, mapZoom}) => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
     { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
   ]);
   const [userLocation, setUserLocation] = useState(null);
-  const [mapCenter, setMapCenter] = useState([39.8283, -98.5795]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [ratings, setRatings] = useState({});
   const [images, setImages] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
+
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -52,17 +52,6 @@ const MapComponent = () => {
     };
     setPoints([...points, newPoint]);
   };
-  const handleSearch = async () => {
-    try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`);
-      const data = await response.json();
-      if (data.length > 0) {
-        setMapCenter([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
-      }
-    } catch (error) {
-      console.error("Error buscando la ubicación:", error);
-    }
-  };
   const handleDeletePoint = (id) => {
     setPoints(points.filter(point => point.id !== id));
   };
@@ -89,18 +78,7 @@ const MapComponent = () => {
   };
   return (
     <div>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Buscar ciudad, país..."
-      />
-      <button onClick={handleSearch}>Buscar</button>
-
-      <Map center={mapCenter} zoom={4} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
-
-      <Map center={mapCenter} zoom={4} style={{ height: "85vh", width: "100%" }} onClick={handleMapClick}>
-
+      <Map center={mapCenter} zoom={mapZoom} style={{ height: "86vh", width: "100%" }} onClick={handleMapClick}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lng]}>
@@ -163,6 +141,9 @@ const MapComponent = () => {
   );
 };
 export default MapComponent;
+
+
+
 
 
 

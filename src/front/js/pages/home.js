@@ -10,18 +10,12 @@ export const Home = () => {
 
 	return (
 
-		<div className="text-center_homePage">
-
-		<div>
 		<div className="text-center homePage">
-
 			<div className="divForModals">
 				<Modal/>
 				<MyMap/>
 				<Tutorial/>
 			</div>
 		</div>
-		</div>
-
 	);
 };
