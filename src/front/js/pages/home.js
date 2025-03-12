@@ -12,7 +12,6 @@ export const Home = () => {
 		<div>
 		<div className="text-center homePage">
 			<div className="divForModals">
-				<Modal/>
 				<MyMap/>
 				<Tutorial/>
 			</div>

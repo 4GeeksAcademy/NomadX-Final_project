@@ -83,8 +83,10 @@ export const CreatePost = () => {
                 body:JSON.stringify({
                     image_url : fileUrl,
                     title : title,
-                    comment : newEntry
-
+                    comment : newEntry,
+                    latitude : "",
+                    longitude : "",
+                    city_name : ""
 
                 }),
                 headers:{
