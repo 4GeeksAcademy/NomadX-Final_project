@@ -26,17 +26,20 @@ const Layout = () => {
     // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
-    if(!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL/ >;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+
+    const [mapCenter, setMapCenter] = React.useState([39.8283, -98.5795]);
+    const [mapZoom, setMapZoom] = React.useState(4);
 
     return (
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Navbar  setMapCenter={setMapCenter} setMapZoom={setMapZoom} />
                     <Routes>
-                        <Route element={<Home />} path="/" />
+                        <Route element={<Home mapCenter={mapCenter} mapZoom={mapZoom} />} path="/" />
                         <Route element={<ProfileFeed />} path="/profile-feed" />
-                        <Route element={<ProfileUserMap />} path="/profile-user-map" />
+                        <Route element={<ProfileUserMap mapCenter={mapCenter} mapZoom={mapZoom} />} path="/profile-user-map" />
                         <Route element={<Faq />} path="/faq" />
                         <Route element={<ContactUs />} path="/contact-us" />
                         <Route element={<MeetTheTeam />} path="/meet-the-team" />

@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import MyMap from "../component/leaflet";
 import "../../styles/profileUserMap.css";
 
-export const ProfileUserMap = () => {
+export const ProfileUserMap = ({mapCenter, mapZoom}) => {
 
     return (
 
         <div>
-            <MyMap />
-        <div className="profileUserMapDiv">
-            <h1>This is the Profile User Map View</h1>
+            <MyMap mapCenter={mapCenter} mapZoom={mapZoom} />
         </div>
         </div>
     );
