@@ -136,7 +136,7 @@ def get_favs():
         "latitude": fav.post.latitude,
         "longitude": fav.post.longitude,
         "user_id": fav.post.user_id
-    } for fav in favorites if fav.post]  # Evita errores si el post fue eliminado
+    } for fav in favorites if fav.post]  
 
     return jsonify({"favorites": fav_posts}), 200
 
@@ -149,3 +149,11 @@ def get_image():
     posts = Post.query.filter_by(user_id = user_id).all() 
     post_list = [post.serialize() for post in posts]
     return jsonify(post_list),200
+
+@api.route('/post', methods=['GET'])
+def get_all_posts():
+    try:
+        posts = Post.query.all()
+        return jsonify([post.serialize() for post in posts]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
