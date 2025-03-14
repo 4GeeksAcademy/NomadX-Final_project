@@ -236,8 +236,60 @@ export const ProfileFeed = () => {
 
 
 /*
+return (
+        <div className="profileFeed">
+            <div className="content">
+                <div className="favorites-scroll">
+                    <div className="favorites-title">
+                        <h2>My Favorites</h2>
+                        <span className="scroll"></span>
+                    </div>
+                    <div className="favorites-items">
+                        <div className="p-1"><img
+                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
+                        </div>
+                        <div className="p-1"><img
+                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
+                        </div>
+                    </div>
+                </div>
 
-useEffect(() => {
+
+
+
+
+
+
+
+
+
+                
+
+
+
+ NO SE SI NECESITO ESTO... NO LO BORREN :) 
+  useEffect(() => {
     const fetchPosts = async () => {
         try {
             const response = await fetch('https://reimagined-space-halibut-wrvrrwvj7659f59gw-3001.app.github.dev/profile-feed');

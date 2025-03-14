@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import "../../styles/footer.css"
 
 export const Footer = () => (
-	<footer className="fixedFooter">
+	<footer className="footer">
 		<div className="card text-center">
 			<div className="footer">
 				<i className="fa-solid fa-globe"></i>

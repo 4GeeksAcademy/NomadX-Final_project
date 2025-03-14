@@ -8,10 +8,14 @@
     z-index: 1000;
 }
 .brandName{
-    font-size: x-large;
+    font-size: 30px;
+    padding: 12px;
+    font-family: "Big Shoulders Stencil", sans-serif;
+    font-weight: 400;
 }
 .navbar-brand{
     size: 50px;
+    margin-right: 0;
 }
 
 .search-bar{

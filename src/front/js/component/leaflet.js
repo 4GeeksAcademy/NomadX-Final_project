@@ -97,7 +97,7 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
   return (
     <div>
 
-      <Map center={mapCenter} zoom={mapZoom} style={{ height: "83vh", width: "100%" }} onClick={handleMapClick}>
+      <Map center={mapCenter} zoom={mapZoom} style={{ height: "80vh", width: "100%" }} onClick={handleMapClick}>
 
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
