@@ -157,3 +157,18 @@ def get_all_posts():
         return jsonify([post.serialize() for post in posts]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@api.route('/fav/<int:post_id>', methods=["DELETE"])
+@jwt_required()
+def delete_fav(post_id):
+    user_id = get_jwt_identity()
+    favorite = Favorite.query.filter_by(user_id=user_id, post_id=post_id).first()
+    
+    if not favorite:
+        return jsonify({"msg": "Favorito no encontrado"}), 404
+    
+    db.session.delete(favorite)
+    db.session.commit()
+    
+    return jsonify({"msg": "Favorito eliminado correctamente"}), 200

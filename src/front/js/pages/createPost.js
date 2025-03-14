@@ -73,6 +73,8 @@ export const CreatePost = () => {
 
     };
 
+    
+
     const handlePost = async (e) => {
         e.preventDefault()
         if (!fileUrl) {
