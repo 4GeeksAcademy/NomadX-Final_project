@@ -1,7 +1,6 @@
 .container_howToUse{
-    padding-top: 110px;
+    padding-top: 40px;
     background: linear-gradient(to right, black, #d0d0d0);
-    height: calc(100vh - 160px);
     color: whitesmoke;
 }
 .same-height-cards{
@@ -27,7 +26,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    min-height: 250px;
+    min-height: 200px;
 }
 .card-body p{
     flex-grow: 1;
@@ -40,7 +39,4 @@
     margin: 10px auto;
     background: linear-gradient(to right, #CD7F32, #A97142);
     color: whitesmoke
-}
-.button-wrapper{
-    margin-top: 80px;
 }

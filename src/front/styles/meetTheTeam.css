@@ -1,7 +1,7 @@
 .container_meetTheTeam{
-    margin-top: 70px;
+    margin-top: 60px;
     background: linear-gradient(to right, black, #d0d0d0);
-    min-height: 100vh;
+    min-height: 80vh;
     padding-left: 10px;
     padding-right: 10px;
     color: whitesmoke;
@@ -14,8 +14,8 @@
     color:  #CD7F32
 }
 .team-member-img{
-    width: 100px;
-    height: 100px;
+    width: 85px;
+    height: 85px;
     object-fit: cover;
 }
 .team-member-img.female{
