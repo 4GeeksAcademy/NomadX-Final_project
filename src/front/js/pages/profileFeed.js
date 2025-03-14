@@ -14,34 +14,44 @@ import NYC from "../../img/NYC.jpg"
 
 export const ProfileFeed = () => {
     const [favorites, setFavorites] = useState([]);
-    const [userPosts, setUserPosts] = useState([]);
-    /*
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [userPosts, setUserPosts] = useState([]); // esto es para /user/post FETCH con leaflet
+
     useEffect(() => {
         const fetchFavorites = async () => {
             try {
-                const response = await fetch('https://reimagined-space-halibut-wrvrrwvj7659f59gw-3001.app.github.dev/profile-feed');
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    throw new Error("User not authenticated");
+                }
+
+                const response = await fetch(`${process.env.BACKEND_URL}/api/fav/list`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                });
+
                 const data = await response.json();
-                setFavorites(data);
-            } catch (error) {
-                console.error('Error fetching favorites', error);
+                setFavorites(data.favorites);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
             }
         };
+
         fetchFavorites();
     }, []);
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const response = await fetch('https://reimagined-space-halibut-wrvrrwvj7659f59gw-3001.app.github.dev/profile-feed');
-                const data = await response.json();
-                setUserPosts(data);
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-            }
-        };
-        fetchPosts();
-    }, []);
-    */
+    if (loading) return <p>Loading favorites...</p>;
+    if (error) return <p>Error: {error}</p>;
+
+    if (favorites && favorites.length === 0) {
+        return <p>You don't have any favorites yet.</p>;
+    }
 
     return (
         <div className="profileFeed">
@@ -49,37 +59,18 @@ export const ProfileFeed = () => {
                 <div className="favorites-scroll">
                     <div className="favorites-title">
                         <h2>My Favorites</h2>
-                        <span className="scroll"></span>
                     </div>
-                    <div className="favorites-items">
-                        <div className="p-1"><img
-                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
+                    {favorites && favorites.map((fav) => (
+                        <div key={fav.post.id}>
+                            {fav.post && (
+                                <>
+                                    <div>
+                                        <img src={fav_post.image_url} />
+                                    </div>
+                                </>
+                            )}
                         </div>
-                        <div className="p-1"><img
-                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://www.touristegypt.com/wp-content/uploads/2023/03/giza-pyramids-cairo-egypt-with-palm-1024x634.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://d3h1lg3ksw6i6b.cloudfront.net/media/image/2024/09/10/92179ccffd614ab692e7513cec63d0c8_iStock-534799507_HeroImage.jpg" />
-                        </div>
-                        <div className="p-1"><img
-                            src="https://shinkyosei.edu.vn/uploads/images/images/thanh-pho-seoul-han-quoc-1.jpg" />
-                        </div>
-                    </div>
+                    ))}
                 </div>
 
                 <div className="postsByCity">
@@ -245,27 +236,17 @@ export const ProfileFeed = () => {
 
 
 /*
-<div className="profileFeed">
-            <div className="content">
-                <div className="favorites-scroll">
-                    <div className="favorites-title">
-                        Favorites <span className="scroll">scroll</span>
-                    </div>
-                    <div className="favorites-items">
-                        {favorites && favorites.map((favorite) => ( 
-                            <div key={favorite.id} className="favorite-item">
-                                {favorite.name}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="postsByCity">
-                    {userPosts && userPosts.map((post) => ( 
-                        <div key={post.id} className="post">
-                            {post.city}: {post.content}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+
+useEffect(() => {
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('https://reimagined-space-halibut-wrvrrwvj7659f59gw-3001.app.github.dev/profile-feed');
+            const data = await response.json();
+            setUserPosts(data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
+    };
+    fetchPosts();
+}, []);
 */
