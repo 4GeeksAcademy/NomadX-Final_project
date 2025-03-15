@@ -111,3 +111,23 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
 
     );
 };
+
+
+
+// ESTA FUNCION ES PARA AÑADIRLA A UN BOTON PARA ELIMINAR EL FAV
+// function deleteFavorite(postId) {
+//     fetch(`/fav/${postId}`, {
+//         method: 'DELETE',
+//         headers: {
+//             'Authorization': `Bearer ${localStorage.getItem('token')}`,
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         alert(data.msg);
+//         location.reload(); // Recargar la página para actualizar la lista de favoritos
+//     })
+//     .catch(error => console.error('Error:', error));
+// }
+
