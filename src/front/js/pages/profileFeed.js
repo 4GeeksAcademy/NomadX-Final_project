@@ -61,7 +61,7 @@ export const ProfileFeed = () => {
                         <h2>My Favorites</h2>
                     </div>
                     {favorites && favorites.map((fav) => (
-                        <div key={fav.post.id}>
+                        <div key={fav.post_id}>
                             {fav.post && (
                                 <>
                                     <div>

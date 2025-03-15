@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/createPost.css";
 import "../../styles/index.css";
+import MyMap from "../component/leaflet";
 
-
-export const CreatePost = () => {
+export const CreatePost = ({mapCenter, mapZoom}) => {
     //const { store, actions } = useContext(Context);
     const [newEntry, setNewEntry] = useState("");
     const [rating, setRating] = useState(0);
@@ -171,6 +171,7 @@ export const CreatePost = () => {
                     </div>
                 </main>
             </div>
+            <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} /></div>
         </div >
     );
 };
