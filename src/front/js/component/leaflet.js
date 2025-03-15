@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
@@ -133,6 +132,19 @@ const mapStyles = {
 
 // Iconos personalizados para los marcadores
 const createCustomIcon = (isMedia = false, isFavorite = false) => {
+  let color = "#3388ff"; // Color normal
+  let icon = "📍"; // Icono normal
+  
+  // Si tiene media
+  if (isMedia) {
+    icon = "📸";
+    color = isFavorite ? "#ffcc00" : "#ff5252"; // Dorado si es favorito, rojo si solo tiene media
+  } 
+  // Si no tiene media pero es favorito
+  else if (isFavorite) {
+    color = "#ffcc00"; // Dorado para favoritos
+  }
+  
   return L.divIcon({
     className: "",
     iconSize: [40, 40],
@@ -142,7 +154,7 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
       <div style="
         width: 40px;
         height: 40px;
-        background-color: ${isMedia ? (isFavorite ? "#ffcc00" : "#ff5252") : "#3388ff"};
+        background-color: ${color};
         border-radius: 50%;
         border: 3px solid white;
         box-shadow: 0 3px 6px rgba(0,0,0,0.3);
@@ -152,7 +164,7 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
         color: white;
         font-weight: bold;
       ">
-        ${isMedia ? "📸" : "📍"}
+        ${icon}
       </div>
     `
   });
@@ -174,15 +186,26 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    // Intentar obtener la ubicación al cargar el componente
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
           const cityName = await getCityName(latitude, longitude);
           setUserLocation({ lat: latitude, lng: longitude, city: cityName });
+          
+          // Opcional: centrar el mapa en la ubicación del usuario
+          if (mapRef.current) {
+            mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
+          }
         },
         (error) => {
           console.error("Error getting location:", error);
+        },
+        { 
+          enableHighAccuracy: true, 
+          timeout: 5000,
+          maximumAge: 0
         }
       );
     }
@@ -192,12 +215,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
       const data = await response.json();
-      console.log(data);
-      
-      return ({
-        city:data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
-        country: data.address.country || "Ubicación desconocida"
-      })
+      return data.address?.city || data.address?.town || data.address?.village || "Ubicación desconocida";
     } catch (error) {
       console.error("Error fetching city name:", error);
       return "Ubicación desconocida";
@@ -205,24 +223,16 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   };
   
   const handleMapClick = async (e) => {
-    const location = await getCityName(e.latlng.lat, e.latlng.lng);
+    const cityName = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
       id: Date.now(), // Usar timestamp para IDs únicos
       lat: e.latlng.lat,
       lng: e.latlng.lng,
-      city: location.city ,
-      text: "Descripción del nuevo punto",
-      country : location.country
+      city: cityName,
+      text: "Describe este lugar...",
     };
-    console.log(newPoint);
-    
     setPoints([...points, newPoint]);
   };
-
-  const handleDeletePoint = (id) => {
-    setPoints(points.filter(point => point.id !== id));
-  };
-
   
   const toggleFavorite = (id) => {
     setFavorites({ ...favorites, [id]: !favorites[id] });
@@ -239,7 +249,6 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       reader.readAsDataURL(file);
     }
   };
-
 
   const addComment = (id) => {
     if (commentInputs[id] && commentInputs[id].trim()) {
@@ -295,9 +304,17 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                   align-items: center;
                   color: white;
                   font-weight: bold;
+                  animation: pulse 2s infinite;
                 ">
                   😊
                 </div>
+                <style>
+                  @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                  }
+                </style>
               `
             })}
           >
@@ -425,20 +442,15 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         {favorites[point.id] ? "★ Favorito" : "☆ Favorito"}
                       </button>
                     </div>
-
                   </div>
                 </div>
               </Popup>
             </Marker>
           </React.Fragment>
-          </>
-
         ))}
       </Map>
     </div>
   );
 };
 
-
 export default MapComponent;
-
