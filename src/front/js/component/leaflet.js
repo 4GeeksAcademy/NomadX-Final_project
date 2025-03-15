@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "../../styles/leaflet.css"
+import "../../styles/leaflet.css";
 
 const MapComponent = ({ mapCenter, mapZoom }) => {
 
@@ -11,13 +11,12 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
     { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
   ]);
 
-
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
-  const [images, setImages] = useState({});
+  const [media, setMedia] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
-
+  const [favorites, setFavorites] = useState({});
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -26,7 +25,6 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
           const { latitude, longitude } = position.coords;
           const cityName = await getCityName(latitude, longitude);
           setUserLocation({ lat: latitude, lng: longitude, city: cityName });
-          setMapCenter([latitude, longitude]);
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -34,71 +32,61 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
       );
     }
   }, []);
+
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
       const data = await response.json();
-      return data.address?.city || data.address?.town || data.address?.village || "Ubicación desconocida";
+      console.log(data);
+      
+      return ({
+        city:data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
+        country: data.address.country || "Ubicación desconocida"
+      })
     } catch (error) {
       console.error("Error fetching city name:", error);
       return "Ubicación desconocida";
     }
   };
+  
   const handleMapClick = async (e) => {
-    const cityName = await getCityName(e.latlng.lat, e.latlng.lng);
+    const location = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
       id: points.length + 1,
       lat: e.latlng.lat,
       lng: e.latlng.lng,
-      city: cityName,
+      city: location.city ,
       text: "Descripción del nuevo punto",
+      country : location.country
     };
+    console.log(newPoint);
+    
     setPoints([...points, newPoint]);
-  };
-
-
-
-  const handleSearch = async () => {
-    try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`);
-      const data = await response.json();
-      if (data.length > 0) {
-        setMapCenter([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
-      }
-    } catch (error) {
-      console.error("Error buscando la ubicación:", error);
-    }
   };
 
   const handleDeletePoint = (id) => {
     setPoints(points.filter(point => point.id !== id));
   };
-  const handleImageUpload = (e, id) => {
+  
+  const toggleFavorite = (id) => {
+    setFavorites({ ...favorites, [id]: !favorites[id] });
+  };
+
+  const handleMediaUpload = (e, id) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setImages({ ...images, [id]: reader.result });
+        const fileType = file.type.split('/')[0];
+        setMedia({ ...media, [id]: { type: fileType, src: reader.result } });
       };
       reader.readAsDataURL(file);
     }
   };
-  const handleRatingChange = (id, rating) => {
-    setRatings({ ...ratings, [id]: rating });
-  };
-  const handleCommentChange = (id, text) => {
-    setCommentInputs({ ...commentInputs, [id]: text });
-  };
-  const handleAddComment = (id) => {
-    if (!commentInputs[id]) return;
-    setComments({ ...comments, [id]: [...(comments[id] || []), commentInputs[id]] });
-    setCommentInputs({ ...commentInputs, [id]: "" });
-  };
+
   return (
     <div>
-
       <Map center={mapCenter} zoom={mapZoom} style={{ height: "80vh", width: "100%" }} onClick={handleMapClick}>
-
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {userLocation && (
           <Marker position={[userLocation.lat, userLocation.lng]}>
@@ -109,58 +97,89 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
           </Marker>
         )}
         {points.map((point) => (
-          <Marker key={point.id} position={[point.lat, point.lng]}>
-            <Popup>
-              <div style={{ textAlign: "center" }}>
-                <h3>{point.city}</h3>
-                {images[point.id] ? (
-                  <img src={images[point.id]} alt={point.city} style={{ width: "100%", borderRadius: "5px" }} />
-                ) : (
-                  <p>No image uploaded</p>
-                )}
-                <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, point.id)} />
-                <textarea
-                  value={point.text}
-                  onChange={(e) => setPoints(points.map(p => p.id === point.id ? { ...p, text: e.target.value } : p))}
-                  style={{ width: "100%", height: "50px" }}
-                />
-                <p>
-                  Rating:
-                  {[1, 2, 3, 4, 5].map((num) => (
-                    <span
-                      key={num}
-                      style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
-                      onClick={() => handleRatingChange(point.id, num)}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </p>
-                <button onClick={() => handleDeletePoint(point.id)} style={{ marginTop: "10px", color: "red" }}>Eliminar</button>
-                <div>
-                  <input
-                    type="text"
-                    value={commentInputs[point.id] || ""}
-                    onChange={(e) => handleCommentChange(point.id, e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && handleAddComment(point.id)}
-                    placeholder="Escribe un comentario"
+          <>
+            {media[point.id] && media[point.id].type === "image" && (
+              <ImageOverlay
+                key={`image-${point.id}`}
+                url={media[point.id].src}
+                bounds={[[point.lat - 0.005, point.lng - 0.005], [point.lat + 0.005, point.lng + 0.005]]}
+              />
+            )}
+            <Marker key={point.id} position={[point.lat, point.lng]}>
+              <Popup>
+                <div style={{ textAlign: "center" }}>
+                  <h3>{point.city}</h3>
+                  {media[point.id] ? (
+                    media[point.id].type === "image" ? (
+                      <img src={media[point.id].src} alt={point.city} style={{ width: "100%", borderRadius: "5px" }} />
+                    ) : (
+                      <video controls style={{ width: "100%", borderRadius: "5px" }}>
+                        <source src={media[point.id].src} type="video/mp4" />
+                        Tu navegador no soporta el formato de video.
+                      </video>
+                    )
+                  ) : (
+                    <p>No media uploaded</p>
+                  )}
+                  <input type="file" accept="image/*,video/*" onChange={(e) => handleMediaUpload(e, point.id)} />
+                  <textarea
+                    value={point.text}
+                    onChange={(e) => setPoints(points.map(p => p.id === point.id ? { ...p, text: e.target.value } : p))}
+                    style={{ width: "100%", height: "50px" }}
                   />
-                  <button onClick={() => handleAddComment(point.id)}>Añadir</button>
-                  <ul>
-                    {(comments[point.id] || []).map((comment, index) => (
-                      <li key={index}>{comment}</li>
+                  <p>
+                    Rating:
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <span
+                        key={num}
+                        style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
+                        onClick={() => setRatings({ ...ratings, [point.id]: num })}
+                      >
+                        ★
+                      </span>
                     ))}
-                  </ul>
+                  </p>
+                  <button onClick={() => handleDeletePoint(point.id)} style={{ marginTop: "10px", color: "red" }}>Eliminar</button>
+                  <button onClick={() => toggleFavorite(point.id)} style={{ marginTop: "10px", color: favorites[point.id] ? "gold" : "black" }}>
+                    {favorites[point.id] ? "★ Favorito" : "☆ Agregar a Favoritos"}
+                  </button>
+                  <div>
+                    <input
+                      type="text"
+                      value={commentInputs[point.id] || ""}
+                      onChange={(e) => setCommentInputs({ ...commentInputs, [point.id]: e.target.value })}
+                      onKeyPress={(e) => e.key === "Enter" && setComments({ ...comments, [point.id]: [...(comments[point.id] || []), commentInputs[point.id]] })}
+                      placeholder="Escribe un comentario"
+                    />
+                    <button onClick={() => setComments({ ...comments, [point.id]: [...(comments[point.id] || []), commentInputs[point.id]] })}>Añadir</button>
+                    <ul>
+                      {(comments[point.id] || []).map((comment, index) => (
+                        <li key={index}>{comment}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </Popup>
-          </Marker>
+              </Popup>
+            </Marker>
+          </>
         ))}
       </Map>
     </div>
   );
 };
 export default MapComponent;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
