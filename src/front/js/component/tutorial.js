@@ -12,8 +12,8 @@ export const Tutorial = () => {
             content: "Get started your way! Create an account to unlock all features, or explore NomadX anonymously. Your privacy is always protected.",
         },
         {
-            title: "2: Browse Content by City",
-            content: "Explore travel stories by location! Discover posts from your current city on the homepage, or use the search bar to find content from anywhere in the world. Simply click to view the feed.",
+            title: "2: Browse Content by Country",
+            content: "Explore travel stories by location! Discover posts from your current country on the homepage, or use the search bar to find content from anywhere in the world. Simply click to view the feed.",
         },
         {
             title: "3. Like, Comment & Mark Posts as Favorites",
@@ -21,7 +21,7 @@ export const Tutorial = () => {
         },
         {
             title: "4. Profile Section",
-            content: "Your profile is your personal travel journal! View your posts organized by city and access your saved favorites.",
+            content: "Your profile is your personal travel journal! View your posts organized by country and access your saved favorites.",
         },
         {
             title: "5. Profile User Map",

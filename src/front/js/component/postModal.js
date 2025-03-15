@@ -1,10 +1,36 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+
+export const PostModal = ({ post }) => {
+    const { store, actions } = useContext(Context);
+    const [favoriteChange, setFavoriteChange ] = useState(false);
+
+    const handleSaveFavorite = () => {
+        actions.saveFavorite(post.id, () => setFavoriteChange(!favoriteChange));
+    }
+
+
+    return (
+        <div>
+            <button onClick={handleSaveFavorite}>Save Favorite</button>
+            <ProfileFeed onFavoriteChange = {favoriteChange}/>
+        </div>
+    );
+}
+
+
+/*
 
 // will remove this and add it to modal. Which will then need to go 
 // into store to continually update list of favs displayed in home map
 //  need to use global state. 
 
-export const postModal = () => {
+export const postModal = ({ post }) => {
+    const { store, actions } = useContext(Context);
+    const [favoriteChange, setFavoriteChange ] = useState(false);
+
+
+
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [error, setError] = useState(null);
@@ -54,3 +80,4 @@ export const postModal = () => {
         </div>
     );
 }
+    */

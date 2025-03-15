@@ -1,52 +1,47 @@
 .container-contact{
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    padding: 20px;
+    padding: 100px;
     background: linear-gradient(to right, black, #d0d0d0);
-    min-height: 100vh;
+    min-height: 80vh;
     color: whitesmoke;
 }
+.leftSection, .rightSection{
+    width: 48%;
+    box-sizing: border-box;
+}
+
 .leftSection{
-    width: 30%;
     padding: 30px;
 }
 
 .rightSection{
-    width: 65%;
     padding-right: 30px;
 }
 
 .leftSection h1{
-    font-size: 2.5em;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .leftSection p{
     margin-bottom: 5px;
 }
 .right-section h2{
-    font-size: 1.8em;
     margin-bottom: 20px;
 }
-form input,
-form textarea{
+.button-wrapper{
+    display: flex;
+    justify-content: center;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: #d0d0d0;
+    margin-top: 80px;
 }
-.messageBox{
-    height: 200px;
-    background-color: #d0d0d0;
+.contact-sections{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 160px;
+
 }
-form button{
-    background: linear-gradient(to right, #CD7F32, #A97142);
-    color: whitesmoke;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+
+
