@@ -1,9 +1,11 @@
 
 .faq-for-users{
     background: linear-gradient(to right, black, #d0d0d0);
-    min-height: 80vh;
+    min-height: 75px; 
     color: whitesmoke;
 }
+/* min height is causing issues? */
+
 .faq {
     padding-top: 30px;
     padding-bottom: 30px;

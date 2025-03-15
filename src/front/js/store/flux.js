@@ -1,51 +1,67 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},    
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+
+			favorites: [],
+			userPosts: [],
+			post: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-
-			getMessage: async () => {
+			
+			saveFavorite: async (postId, onFavoriteChange) => {
+				const token = localStorage.getItem('token');
+				if(!token) {
+					console.error('User not authenticated');
+					return;
+				}
 				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
-					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
-					return data;
-				}catch(error){
-					console.log("Error loading message from backend", error)
+					const response = await fetch(`${process.env.BACKEND_URL}/api/fav`,{
+						method: 'POST',
+						headers: {
+							'Content-type': 'application/json',
+							'Authorization': `Bearer ${token}`,
+						},
+						body: JSON.stringify({ post_id: postId})
+					});
+					if (response.ok){
+						const data = await response.json();
+						console.log(data.msg);
+						if(onFavoriteChange){
+							onFavoriteChange()
+						}
+					} else {
+						const errorData = await response.json();
+						console.error('Error saving favorite:', response.status)
+					}
+				} catch (error) {
+					console.error(error)
 				}
 			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
-				//reset the global store
-				setStore({ demo: demo });
+			fetchUserPosts: async () => {
+				const token = localStorage.getItem('token');
+				if(!token) {
+					console.error('User not authenticated');
+					return;
+				}
+				try{
+					const response = await fetch(`${process.env.BACKEND_URL}/api/user/post`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`,
+							'Content-Type': 'application/json',
+						},
+					});
+					if(response.ok) {
+						const posts = await response.json();
+						setStore({ userPosts: posts }) // this updates the store?
+					} else{
+						console.error('Error fetching users posts:', response.status);
+					}
+				} catch(error) {
+					console.error(error);
+				}
 			}
 		}
 	};

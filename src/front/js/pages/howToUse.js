@@ -29,11 +29,11 @@ export const HowToUse = () => {
                 <div className="col-md-3 mb-4">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">2. Browse Content by City</h5>
+                            <h5 className="card-title">2. Browse Content by Country</h5>
                             <br></br>
                             <p className="card-text">
                                 Explore travel stories by location! Discover posts from your current
-                                city on the homepage, or use the search bar to find content
+                                country on the homepage, or use the search bar to find content
                                 from anywhere in the world. Simply click to view the feed.
                             </p>
                             <Link to="/">
@@ -64,7 +64,7 @@ export const HowToUse = () => {
                             <br></br>
                             <p className="card-text">
                                 Your profile is your personal travel journal! View your posts
-                                organized by city and access your saved favorites.
+                                organized by country and access your saved favorites.
                             </p>
                             <Link to="/profile-feed">
                                 <button type="button" className="metallic-button">View My Profile👤</button>
