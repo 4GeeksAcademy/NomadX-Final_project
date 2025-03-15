@@ -53,6 +53,8 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
     };
 
     const handleImgChange = async (e) => {
+        console.log(e.target.files);
+        
         if (e.target.files.length) {
             setFile(e.target.files[0])
             try {
@@ -72,6 +74,8 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
         }
 
     };
+
+    
 
     const handlePost = async (e) => {
         e.preventDefault()

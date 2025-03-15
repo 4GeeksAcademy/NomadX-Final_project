@@ -39,8 +39,10 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     latitude = db.Column(db.String(200), unique=False, nullable=True)
     longitude = db.Column(db.String(200), unique=False, nullable=True)
-    city_name = db.Column(db.String(50), unique = True, nullable= True)
+    city_name = db.Column(db.String(150), unique = True, nullable= True)
+    rating = db.Column(db.String(50), unique = True, nullable= True)
     user=db.relationship("User", backref="posts", lazy=True)
+    country = db.Column(db.String(150), unique = True, nullable= True)
 
     def __repr__(self):
         return f'<Post {self.title}>'

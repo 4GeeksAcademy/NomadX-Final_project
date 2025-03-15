@@ -92,7 +92,9 @@ def update_posts_image():
         comment = request_body["comment"],
         latitude = request_body["latitude"], 
         longitude = request_body["longitude"], 
-        city_name = request_body["city_name"]
+        city_name = request_body["city_name"],
+        rating = request_body["rating"],
+        country = request_body["country"]
         )
     
     db.session.add(newPost)
@@ -157,3 +159,36 @@ def get_all_posts():
         return jsonify([post.serialize() for post in posts]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@api.route('/fav/<int:post_id>', methods=["DELETE"])
+@jwt_required()
+def delete_fav(post_id):
+    user_id = get_jwt_identity()
+    favorite = Favorite.query.filter_by(user_id=user_id, post_id=post_id).first()
+    
+    if not favorite:
+        return jsonify({"msg": "Favorito no encontrado"}), 404
+    
+    db.session.delete(favorite)
+    db.session.commit()
+    
+    return jsonify({"msg": "Favorito eliminado correctamente"}), 200
+
+@api.route('/post/<int:post_id>', methods=['DELETE'])
+@jwt_required()
+def delete_post(post_id):
+    user_id = get_jwt_identity()
+    post = Post.query.get(post_id)
+    
+    if not post:
+        return jsonify({"msg": "Post not found"}), 404
+    
+    if post.user_id != user_id:
+        return jsonify({"msg": "Unauthorized"}), 403
+    
+    db.session.delete(post)
+    db.session.commit()
+    
+    return jsonify({"msg": "Post deleted successfully"}), 200
+

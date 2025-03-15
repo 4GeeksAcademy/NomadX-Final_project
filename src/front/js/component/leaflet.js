@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
@@ -191,7 +192,12 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
       const data = await response.json();
-      return data.address?.city || data.address?.town || data.address?.village || "Ubicación desconocida";
+      console.log(data);
+      
+      return ({
+        city:data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
+        country: data.address.country || "Ubicación desconocida"
+      })
     } catch (error) {
       console.error("Error fetching city name:", error);
       return "Ubicación desconocida";
@@ -199,16 +205,24 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   };
   
   const handleMapClick = async (e) => {
-    const cityName = await getCityName(e.latlng.lat, e.latlng.lng);
+    const location = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
       id: Date.now(), // Usar timestamp para IDs únicos
       lat: e.latlng.lat,
       lng: e.latlng.lng,
-      city: cityName,
-      text: "Describe este lugar...",
+      city: location.city ,
+      text: "Descripción del nuevo punto",
+      country : location.country
     };
+    console.log(newPoint);
+    
     setPoints([...points, newPoint]);
   };
+
+  const handleDeletePoint = (id) => {
+    setPoints(points.filter(point => point.id !== id));
+  };
+
   
   const toggleFavorite = (id) => {
     setFavorites({ ...favorites, [id]: !favorites[id] });
@@ -225,6 +239,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       reader.readAsDataURL(file);
     }
   };
+
 
   const addComment = (id) => {
     if (commentInputs[id] && commentInputs[id].trim()) {
@@ -410,15 +425,20 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         {favorites[point.id] ? "★ Favorito" : "☆ Favorito"}
                       </button>
                     </div>
+
                   </div>
                 </div>
               </Popup>
             </Marker>
           </React.Fragment>
+          </>
+
         ))}
       </Map>
     </div>
   );
 };
 
+
 export default MapComponent;
+
