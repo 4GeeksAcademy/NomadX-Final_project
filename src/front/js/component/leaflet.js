@@ -1,10 +1,164 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../styles/leaflet.css";
 
-const MapComponent = ({ mapCenter, mapZoom }) => {
+// Estilos CSS integrados para el componente
+const mapStyles = {
+  container: {
+    position: "relative",
+    height: "100vh",
+    width: "100%",
+  },
+  map: {
+    height: "100%",
+    width: "100%",
+  },
+  popupContent: {
+    padding: "0",
+    borderRadius: "8px",
+    overflow: "hidden",
+    width: "300px",
+    maxWidth: "300px",
+  },
+  popupHeader: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    padding: "12px 15px",
+    borderBottom: "1px solid #eee",
+    backgroundColor: "#fff",
+  },
+  popupBody: {
+    padding: "15px",
+    backgroundColor: "#fff",
+  },
+  popupMedia: {
+    width: "100%",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    objectFit: "cover",
+  },
+  popupText: {
+    marginBottom: "15px",
+    fontSize: "14px",
+    lineHeight: "1.6",
+    color: "#333",
+  },
+  popupActions: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "15px",
+  },
+  popupButton: {
+    padding: "8px 15px",
+    border: "none",
+    borderRadius: "20px",
+    cursor: "pointer",
+    fontSize: "13px",
+    fontWeight: "500",
+  },
+  favoriteButton: {
+    backgroundColor: "#f9f9f9",
+    color: "#333",
+    border: "1px solid #ddd",
+  },
+  favoriteButtonActive: {
+    backgroundColor: "#ffcc00",
+    color: "#fff",
+    border: "1px solid #ffcc00",
+  },
+  uploadLabel: {
+    display: "inline-block",
+    padding: "8px 15px",
+    backgroundColor: "#f0f0f0",
+    color: "#333",
+    borderRadius: "20px",
+    cursor: "pointer",
+    fontSize: "13px",
+    textAlign: "center",
+    marginTop: "10px",
+    width: "100%",
+  },
+  ratings: {
+    display: "flex",
+    marginBottom: "15px",
+  },
+  star: {
+    fontSize: "20px",
+    cursor: "pointer",
+    margin: "0 2px",
+  },
+  commentSection: {
+    marginTop: "15px",
+  },
+  commentInput: {
+    width: "100%",
+    padding: "8px 10px",
+    borderRadius: "20px",
+    border: "1px solid #ddd",
+    marginBottom: "10px",
+  },
+  commentList: {
+    maxHeight: "120px",
+    overflowY: "auto",
+    padding: "0",
+    listStyle: "none",
+  },
+  commentItem: {
+    padding: "8px 0",
+    borderBottom: "1px solid #f5f5f5",
+    fontSize: "13px",
+  },
+  mediaContainer: {
+    position: "relative",
+    width: "100%",
+    height: "180px",
+    marginBottom: "15px",
+    overflow: "hidden",
+    borderRadius: "4px",
+  },
+  textareaStyle: {
+    width: "100%",
+    padding: "10px",
+    borderRadius: "4px",
+    border: "1px solid #ddd",
+    height: "80px",
+    resize: "none",
+    fontFamily: "inherit",
+    fontSize: "14px",
+  }
+};
 
+// Iconos personalizados para los marcadores
+const createCustomIcon = (isMedia = false, isFavorite = false) => {
+  return L.divIcon({
+    className: "",
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40],
+    html: `
+      <div style="
+        width: 40px;
+        height: 40px;
+        background-color: ${isMedia ? (isFavorite ? "#ffcc00" : "#ff5252") : "#3388ff"};
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+      ">
+        ${isMedia ? "📸" : "📍"}
+      </div>
+    `
+  });
+};
+
+const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
@@ -17,6 +171,7 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
   const [favorites, setFavorites] = useState({});
+  const mapRef = useRef(null);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -52,7 +207,7 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
   const handleMapClick = async (e) => {
     const location = await getCityName(e.latlng.lat, e.latlng.lng);
     const newPoint = {
-      id: points.length + 1,
+      id: Date.now(), // Usar timestamp para IDs únicos
       lat: e.latlng.lat,
       lng: e.latlng.lng,
       city: location.city ,
@@ -67,6 +222,7 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
   const handleDeletePoint = (id) => {
     setPoints(points.filter(point => point.id !== id));
   };
+
   
   const toggleFavorite = (id) => {
     setFavorites({ ...favorites, [id]: !favorites[id] });
@@ -84,108 +240,205 @@ const MapComponent = ({ mapCenter, mapZoom }) => {
     }
   };
 
+
+  const addComment = (id) => {
+    if (commentInputs[id] && commentInputs[id].trim()) {
+      setComments({ 
+        ...comments, 
+        [id]: [...(comments[id] || []), commentInputs[id]] 
+      });
+      setCommentInputs({ ...commentInputs, [id]: "" });
+    }
+  };
+
+  const handleKeyPress = (e, id) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      addComment(id);
+    }
+  };
+
   return (
-    <div>
-      <Map center={mapCenter} zoom={mapZoom} style={{ height: "80vh", width: "100%" }} onClick={handleMapClick}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <div style={mapStyles.container}>
+      <Map 
+        center={mapCenter} 
+        zoom={mapZoom} 
+        style={mapStyles.map}
+        ref={mapRef}
+        zoomControl={false}
+        attributionControl={false}
+        onClick={handleMapClick}
+      >
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+
         {userLocation && (
-          <Marker position={[userLocation.lat, userLocation.lng]}>
+          <Marker 
+            position={[userLocation.lat, userLocation.lng]}
+            icon={L.divIcon({
+              className: "",
+              iconSize: [40, 40],
+              iconAnchor: [20, 40],
+              popupAnchor: [0, -40],
+              html: `
+                <div style="
+                  width: 40px; 
+                  height: 40px; 
+                  background-color: #4CAF50; 
+                  border-radius: 50%; 
+                  border: 3px solid white;
+                  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  color: white;
+                  font-weight: bold;
+                ">
+                  😊
+                </div>
+              `
+            })}
+          >
             <Popup>
-              <h3>Tu ubicación</h3>
-              <p>{userLocation.city}</p>
+              <div style={mapStyles.popupContent}>
+                <div style={mapStyles.popupHeader}>Tu ubicación</div>
+                <div style={mapStyles.popupBody}>
+                  <p style={mapStyles.popupText}>{userLocation.city}</p>
+                </div>
+              </div>
             </Popup>
           </Marker>
         )}
+
         {points.map((point) => (
-          <>
+          <React.Fragment key={point.id}>
             {media[point.id] && media[point.id].type === "image" && (
               <ImageOverlay
-                key={`image-${point.id}`}
                 url={media[point.id].src}
-                bounds={[[point.lat - 0.005, point.lng - 0.005], [point.lat + 0.005, point.lng + 0.005]]}
+                bounds={[
+                  [point.lat - 0.005, point.lng - 0.005], 
+                  [point.lat + 0.005, point.lng + 0.005]
+                ]}
+                opacity={0.8}
+                zIndex={1000}
               />
             )}
-            <Marker key={point.id} position={[point.lat, point.lng]}>
-              <Popup>
-                <div style={{ textAlign: "center" }}>
-                  <h3>{point.city}</h3>
-                  {media[point.id] ? (
-                    media[point.id].type === "image" ? (
-                      <img src={media[point.id].src} alt={point.city} style={{ width: "100%", borderRadius: "5px" }} />
-                    ) : (
-                      <video controls style={{ width: "100%", borderRadius: "5px" }}>
-                        <source src={media[point.id].src} type="video/mp4" />
-                        Tu navegador no soporta el formato de video.
-                      </video>
-                    )
-                  ) : (
-                    <p>No media uploaded</p>
-                  )}
-                  <input type="file" accept="image/*,video/*" onChange={(e) => handleMediaUpload(e, point.id)} />
-                  <textarea
-                    value={point.text}
-                    onChange={(e) => setPoints(points.map(p => p.id === point.id ? { ...p, text: e.target.value } : p))}
-                    style={{ width: "100%", height: "50px" }}
-                  />
-                  <p>
-                    Rating:
-                    {[1, 2, 3, 4, 5].map((num) => (
-                      <span
-                        key={num}
-                        style={{ cursor: "pointer", color: num <= (ratings[point.id] || 0) ? "gold" : "gray", fontSize: "20px" }}
-                        onClick={() => setRatings({ ...ratings, [point.id]: num })}
-                      >
-                        ★
-                      </span>
-                    ))}
-                  </p>
-                  <button onClick={() => handleDeletePoint(point.id)} style={{ marginTop: "10px", color: "red" }}>Eliminar</button>
-                  <button onClick={() => toggleFavorite(point.id)} style={{ marginTop: "10px", color: favorites[point.id] ? "gold" : "black" }}>
-                    {favorites[point.id] ? "★ Favorito" : "☆ Agregar a Favoritos"}
-                  </button>
-                  <div>
-                    <input
-                      type="text"
-                      value={commentInputs[point.id] || ""}
-                      onChange={(e) => setCommentInputs({ ...commentInputs, [point.id]: e.target.value })}
-                      onKeyPress={(e) => e.key === "Enter" && setComments({ ...comments, [point.id]: [...(comments[point.id] || []), commentInputs[point.id]] })}
-                      placeholder="Escribe un comentario"
-                    />
-                    <button onClick={() => setComments({ ...comments, [point.id]: [...(comments[point.id] || []), commentInputs[point.id]] })}>Añadir</button>
-                    <ul>
-                      {(comments[point.id] || []).map((comment, index) => (
-                        <li key={index}>{comment}</li>
+            
+            <Marker 
+              position={[point.lat, point.lng]}
+              icon={createCustomIcon(!!media[point.id], favorites[point.id])}
+            >
+              <Popup minWidth={300} maxWidth={300}>
+                <div style={mapStyles.popupContent}>
+                  <div style={mapStyles.popupHeader}>{point.city}</div>
+                  <div style={mapStyles.popupBody}>
+                    {media[point.id] && (
+                      <div style={mapStyles.mediaContainer}>
+                        {media[point.id].type === "image" ? (
+                          <img 
+                            src={media[point.id].src} 
+                            alt={point.city} 
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }} 
+                          />
+                        ) : (
+                          <video 
+                            controls 
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          >
+                            <source src={media[point.id].src} type="video/mp4" />
+                            Tu navegador no soporta el formato de video.
+                          </video>
+                        )}
+                      </div>
+                    )}
+                    
+                    <textarea
+                      style={mapStyles.textareaStyle}
+                      value={point.text}
+                      onChange={(e) => setPoints(points.map(p => 
+                        p.id === point.id ? { ...p, text: e.target.value } : p
                       ))}
-                    </ul>
+                      placeholder="Describe este lugar..."
+                    />
+                    
+                    <div style={mapStyles.ratings}>
+                      {[1, 2, 3, 4, 5].map((num) => (
+                        <span
+                          key={num}
+                          style={{
+                            ...mapStyles.star,
+                            color: num <= (ratings[point.id] || 0) ? "#ffcc00" : "#ddd"
+                          }}
+                          onClick={() => setRatings({ ...ratings, [point.id]: num })}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <label style={mapStyles.uploadLabel}>
+                      {media[point.id] ? "Cambiar" : "Añadir"} foto/video
+                      <input 
+                        type="file" 
+                        accept="image/*,video/*" 
+                        onChange={(e) => handleMediaUpload(e, point.id)} 
+                        style={{ display: "none" }}
+                      />
+                    </label>
+                    
+                    <div style={mapStyles.commentSection}>
+                      <input
+                        type="text"
+                        style={mapStyles.commentInput}
+                        value={commentInputs[point.id] || ""}
+                        onChange={(e) => setCommentInputs({ ...commentInputs, [point.id]: e.target.value })}
+                        onKeyPress={(e) => handleKeyPress(e, point.id)}
+                        placeholder="Escribe un comentario"
+                      />
+                      {(comments[point.id] && comments[point.id].length > 0) && (
+                        <ul style={mapStyles.commentList}>
+                          {comments[point.id].map((comment, index) => (
+                            <li key={index} style={mapStyles.commentItem}>{comment}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                    
+                    <div style={mapStyles.popupActions}>
+                      <button 
+                        onClick={() => toggleFavorite(point.id)} 
+                        style={{
+                          ...mapStyles.popupButton,
+                          ...(favorites[point.id] ? mapStyles.favoriteButtonActive : mapStyles.favoriteButton)
+                        }}
+                      >
+                        {favorites[point.id] ? "★ Favorito" : "☆ Favorito"}
+                      </button>
+                    </div>
+
                   </div>
                 </div>
               </Popup>
             </Marker>
+          </React.Fragment>
           </>
+
         ))}
       </Map>
     </div>
   );
 };
+
+
 export default MapComponent;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
