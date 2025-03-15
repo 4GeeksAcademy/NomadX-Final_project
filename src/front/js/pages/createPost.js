@@ -53,6 +53,8 @@ export const CreatePost = () => {
     };
 
     const handleImgChange = async (e) => {
+        console.log(e.target.files);
+        
         if (e.target.files.length) {
             setFile(e.target.files[0])
             try {
