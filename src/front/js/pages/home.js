@@ -1,11 +1,12 @@
 import React from "react";
 import "../../styles/home.css";
-import { Modal } from "../component/modal";
 import MyMap from "../component/leaflet";
 import { Tutorial } from "../component/tutorial.js";
+import { point } from "leaflet";
+import PointModal from "../component/pointModal.js";
 
 
-export const Home = ({mapCenter, mapZoom}) => {
+export const Home = ({ mapCenter, mapZoom }) => {
 	//const { store, actions } = useContext(Context);
 
 	return (
@@ -13,7 +14,7 @@ export const Home = ({mapCenter, mapZoom}) => {
 		<div className="text-center homePage">
 			<div className="divForModals">
 				<MyMap mapCenter={mapCenter} mapZoom={mapZoom} />
-				<Tutorial/>
+				<Tutorial />
 			</div>
 		</div>
 	);
