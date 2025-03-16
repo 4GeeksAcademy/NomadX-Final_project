@@ -160,11 +160,9 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
 
 
 
-const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry}) => {
+const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry, setCity, setLatitude, setLongitude}) => {
   const [points, setPoints] = useState([
-    { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
-    { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
-    { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
+    
   ]);
 
   const [userLocation, setUserLocation] = useState(null);
@@ -175,7 +173,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry}
   const [favorites, setFavorites] = useState({});
   const mapRef = useRef(null);
   const location = useLocation();
-  console.log(location);
+  
   
 
 
@@ -193,7 +191,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry}
       );
     }
   }, []);
-
+// i think this is fetching the current location. how to change it so that it redirects map when clicking on home or profile usermap
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -217,13 +215,16 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry}
       lat: e.latlng.lat,
       lng: e.latlng.lng,
       city: location.city ,
-      text: "Descripción del nuevo punto",
+      //text: "Descripción del nuevo punto",
       country : location.country
     };
     console.log(newPoint);
     
     setPoints([...points, newPoint]);
     setCountry(location.country);
+    setCity(location.city);
+    setLatitude(e.latlng.lat);
+    setLongitude(e.latlng.lng);
   };
 
   const handleDeletePoint = (id) => {
