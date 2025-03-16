@@ -68,16 +68,3 @@
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Smaller shadow on click */
     transform: translateY(1px); /* Slight downward push on click */
 }
-.avatar-options {
-    display: flex; /* Make the container a flex container */
-    flex-direction: row; /* Align items in a row */
-}
-  
-.avatar-options img {
-    width: 50px; /* Set the width of each avatar */
-    height: 50px; /* Set the height of each avatar */
-    margin-right: 10px; /* Add some space between avatars */
-}
-.avatar-options img.selected {
-    border: 2px solid blue; /* Example: Add a blue border */
-}

@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 
 			favorites: [],
-			userPosts: [],
+			userPosts: [], // this is for each individual user on their profile feed.
 			post: [],
 		},
 		actions: {

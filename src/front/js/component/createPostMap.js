@@ -1,16 +1,15 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import "../../styles/leaflet.css";
+import "../../styles/createPostMap.css";
 import { useLocation } from "react-router-dom";
 
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
     position: "relative",
-    height: "81vh",
+    height: "41vh",
     width: "100%",
   },
   map: {
@@ -161,7 +160,7 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
 
 
 
-const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
+const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry}) => {
   const [points, setPoints] = useState([
     { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
     { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
@@ -224,6 +223,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     console.log(newPoint);
     
     setPoints([...points, newPoint]);
+    setCountry(location.country);
   };
 
   const handleDeletePoint = (id) => {
@@ -309,14 +309,14 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               `
             })}
           >
-            <Popup>
+            {/* <Popup>
               <div style={mapStyles.popupContent}>
                 <div style={mapStyles.popupHeader}>Tu ubicación</div>
                 <div style={mapStyles.popupBody}>
                   <p style={mapStyles.popupText}>{userLocation.city}</p>
                 </div>
               </div>
-            </Popup>
+            </Popup> */}
           </Marker>
         )}
 
@@ -338,7 +338,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               position={[point.lat, point.lng]}
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >
-              <Popup minWidth={300} maxWidth={300}>
+              {/* <Popup minWidth={300} maxWidth={300}>
                 <div style={mapStyles.popupContent}>
                   <div style={mapStyles.popupHeader}>{point.city}</div>
                   <div style={mapStyles.popupBody}>
@@ -436,7 +436,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
 
                   </div>
                 </div>
-              </Popup>
+              </Popup> */}
             </Marker>
           </React.Fragment>
 

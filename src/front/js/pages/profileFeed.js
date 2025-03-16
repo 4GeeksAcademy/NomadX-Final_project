@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/profileFeed.css"
-import { PostModal } from "../component/postModal"; // does this need to be here?
-
 
 export const ProfileFeed = ({ onFavoriteChange }) => {
     const { store, actions } = useContext(Context);
@@ -12,7 +10,7 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     console.log(postsByCountry);
-    
+
 
     const fetchFavorites = async () => {
         try {
@@ -42,7 +40,7 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
     }, []);
 
     // code for fetching posts by COUNTRY --- code below needs to be changed to country and not city once model is changed. 
-   
+
     useEffect(() => {
         if (store.userPosts.length > 0) {
             // Organize posts by country (using city_name for now)
@@ -61,8 +59,8 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
         }
     }, [store.userPosts]);
 
-        if (loading) return <p>Loading posts...</p>;
-        if (error) return <p>Error: {error}</p>;
+    if (loading) return <p>Loading posts...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="profileFeed">
@@ -106,6 +104,11 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className="button-wrapper">
+                <Link to="/profile-user-map">
+                    <button className="metallic-button" type="button">My Map</button>
+                </Link>
             </div>
         </div>
 

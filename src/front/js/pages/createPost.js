@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/createPost.css";
 import "../../styles/index.css";
-import MyMap from "../component/leaflet";
+import MyMap from "../component/createPostMap";
+import Select from "react-select"
 
-export const CreatePost = ({mapCenter, mapZoom}) => {
+export const CreatePost = ({ mapCenter, mapZoom }) => {
     //const { store, actions } = useContext(Context);
     const [newEntry, setNewEntry] = useState("");
     const [rating, setRating] = useState(0);
@@ -11,6 +12,7 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
     const [fileUrl, setFileUrl] = useState("");
     const [title, setTitle] = useState("");
     const [selectedTopic, setSelectedTopic] = useState("");
+
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
         "Accomodation 🛌💤", "Goods & Services 🛍️💇",
@@ -29,7 +31,9 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
         "LGBTQIA2S+ Friendly 🏳️‍🌈🏳️‍⚧️", "Solo-Female Travel Friendly 🚶‍♀️✅",
         "The Holidays Abroad 🎄🔔",
     ]);
-
+    const [country, setCountry] = useState("");
+    console.log(country);
+    
     useEffect(() => {
         setTopics(shuffledTopics(topics));
     }, []);
@@ -54,7 +58,7 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
 
     const handleImgChange = async (e) => {
         console.log(e.target.files);
-        
+
         if (e.target.files.length) {
             setFile(e.target.files[0])
             try {
@@ -75,7 +79,6 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
 
     };
 
-    
 
     const handlePost = async (e) => {
         e.preventDefault()
@@ -92,10 +95,10 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
                     title: title,
                     comment: newEntry,
                     topic: selectedTopic,
-                    rating: rating,
-                    latitude : "",
-                    longitude : "",
-                    city_name : ""
+                    rating: "",
+                    latitude: "",
+                    longitude: "",
+                    city_name: ""
 
 
                 }),
@@ -148,6 +151,8 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
                             />
                         )}
                     </div>
+                    <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setCountry={setCountry} /></div>
+
                     <div className="ratingFilePostRow">
                         <div className="rating">
                             <label> Rating:</label>
@@ -175,7 +180,8 @@ export const CreatePost = ({mapCenter, mapZoom}) => {
                     </div>
                 </main>
             </div>
-            <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} /></div>
+            
         </div >
     );
 };
+

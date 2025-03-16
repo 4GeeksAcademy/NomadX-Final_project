@@ -1,7 +1,6 @@
 import React from "react";
 import logo from "../../img/logo.jpeg";
 import { Link } from "react-router-dom";
-import '@fortawesome/fontawesome-svg-core/styles.css';
 import "../../styles/navbar.css";
 import "../../styles/index.css";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +54,7 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 					options={countries}
 					value={selectedCountry}
 					onChange={handleSelectCountry}
-					placeholder="Search Posts by City Here"
+					placeholder="Search Posts by Country Here"
 					isSearchable={true}
 					isClearable={true}
 					classNamePrefix="select"
@@ -80,10 +79,12 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 						<Link to="/profile-feed" className="dropdown-item">
 							Profile
 						</Link>
+						<Link to="/profile-user-map" className="dropdown-item">
+							User Map
+						</Link>
 
 						<Link to="/instructions" className="dropdown-item">
 							User Guide
-
 						</Link>
 						<Link to="/" className="dropdown-item" onClick={logout}>
 							Logout
