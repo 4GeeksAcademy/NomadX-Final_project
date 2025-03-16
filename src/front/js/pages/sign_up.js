@@ -3,12 +3,6 @@ import { Context } from "../store/appContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/signUp.css";
-import "../../styles/index.css";
-import avatar1 from "../../img/avatar1.jpg";
-import avatar2 from "../../img/avatar2.jpg";
-import avatar3 from "../../img/avatar3.jpg";
-import avatar4 from "../../img/avatar4.jpg";
-import avatar5 from "../../img/avatar5.jpg";
 
 
 export const Sign_up = () => {
@@ -19,13 +13,6 @@ export const Sign_up = () => {
 	const [selectedAvatar, setSelectedAvatar] = useState(null);
 	const navigate = useNavigate()
 
-    const avatars = [
-        avatar1,
-        avatar2,
-        avatar3,
-        avatar4,
-        avatar5,
-    ];
 
 	const handdlesubmmit = async (e) => {
 		e.preventDefault()
@@ -37,7 +24,7 @@ export const Sign_up = () => {
 				email: email,
 				nickname: nickname,
 				password: password,
-				avatar: selectedAvatar
+
 			}),
 			headers: {
 				"Content-Type": "application/json"
@@ -65,18 +52,6 @@ export const Sign_up = () => {
 					<input type="nickname" value={nickname} onChange={e => setNickname(e.target.value)} className="form-control me-2" id="exampleInputNickname1" />
 					<label for="exampleInputPassword1" className="form-label">Set a Password</label>
 					<input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-control me-2" id="exampleInputPassword1" />
-					<div className="avatar-options">
-						<h4>Choose an Avatar:</h4>
-						{avatars.map((avatar, index) => (
-							<img
-								key={index}
-								src={avatar}
-								alt={`Avatar ${index + 1}`}
-								onClick={() => setSelectedAvatar(avatar)}
-								className={selectedAvatar === avatar ? "selected" : ""}
-							/>
-						))}
-					</div>
 					<button type="submit" className="metallic-button">Sign up</button>
 				</form>
 			</div>

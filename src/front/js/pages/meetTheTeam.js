@@ -19,8 +19,8 @@ export const MeetTheTeam = () => {
                     <p className="coFounder"><i>  Co-Founder</i></p>
                     <br></br>
                     <p>Alynne brings NomadX to life with her meticulous frontend
-                        development and design skills. She's a true perfectionist,
-                        ensuring every detail is just right. For Alynne, travel is
+                        development and design skills. She has a keen eye for precision
+                        ensuring the vision becomes reality. For Alynne, travel is
                         more than just seeing new places; it's about connecting
                         with people and expanding her understanding of the world.</p>
                 </div>
