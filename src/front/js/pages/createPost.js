@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../../styles/createPost.css";
 import "../../styles/index.css";
 import MyMap from "../component/createPostMap";
@@ -31,9 +32,14 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         "LGBTQIA2S+ Friendly 🏳️‍🌈🏳️‍⚧️", "Solo-Female Travel Friendly 🚶‍♀️✅",
         "The Holidays Abroad 🎄🔔",
     ]);
+
     const [country, setCountry] = useState("");
-    console.log(country);
-    
+    const [city, setCity] = useState("");
+    const [latitude, setLatitude] = useState("");
+    const [longitude, setLongitude] = useState("");
+ 
+    const navigate = useNavigate();
+
     useEffect(() => {
         setTopics(shuffledTopics(topics));
     }, []);
@@ -82,9 +88,17 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
 
     const handlePost = async (e) => {
         e.preventDefault()
-        if (!fileUrl) {
-            alert("image/video is required");
-            return
+        if(!newEntry.trim()){
+            alert("Comment is required");
+            return;
+        }
+        if(!selectedTopic){
+            alert("Please select a topic");
+            return;
+        }
+        if(!city || !country){
+            alert("Please select a location on the map");
+            return;
         }
         try {
 
@@ -94,13 +108,11 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                     image_url: fileUrl,
                     title: selectedTopic,
                     comment: newEntry,
-                    rating: rating,
-                    latitude: "",
-                    longitude: "",
-                    city_name: "",
-                    country :""
-
-
+                    rating: rating, 
+                    latitude: latitude,
+                    longitude: longitude,
+                    city_name: city,
+                    country: country
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -109,6 +121,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
             })
             const data = await response.json()
             console.log(data);
+
+            alert("Post created successfully!"); 
+            navigate("/profile-feed"); 
 
         } catch (error) {
             console.error("Error creating post:", error)
@@ -122,7 +137,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 <aside className="writingTopics">
                     <h5><u>Travel Categories</u></h5>
                     <div className="categoriesAndButtons">
-                        {topics.slice(0, 7).map((topic, index) => (
+                        {topics.slice(0, 10).map((topic, index) => (
                             <button
                                 className={`topic-buttons ${selectedTopic === topic ? 'active' : ''}`}
                                 key={index}
@@ -135,13 +150,14 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 </aside>
                 <main className="writingArea">
                     <div className="tripLocation">
-                        <form className="d-flex mx-auto">
-                            <input className="tripLocTextBox me-2" onChange={e => setTitle(e.target.value)} value={title} type="text" placeholder="Where are you writing from today?" aria-label="Search" />
-                        </form>
                     </div>
                     <div className="entry-container">
                         <div className="entry">
-                            <textarea id="entry" placeholder="Choose a topic from the column on the left and jot down your thoughts today 🙂" value={newEntry} onChange={(e) => setNewEntry(e.target.value)}></textarea>
+                            <textarea id="entry" 
+                            placeholder="Choose a topic from the column 
+                            on the left and jot down your thoughts today 🙂" 
+                            value={newEntry} 
+                            onChange={(e) => setNewEntry(e.target.value)}></textarea>
                         </div>
                         {file && (
                             <img
@@ -151,7 +167,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                             />
                         )}
                     </div>
-                    <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setCountry={setCountry} /></div>
+                    <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setCountry={setCountry} setCity={setCity} setLatitude={setLatitude} setLongitude={setLongitude} /></div>
 
                     <div className="ratingFilePostRow">
                         <div className="rating">
