@@ -160,21 +160,17 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
 
 
 
-const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry, setCity, setLatitude, setLongitude}) => {
+const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setSelectedPoint }) => {
   const [points, setPoints] = useState([
-    
+
   ]);
 
   const [userLocation, setUserLocation] = useState(null);
-  const [ratings, setRatings] = useState({});
   const [media, setMedia] = useState({});
   const [comments, setComments] = useState({});
   const [commentInputs, setCommentInputs] = useState({});
   const [favorites, setFavorites] = useState({});
   const mapRef = useRef(null);
-  const location = useLocation();
-  
-  
 
 
   useEffect(() => {
@@ -196,10 +192,9 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry,
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
       const data = await response.json();
-      console.log(data);
-      
+
       return ({
-        city:data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
+        city: data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
         country: data.address.country || "Ubicación desconocida"
       })
     } catch (error) {
@@ -207,34 +202,22 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry,
       return "Ubicación desconocida";
     }
   };
-  
+
   const handleMapClick = async (e) => {
+    setPoints([{ lat: e.latlng.lat, lng: e.latlng.lng }]);
     const location = await getCityName(e.latlng.lat, e.latlng.lng);
+   
     const newPoint = {
-      id: Date.now(), // Usar timestamp para IDs únicos
-      lat: e.latlng.lat,
-      lng: e.latlng.lng,
-      city: location.city ,
-      //text: "Descripción del nuevo punto",
-      country : location.country
+      latitude: e.latlng.lat,
+      longitude: e.latlng.lng,
+      city: location.city,
+      country: location.country
     };
-    console.log(newPoint);
-    
-    setPoints([...points, newPoint]);
-    setCountry(location.country);
-    setCity(location.city);
-    setLatitude(e.latlng.lat);
-    setLongitude(e.latlng.lng);
+
+
+    setSelectedPoint(newPoint);
   };
 
-  const handleDeletePoint = (id) => {
-    setPoints(points.filter(point => point.id !== id));
-  };
-
-  
-  const toggleFavorite = (id) => {
-    setFavorites({ ...favorites, [id]: !favorites[id] });
-  };
 
   const handleMediaUpload = (e, id) => {
     const file = e.target.files[0];
@@ -251,27 +234,21 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry,
 
   const addComment = (id) => {
     if (commentInputs[id] && commentInputs[id].trim()) {
-      setComments({ 
-        ...comments, 
-        [id]: [...(comments[id] || []), commentInputs[id]] 
+      setComments({
+        ...comments,
+        [id]: [...(comments[id] || []), commentInputs[id]]
       });
       setCommentInputs({ ...commentInputs, [id]: "" });
     }
   };
 
-  const handleKeyPress = (e, id) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      addComment(id);
-    }
-  };
 
 
   return (
     <div style={mapStyles.container}>
-      <Map 
-        center={mapCenter} 
-        zoom={mapZoom} 
+      <Map
+        center={mapCenter}
+        zoom={mapZoom}
         style={mapStyles.map}
         ref={mapRef}
         zoomControl={false}
@@ -284,7 +261,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry,
         />
 
         {userLocation && (
-          <Marker 
+          <Marker
             position={[userLocation.lat, userLocation.lng]}
             icon={L.divIcon({
               className: "",
@@ -310,32 +287,24 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setCountry,
               `
             })}
           >
-            {/* <Popup>
-              <div style={mapStyles.popupContent}>
-                <div style={mapStyles.popupHeader}>Tu ubicación</div>
-                <div style={mapStyles.popupBody}>
-                  <p style={mapStyles.popupText}>{userLocation.city}</p>
-                </div>
-              </div>
-            </Popup> */}
           </Marker>
         )}
 
-        {points.map((point) => (
-          <React.Fragment key={point.id}>
+        {points.map((point,index) => (
+          <React.Fragment key={index}>
             {media[point.id] && media[point.id].type === "image" && (
               <ImageOverlay
                 url={media[point.id].src}
                 bounds={[
-                  [point.lat - 0.005, point.lng - 0.005], 
+                  [point.lat - 0.005, point.lng - 0.005],
                   [point.lat + 0.005, point.lng + 0.005]
                 ]}
                 opacity={0.8}
                 zIndex={1000}
               />
             )}
-            
-            <Marker 
+
+            <Marker
               position={[point.lat, point.lng]}
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >

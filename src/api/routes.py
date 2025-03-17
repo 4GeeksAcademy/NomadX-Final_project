@@ -49,7 +49,7 @@ def create_user():
 
 @api.route('/sign_in', methods=['POST'])
 def generate_token():
-
+    print("estoyqui" )
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
