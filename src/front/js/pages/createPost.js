@@ -73,13 +73,17 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 const response = await fetch(`${process.env.BACKEND_URL}/api/img`, {
                     method: "POST",
                     body: form
-                })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json()
                 setFileUrl(data.img)
-                //  const response = await fetch 
-                // need to connect this to the routes in the backend.
             } catch (error) {
-
+                console.error("Error uploading image:", error);
+                alert("Failed to upload image. Please try again.");
+                setFileUrl(null);
+                setFile(null);
             }
         }
 

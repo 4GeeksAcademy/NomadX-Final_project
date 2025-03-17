@@ -9,8 +9,6 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
     const [postsByCountry, setPostsByCountry] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log(postsByCountry);
-
 
     const fetchFavorites = async () => {
         try {
@@ -57,7 +55,7 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
         } else if (store.userPosts.length === 0 && loading === true) {
             actions.fetchUserPosts();
         }
-    }, [store.userPosts]);
+    }, []);
 
     if (loading) return <p>Loading posts...</p>;
     if (error) return <p>Error: {error}</p>;
