@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { store, actions } = useContext(Context);
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault()
         const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`,{
@@ -27,7 +27,7 @@ export const Login = () => {
         console.log(data);
         if (response.ok) {
             localStorage.setItem("token", data.access_token)
-            navigate("/Profile-Feed")
+            navigate("/profile-feed")
         }
     }
     return (
