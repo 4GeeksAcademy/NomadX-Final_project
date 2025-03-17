@@ -5,20 +5,42 @@ import "../../styles/navbar.css";
 import "../../styles/index.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export const Navbar = ({ setMapCenter, setMapZoom }) => {
 
 	const navigate = useNavigate()
 	const [countries, setCountries] = React.useState([]);
 	const [selectedCountry, setSelectedCountry] = React.useState(null);
+	const [user, setUser] = useState();
 
+
+	useEffect(() => {
+        const token = localStorage.getItem("access_token");
+        if (token) {
+            fetch("/profile", {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.nickname) {
+                        setUser(data);
+                    }
+                })
+                .catch(() => localStorage.removeItem("access_token"));
+        }
+    }, []);
 
 
 	const logout = () => {
 		localStorage.removeItem("access_token");
 
 		navigate("/login");
-	}
+	};
 	const handleSelectCountry = (selectedOption) => {
 		setSelectedCountry(selectedOption);
 		setMapCenter([selectedOption.value.lat, selectedOption.value.lon]);
@@ -61,9 +83,13 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 					className="form-control me-2 search-bar"
 				/>}
 
-				<Link to="/login">
-					<button type="button" className="metallic-button">Login!</button>
-				</Link>
+				 {user ? (
+                <h6>Hi! {user.nickname}</h6>
+            ) : (
+                <Link to="/login">
+                    <button type="button" className="metallic-button">Login!</button>
+                </Link>
+            )}
 				<Link to="/create-post">
 					<button type="button" className="metallic-button">Post</button>
 				</Link>

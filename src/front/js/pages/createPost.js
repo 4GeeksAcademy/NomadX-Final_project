@@ -13,6 +13,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
     const [fileUrl, setFileUrl] = useState("");
     const [selectedTopic, setSelectedTopic] = useState("");
     const [selectedPoint, setSelectedPoint] = useState({ latitude: 0, longitude: 0, city: "", country: "" })
+    const navigate = useNavigate()
 
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
@@ -103,9 +104,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
 
                     title: selectedTopic,
                     comment: description,
-                    rating: rating.toString(),
-                    latitude: selectedPoint.latitude.toString(),
-                    longitude: selectedPoint.longitude.toString(),
+                    rating: rating,
+                    latitude: selectedPoint.latitude,
+                    longitude: selectedPoint.longitude,
                     city_name: selectedPoint.city, 
                     country: selectedPoint.country
 
@@ -125,7 +126,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         } catch (error) {
             console.error("Error creating post:", error)
         }
+        
     };
+console.log(selectedPoint);
 
     return (
         <div className="createPostView">

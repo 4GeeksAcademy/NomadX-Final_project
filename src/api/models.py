@@ -37,12 +37,12 @@ class Post(db.Model):
     comment = db.Column(db.Text, unique=False, nullable=False)
     image_url = db.Column(db.String(1000), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    latitude = db.Column(db.String(200), unique=False, nullable=True)
-    longitude = db.Column(db.String(200), unique=False, nullable=True)
-    city_name = db.Column(db.String(150), unique = True, nullable= True)
-    rating = db.Column(db.String(50), unique = True, nullable= True)
+    latitude = db.Column(db.Float, unique=False, nullable=True)
+    longitude = db.Column(db.Float, unique=False, nullable=True)
+    city_name = db.Column(db.String(150), unique = False, nullable= True)
+    rating = db.Column(db.Integer, unique = True, nullable= True)
     user=db.relationship("User", backref="posts", lazy=True)
-    country = db.Column(db.String(150), unique = True, nullable= True)
+    country = db.Column(db.String(150), unique = False, nullable= True)
 
     def __repr__(self):
         return f'<Post {self.title}>'
