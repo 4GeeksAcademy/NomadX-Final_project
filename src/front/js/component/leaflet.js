@@ -171,10 +171,12 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
   });
 };
 
+
 const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const [points, setPoints] = useState([
     //useeffect donde hace el request a la api, para que traiga el post
   ]);
+
 
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
@@ -199,9 +201,11 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
             country: locationInfo.country 
           });
           
+
           // Centrar el mapa en la ubicación del usuario
           if (mapRef.current && mapRef.current.leafletElement) {
             mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
+
           }
         },
         (error) => {
@@ -429,7 +433,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                       {media[point.id] ? "Cambiar" : "Añadir"} foto/video
                       <input 
                         type="file" 
-                        accept="image/*,video/*" 
+                        accept="image/,video/" 
                         onChange={(e) => handleMediaUpload(e, point.id)} 
                         style={{ display: "none" }}
                       />
@@ -477,3 +481,4 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
 };
 
 export default MapComponent;
+

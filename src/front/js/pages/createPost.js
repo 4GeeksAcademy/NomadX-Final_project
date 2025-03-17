@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "../../styles/createPost.css";
 import "../../styles/index.css";
 import MyMap from "../component/createPostMap";
@@ -31,6 +32,8 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         "LGBTQIA2S+ Friendly 🏳️‍🌈🏳️‍⚧️", "Solo-Female Travel Friendly 🚶‍♀️✅",
         "The Holidays Abroad 🎄🔔",
     ]);
+
+
 
     useEffect(() => {
         setTopics(shuffledTopics(topics));
@@ -81,16 +84,19 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
 
     const handlePost = async (e) => {
         e.preventDefault()
+
         /*  if (!fileUrl) {
               alert("image/video is required");
               return
           }*/
+
         try {
             console.log("creandoPost")
             const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
                 method: "POST",
                 body: JSON.stringify({
                     image_url: fileUrl,
+
                     title: selectedTopic,
                     comment: description,
                     rating: rating.toString(),
@@ -98,6 +104,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                     longitude: selectedPoint.longitude.toString(),
                     city_name: selectedPoint.city, 
                     country: selectedPoint.country
+
 
                 }),
                 headers: {
@@ -107,6 +114,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
             })
             const data = await response.json()
             console.log(data);
+
+            alert("Post created successfully!"); 
+            navigate("/profile-feed"); 
 
         } catch (error) {
             console.error("Error creating post:", error)
@@ -120,7 +130,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 <aside className="writingTopics">
                     <h5><u>Travel Categories</u></h5>
                     <div className="categoriesAndButtons">
-                        {topics.slice(0, 7).map((topic, index) => (
+                        {topics.slice(0, 10).map((topic, index) => (
                             <button
                                 className={`topic-buttons ${selectedTopic === topic ? 'active' : ''}`}
                                 key={index}
@@ -132,9 +142,11 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                     </div>
                 </aside>
                 <main className="writingArea">
+
                     <div className="entry-container">
                         <div className="entry">
                             <textarea id="entry" placeholder="Choose a topic from the column on the left and jot down your thoughts today 🙂" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+
                         </div>
                         {file && (
                             <img
@@ -144,7 +156,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                             />
                         )}
                     </div>
+
                     <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setSelectedPoint={setSelectedPoint} /></div>
+
                     <div className="ratingFilePostRow">
                         <div className="rating">
                             <label> Rating:</label>

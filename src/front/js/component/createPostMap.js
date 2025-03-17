@@ -162,6 +162,7 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
 
 const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setSelectedPoint }) => {
   const [points, setPoints] = useState([
+
   ]);
 
   const [userLocation, setUserLocation] = useState(null);
@@ -170,6 +171,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setSelected
   const [commentInputs, setCommentInputs] = useState({});
   const [favorites, setFavorites] = useState({});
   const mapRef = useRef(null);
+
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -185,7 +187,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setSelected
       );
     }
   }, []);
-
+// i think this is fetching the current location. how to change it so that it redirects map when clicking on home or profile usermap
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -211,6 +213,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4, setSelected
       city: location.city,
       country: location.country
     };
+
 
     setSelectedPoint(newPoint);
   };
