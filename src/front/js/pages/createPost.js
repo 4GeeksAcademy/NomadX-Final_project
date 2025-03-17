@@ -92,13 +92,13 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 method: "POST",
                 body: JSON.stringify({
                     image_url: fileUrl,
-                    title: title,
+                    title: selectedTopic,
                     comment: newEntry,
-                    topic: selectedTopic,
-                    rating: "",
+                    rating: rating,
                     latitude: "",
                     longitude: "",
-                    city_name: ""
+                    city_name: "",
+                    country :""
 
 
                 }),
