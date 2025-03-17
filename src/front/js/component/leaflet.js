@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
@@ -132,8 +131,21 @@ const mapStyles = {
   }
 };
 
-// Iconos personalizados para los marcadores
+// Iconos personalizados para los marcadores - versión mejorada
 const createCustomIcon = (isMedia = false, isFavorite = false) => {
+  let color = "#3388ff"; // Color normal
+  let icon = "📍"; // Icono normal
+  
+  // Si tiene media
+  if (isMedia) {
+    icon = "📸";
+    color = isFavorite ? "#ffcc00" : "#ff5252"; // Dorado si es favorito, rojo si solo tiene media
+  } 
+  // Si no tiene media pero es favorito
+  else if (isFavorite) {
+    color = "#ffcc00"; // Dorado para favoritos
+  }
+  
   return L.divIcon({
     className: "",
     iconSize: [40, 40],
@@ -143,7 +155,7 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
       <div style="
         width: 40px;
         height: 40px;
-        background-color: ${isMedia ? (isFavorite ? "#ffcc00" : "#ff5252") : "#3388ff"};
+        background-color: ${color};
         border-radius: 50%;
         border: 3px solid white;
         box-shadow: 0 3px 6px rgba(0,0,0,0.3);
@@ -153,19 +165,15 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
         color: white;
         font-weight: bold;
       ">
-        ${isMedia ? "📸" : "📍"}
+        ${icon}
       </div>
     `
   });
 };
 
-
-
 const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const [points, setPoints] = useState([
-    { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
-    { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
-    { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
+    //useeffect donde hace el request a la api, para que traiga el post
   ]);
 
   const [userLocation, setUserLocation] = useState(null);
@@ -178,18 +186,31 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const location = useLocation();
   console.log(location);
   
-
-
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          const cityName = await getCityName(latitude, longitude);
-          setUserLocation({ lat: latitude, lng: longitude, city: cityName });
+          const locationInfo = await getCityName(latitude, longitude);
+          setUserLocation({ 
+            lat: latitude, 
+            lng: longitude, 
+            city: locationInfo.city,
+            country: locationInfo.country 
+          });
+          
+          // Centrar el mapa en la ubicación del usuario
+          if (mapRef.current && mapRef.current.leafletElement) {
+            mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
+          }
         },
         (error) => {
           console.error("Error getting location:", error);
+        },
+        { 
+          enableHighAccuracy: true, 
+          timeout: 5000,
+          maximumAge: 0
         }
       );
     }
@@ -202,12 +223,15 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       console.log(data);
       
       return ({
-        city:data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
+        city: data.address?.city || data.address?.town || data.address?.village || data.address?.state || "Ubicación desconocida",
         country: data.address.country || "Ubicación desconocida"
-      })
+      });
     } catch (error) {
       console.error("Error fetching city name:", error);
-      return "Ubicación desconocida";
+      return {
+        city: "Ubicación desconocida",
+        country: "Ubicación desconocida"
+      };
     }
   };
   
@@ -217,9 +241,9 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       id: Date.now(), // Usar timestamp para IDs únicos
       lat: e.latlng.lat,
       lng: e.latlng.lng,
-      city: location.city ,
+      city: location.city,
       text: "Descripción del nuevo punto",
-      country : location.country
+      country: location.country
     };
     console.log(newPoint);
     
@@ -230,7 +254,6 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     setPoints(points.filter(point => point.id !== id));
   };
 
-  
   const toggleFavorite = (id) => {
     setFavorites({ ...favorites, [id]: !favorites[id] });
   };
@@ -246,7 +269,6 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       reader.readAsDataURL(file);
     }
   };
-
 
   const addComment = (id) => {
     if (commentInputs[id] && commentInputs[id].trim()) {
@@ -264,7 +286,6 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       addComment(id);
     }
   };
-
 
   return (
     <div style={mapStyles.container}>
@@ -303,9 +324,17 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                   align-items: center;
                   color: white;
                   font-weight: bold;
+                  animation: pulse 2s infinite;
                 ">
                   😊
                 </div>
+                <style>
+                  @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                  }
+                </style>
               `
             })}
           >
@@ -313,7 +342,9 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               <div style={mapStyles.popupContent}>
                 <div style={mapStyles.popupHeader}>Tu ubicación</div>
                 <div style={mapStyles.popupBody}>
-                  <p style={mapStyles.popupText}>{userLocation.city}</p>
+                  <p style={mapStyles.popupText}>
+                    {userLocation.city}, {userLocation.country}
+                  </p>
                 </div>
               </div>
             </Popup>
@@ -439,13 +470,10 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               </Popup>
             </Marker>
           </React.Fragment>
-
         ))}
       </Map>
     </div>
   );
 };
 
-
 export default MapComponent;
-
