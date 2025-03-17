@@ -30,6 +30,7 @@ const injectContext = PassedComponent => {
 			 **/
 			state.actions.fetchUserPosts();
 			state.actions.saveFavorite(); // dont think this one goes here. 
+			state.actions.fetchAllPosts();
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

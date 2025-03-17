@@ -14,7 +14,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
     const [selectedTopic, setSelectedTopic] = useState("");
     const [selectedPoint, setSelectedPoint] = useState({ latitude: 0, longitude: 0, city: "", country: "" })
     const navigate = useNavigate()
-
+    
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
         "Accomodation 🛌💤", "Goods & Services 🛍️💇",
@@ -124,6 +124,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         }
         
     };
+    
 console.log(selectedPoint);
 
     return (
@@ -142,6 +143,7 @@ console.log(selectedPoint);
                                 {topic}
                             </button>
                         ))}
+                     
                     </div>
                 </aside>
                 <main className="writingArea">

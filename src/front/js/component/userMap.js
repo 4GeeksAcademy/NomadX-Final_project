@@ -358,7 +358,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
           </Marker>
         )}
 
-        {store.post && store.post.map((point) => (
+        {store.userPosts && store.userPosts.map((point) => (
           <React.Fragment key={point.id}>
             {media[point.id] && media[point.id].type === "image" && (
               <ImageOverlay
