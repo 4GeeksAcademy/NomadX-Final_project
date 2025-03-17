@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
@@ -161,12 +162,9 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
 };
 
 
-
 const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const [points, setPoints] = useState([
-    { id: 1, lat: 40.7128, lng: -74.006, city: "Nueva York", text: "Un lugar icónico" },
-    { id: 2, lat: 34.0522, lng: -118.2437, city: "Los Ángeles", text: "La ciudad de las estrellas" },
-    { id: 3, lat: 41.8781, lng: -87.6298, city: "Chicago", text: "La ciudad del viento" },
+    //useeffect donde hace el request a la api, para que traiga el post
   ]);
 
   const [userLocation, setUserLocation] = useState(null);
@@ -187,8 +185,21 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const { latitude, longitude } = position.coords;
-          const cityName = await getCityName(latitude, longitude);
-          setUserLocation({ lat: latitude, lng: longitude, city: cityName });
+
+          const locationInfo = await getCityName(latitude, longitude);
+          setUserLocation({ 
+            lat: latitude, 
+            lng: longitude, 
+            city: locationInfo.city,
+            country: locationInfo.country 
+          });
+          
+
+          // Centrar el mapa en la ubicación del usuario
+          if (mapRef.current && mapRef.current.leafletElement) {
+            mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
+
+          }
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -452,8 +463,8 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   );
 };
 
-
 export default MapComponent;
+
 // 
 // import React, { useState, useEffect, useRef } from "react";
 // import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
@@ -946,3 +957,4 @@ export default MapComponent;
 // };
 
 // export default MapComponent; 
+
