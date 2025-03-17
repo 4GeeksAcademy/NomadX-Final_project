@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
 import L from "leaflet";
@@ -172,11 +171,12 @@ const createCustomIcon = (isMedia = false, isFavorite = false) => {
   });
 };
 
-const MapComponent = (props) => {
-  // Inicializar mapCenter y mapZoom como estados para poder modificarlos
-  const [mapCenter, setMapCenter] = useState(props.mapCenter || [40.7128, -74.006]);
-  const [mapZoom, setMapZoom] = useState(props.mapZoom || 4);
-  const [points, setPoints] = useState([]);
+
+const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
+  const [points, setPoints] = useState([
+    //useeffect donde hace el request a la api, para que traiga el post
+  ]);
+
 
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
@@ -201,20 +201,11 @@ const MapComponent = (props) => {
             country: locationInfo.country 
           });
           
-          // Actualizar el centro del mapa a la ubicación del usuario
-          setMapCenter([latitude, longitude]);
-          setMapZoom(12);
-          
-          // Intentar también utilizar las APIs de Leaflet si están disponibles
-          if (mapRef.current) {
-            // Para react-leaflet v2
-            if (mapRef.current.leafletElement) {
-              mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
-            } 
-            // Para react-leaflet v3
-            else if (mapRef.current.setView) {
-              mapRef.current.setView([latitude, longitude], 12);
-            }
+
+          // Centrar el mapa en la ubicación del usuario
+          if (mapRef.current && mapRef.current.leafletElement) {
+            mapRef.current.leafletElement.flyTo([latitude, longitude], 12);
+
           }
         },
         (error) => {
@@ -489,4 +480,5 @@ const MapComponent = (props) => {
   );
 };
 
-export default MapComponent; 
+export default MapComponent;
+

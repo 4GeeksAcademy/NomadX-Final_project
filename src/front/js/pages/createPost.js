@@ -7,12 +7,13 @@ import Select from "react-select"
 
 export const CreatePost = ({ mapCenter, mapZoom }) => {
     //const { store, actions } = useContext(Context);
-    const [newEntry, setNewEntry] = useState("");
+    const [description, setDescription] = useState("");
     const [rating, setRating] = useState(0);
     const [file, setFile] = useState("")
     const [fileUrl, setFileUrl] = useState("");
-    const [title, setTitle] = useState("");
     const [selectedTopic, setSelectedTopic] = useState("");
+    const [selectedPoint, setSelectedPoint] = useState({ latitude: 0, longitude: 0, city: "", country: "" })
+    const navigate = useNavigate()
 
     const [topics, setTopics] = useState([
         "Nature 🏞️", "Culture 💃🎶", "Attractions 🗽🎢 ",
@@ -33,18 +34,14 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         "The Holidays Abroad 🎄🔔",
     ]);
 
-    const [country, setCountry] = useState("");
-    const [city, setCity] = useState("");
-    const [latitude, setLatitude] = useState("");
-    const [longitude, setLongitude] = useState("");
- 
-    const navigate = useNavigate();
+
 
     useEffect(() => {
         setTopics(shuffledTopics(topics));
     }, []);
 
     const handleRatingClick = (clickedRating) => {
+        console.log("clicketRating", clickedRating)
         setRating(clickedRating);
     };
 
@@ -88,31 +85,28 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
 
     const handlePost = async (e) => {
         e.preventDefault()
-        if(!newEntry.trim()){
-            alert("Comment is required");
-            return;
-        }
-        if(!selectedTopic){
-            alert("Please select a topic");
-            return;
-        }
-        if(!city || !country){
-            alert("Please select a location on the map");
-            return;
-        }
-        try {
 
+        /*  if (!fileUrl) {
+              alert("image/video is required");
+              return
+          }*/
+
+        try {
+            console.log("creandoPost")
             const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
                 method: "POST",
                 body: JSON.stringify({
                     image_url: fileUrl,
+
                     title: selectedTopic,
-                    comment: newEntry,
-                    rating: rating, 
-                    latitude: latitude,
-                    longitude: longitude,
-                    city_name: city,
-                    country: country
+                    comment: description,
+                    rating: rating,
+                    latitude: selectedPoint.latitude,
+                    longitude: selectedPoint.longitude,
+                    city_name: selectedPoint.city, 
+                    country: selectedPoint.country
+
+
                 }),
                 headers: {
                     "Content-Type": "application/json",
@@ -128,7 +122,9 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
         } catch (error) {
             console.error("Error creating post:", error)
         }
+        
     };
+console.log(selectedPoint);
 
     return (
         <div className="createPostView">
@@ -149,15 +145,11 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                     </div>
                 </aside>
                 <main className="writingArea">
-                    <div className="tripLocation">
-                    </div>
+
                     <div className="entry-container">
                         <div className="entry">
-                            <textarea id="entry" 
-                            placeholder="Choose a topic from the column 
-                            on the left and jot down your thoughts today 🙂" 
-                            value={newEntry} 
-                            onChange={(e) => setNewEntry(e.target.value)}></textarea>
+                            <textarea id="entry" placeholder="Choose a topic from the column on the left and jot down your thoughts today 🙂" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+
                         </div>
                         {file && (
                             <img
@@ -167,7 +159,8 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                             />
                         )}
                     </div>
-                    <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setCountry={setCountry} setCity={setCity} setLatitude={setLatitude} setLongitude={setLongitude} /></div>
+
+                    <div><MyMap mapCenter={mapCenter} mapZoom={mapZoom} setSelectedPoint={setSelectedPoint} /></div>
 
                     <div className="ratingFilePostRow">
                         <div className="rating">
@@ -196,7 +189,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                     </div>
                 </main>
             </div>
-            
+
         </div >
     );
 };

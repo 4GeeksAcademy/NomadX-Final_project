@@ -16,7 +16,7 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 	const [user, setUser] = useState();
 
 
- useEffect(() => {
+	useEffect(() => {
         const token = localStorage.getItem("access_token");
         if (token) {
             fetch("/profile", {
@@ -34,6 +34,7 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
                 .catch(() => localStorage.removeItem("access_token"));
         }
     }, []);
+
 
 	const logout = () => {
 		localStorage.removeItem("access_token");
