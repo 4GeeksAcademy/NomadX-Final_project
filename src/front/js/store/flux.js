@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			favorites: [],
 			userPosts: [], // this is for each individual user on their profile feed.
-			post: [],
+			post: [],   
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
