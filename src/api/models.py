@@ -19,7 +19,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "favorite": [fav.serialize() for fav in self.favorites]
+            "favorite": [fav.serialize() for fav in self.favorites],
+            "nickname": self.nickname
             # do not serialize the password, its a security breach
         }
 
@@ -40,7 +41,7 @@ class Post(db.Model):
     latitude = db.Column(db.Float, unique=False, nullable=True)
     longitude = db.Column(db.Float, unique=False, nullable=True)
     city_name = db.Column(db.String(150), unique = False, nullable= True)
-    rating = db.Column(db.Integer, unique = True, nullable= True)
+    rating = db.Column(db.Integer, unique = False, nullable= True)
     user=db.relationship("User", backref="posts", lazy=True)
     country = db.Column(db.String(150), unique = False, nullable= True)
 
@@ -56,6 +57,8 @@ class Post(db.Model):
             "user_id": self.user_id,
             "latitude": self.latitude,
             "longitude": self.longitude,
+            "country": self.country,
+            "city_name": self.city_name,
             "user_nickname":self.user.nickname if self.user else None
             # do not serialize the password, its a security breach
         }

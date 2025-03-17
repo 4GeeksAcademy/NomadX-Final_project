@@ -13,7 +13,7 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 	const navigate = useNavigate()
 	const [countries, setCountries] = React.useState([]);
 	const [selectedCountry, setSelectedCountry] = React.useState(null);
-	const [user, setUser] = useState();
+	const [user, setUser] = useState(null);
 
 
 	useEffect(() => {

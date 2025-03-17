@@ -62,8 +62,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch(error) {
 					console.error(error);
 				}
-			}
+			},
+			fetchAllPosts: async () => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}/api/post`, {
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+						},
+					});
+			
+					if (response.ok) { 
+						const posts = await response.json();
+						setStore({ post: posts }); 
+					} else {
+						console.error('Error fetching posts:', response.status);
+					}
+				} catch (error) {
+					console.error(error);
+				}
+			},
+			
+			
 		}
+		
 	};
 };
 

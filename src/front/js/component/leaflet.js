@@ -1,13 +1,12 @@
-
-
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Map, TileLayer, Marker, Popup, ImageOverlay } from "react-leaflet";
-import L from "leaflet";
+import L, { map } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../../styles/leaflet.css";
 import { Context } from "../store/appContext";
 import { useLocation } from "react-router-dom";
 
+import { Context } from "../store/appContext";
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
@@ -167,6 +166,8 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     //useeffect donde hace el request a la api, para que traiga el post
   ]);
 
+
+  const { store, actions } = useContext(Context);
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
   const [media, setMedia] = useState({});
@@ -208,6 +209,8 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     }
   }, []);
 
+
+
   const getCityName = async (lat, lng) => {
     try {
       const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
@@ -236,7 +239,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
     };
     console.log(newPoint);
     
-    setPoints([...points, newPoint]);
+    // setPoints([...points, newPoint]);
   };
 
   const handleDeletePoint = (id) => {
@@ -337,14 +340,14 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
           </Marker>
         )}
 
-        {points.map((point) => (
+        {store.post && store.post.map((point) => (
           <React.Fragment key={point.id}>
             {media[point.id] && media[point.id].type === "image" && (
               <ImageOverlay
                 url={media[point.id].src}
                 bounds={[
-                  [point.lat - 0.005, point.lng - 0.005], 
-                  [point.lat + 0.005, point.lng + 0.005]
+                  [point.latitude - 0.005, point.longitude - 0.005], 
+                  [point.latitude + 0.005, point.longitude + 0.005]
                 ]}
                 opacity={0.8}
                 zIndex={1000}
@@ -352,7 +355,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
             )}
             
             <Marker 
-              position={[point.lat, point.lng]}
+              position={[point.latitude, point.longitude]}
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >
               <Popup minWidth={300} maxWidth={300}>
