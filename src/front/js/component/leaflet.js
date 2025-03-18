@@ -6,7 +6,7 @@ import "../../styles/leaflet.css";
 import { Context } from "../store/appContext";
 import { useLocation } from "react-router-dom";
 
-import { Context } from "../store/appContext";
+
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
