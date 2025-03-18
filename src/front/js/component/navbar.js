@@ -6,39 +6,34 @@ import "../../styles/navbar.css";
 import "../../styles/index.css";
 
 export const Navbar = ({ setMapCenter, setMapZoom }) => {
-    const navigate = useNavigate();
-    const [countries, setCountries] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState(null);
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
 
-        const token = localStorage.getItem("access_token");
-        console.log("useEffect running, token:", token);
-        if (token) {
-            setIsLoading(true);
-            fetch("/profile", {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}` },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log("User Data:", data);
-                    if (data && data.id) {
-                        setUser(data);
-                    } else {
-                        setUser(null);
-                    }
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    
-                    setUser(null);
-                    setIsLoading(false);
-                });
-        } else {
-            setUser(null);
-        }
-    }, []);
+	const navigate = useNavigate()
+	const [countries, setCountries] = React.useState([]);
+	const [selectedCountry, setSelectedCountry] = React.useState(null);
+	const [user, setUser] = useState();
+
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			fetch(`${process.env.BACKEND_URL}/api/profile`, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json"
+				},
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					
+					if (data.nickname) {
+						setUser(data);
+					}
+				})
+				.catch(() => localStorage.removeItem("token"));
+		}
+	}, []);
 
     const logout = () => {
         localStorage.removeItem("access_token");
@@ -75,55 +70,52 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
                 </Link>
                 <span className="brandName">NomadX</span>
 
-                {countries && (
-                    <Select
-                        options={countries}
-                        value={selectedCountry}
-                        onChange={handleSelectCountry}
-                        placeholder="Search Posts by Country Here"
-                        isSearchable={true}
-                        isClearable={true}
-                        classNamePrefix="select"
-                        className="form-control me-2 search-bar"
-                    />
-                )}
+				{countries && <Select
+					options={countries}
+					value={selectedCountry}
+					onChange={handleSelectCountry}
+					placeholder="Search Posts by Country Here"
+					isSearchable={true}
+					isClearable={true}
+					classNamePrefix="select"
+					className="form-control me-2 search-bar"
+				/>}
 
-                {isLoading ? (
-                    <span>Loading...</span>
-                ) : user ? (
-                    <>
-                        <h6 className="mx-2">Hi Nomad!</h6> {/* Add "Hi Nomad" when logged in */}
-                        <Link to="/create-post">
-                            <button type="button" className="metallic-button">Post</button> {/* Add "Post" button when logged in */}
-                        </Link>
-                        <button className="metallic-button mx-2" onClick={logout}>Logout</button>
-                    </>
-                ) : (
-                    <Link to="/login">
-                        <button type="button" className="metallic-button">Login!</button> {/* Remove "Login" when logged in */}
-                    </Link>
-                )}
+				{user ? (
+					<h6>Hi! {user.nickname}</h6>
+				) : (
+					<Link to="/login">
+						<button type="button" className="metallic-button">Login!</button>
+					</Link>
+				)}
+				<Link to="/create-post">
+					<button type="button" className="metallic-button">Post</button>
+				</Link>
+				<div className="dropdown">
+					<button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						<i className="fa-solid fa-ellipsis-vertical"></i>
+					</button>
+					<ul className="dropdown-menu dropdown-menu-end">
+						<Link to="/" className="dropdown-item">
+							Home
 
-                {/* Dropdown */}
-                <div className="dropdown">
-                    <button className="btn btn-secondary dropdown m-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="fa-solid fa-ellipsis-vertical"></i>
-                    </button>
-                    <ul className="dropdown-menu dropdown-menu-end">
-                        <Link to="/" className="dropdown-item">Home</Link>
-                        {user && ( //  Conditionally render profile and user map
-                            <>
-                                <Link to="/profile-feed" className="dropdown-item">Profile</Link>
-                                <Link to="/profile-user-map" className="dropdown-item">User Map</Link>
-                            </>
-                        )}
-                        <Link to="/instructions" className="dropdown-item">User Guide</Link>
-                        {user && (
-                            <Link to="/" className="dropdown-item" onClick={logout}>Logout</Link>
-                        )}
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    );
+						</Link>
+						<Link to="/profile-feed" className="dropdown-item">
+							Profile
+						</Link>
+						<Link to="/profile-user-map" className="dropdown-item">
+							User Map
+						</Link>
+
+						<Link to="/instructions" className="dropdown-item">
+							User Guide
+						</Link>
+						<Link to="/" className="dropdown-item" onClick={logout}>
+							Logout
+						</Link>
+					</ul>
+				</div>
+			</div>
+		</nav >
+	);
 };

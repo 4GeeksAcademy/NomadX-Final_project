@@ -66,19 +66,11 @@ def generate_token():
 @api.route('/profile', methods=['GET'])
 @jwt_required()
 def get_current_user():
-    user_id = get_jwt_identity()
-    current_user = User.query.filter_by(id=user_id).first()
+    user_id= get_jwt_identity()
+    current_user = User.query.filter_by(id = user_id).first()
+    print({"usuario": current_user})
+    return jsonify(current_user.serialize()),200
 
-    if current_user:
-        return jsonify(current_user.serialize()), 200
-    else:
-        return jsonify({'message': 'User not found'}), 404 
-    
-
-@api.route('/test', methods=['GET'])
-def test_route():
-    return jsonify({'message': 'Test response'}), 200
-    
 #Cloudinary routes
 
 cloudinary.config(
