@@ -12,7 +12,6 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
         const token = localStorage.getItem("access_token");
         console.log("useEffect running, token:", token);
         if (token) {

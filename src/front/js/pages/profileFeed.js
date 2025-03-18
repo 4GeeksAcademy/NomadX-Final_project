@@ -49,8 +49,10 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
                 acc[post.city_name].push(post);
                 return acc;
             }, {});
+                console.log(organizedPosts);
 
             setPostsByCountry(organizedPosts);
+            
             setLoading(false);
         } else if (store.userPosts.length === 0 && loading === true) {
             actions.fetchUserPosts();
