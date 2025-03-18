@@ -69,6 +69,7 @@ def generate_token():
 def get_current_user():
     user_id= get_jwt_identity()
     current_user = User.query.filter_by(id = user_id).first()
+    print({"usuario": current_user})
     return jsonify(current_user.serialize()),200
 
 #Cloudinary routes

@@ -13,27 +13,30 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 	const navigate = useNavigate()
 	const [countries, setCountries] = React.useState([]);
 	const [selectedCountry, setSelectedCountry] = React.useState(null);
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState();
 
 
 	useEffect(() => {
-        const token = localStorage.getItem("access_token");
-        if (token) {
-            fetch("/profile", {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.nickname) {
-                        setUser(data);
-                    }
-                })
-                .catch(() => localStorage.removeItem("access_token"));
-        }
-    }, []);
+		const token = localStorage.getItem("token");
+		if (token) {
+			fetch(`${process.env.BACKEND_URL}/api/profile`, {
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json"
+				},
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log(data);
+					
+					if (data.nickname) {
+						setUser(data);
+					}
+				})
+				.catch(() => localStorage.removeItem("token"));
+		}
+	}, []);
 
 
 	const logout = () => {
@@ -83,13 +86,13 @@ export const Navbar = ({ setMapCenter, setMapZoom }) => {
 					className="form-control me-2 search-bar"
 				/>}
 
-				 {user ? (
-                <h6>Hi! {user.nickname}</h6>
-            ) : (
-                <Link to="/login">
-                    <button type="button" className="metallic-button">Login!</button>
-                </Link>
-            )}
+				{user ? (
+					<h6>Hi! {user.nickname}</h6>
+				) : (
+					<Link to="/login">
+						<button type="button" className="metallic-button">Login!</button>
+					</Link>
+				)}
 				<Link to="/create-post">
 					<button type="button" className="metallic-button">Post</button>
 				</Link>

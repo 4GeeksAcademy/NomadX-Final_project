@@ -19,7 +19,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "favorite": [fav.serialize() for fav in self.favorites],
+            "favorite": [fav.serialize() for fav in self.favorites if fav is not None],
             "nickname": self.nickname
             # do not serialize the password, its a security breach
         }
@@ -77,7 +77,7 @@ class Favorite(db.Model):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "post": self.post.serialize()
+            "post": self.post.serialize() if self.post else None
 
             # do not serialize the password, its a security breach
         }
