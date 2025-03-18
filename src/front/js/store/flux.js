@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			favorites: [],
 			userPosts: [], // this is for each individual user on their profile feed.
-			post: [],
+			post: [],   
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -55,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if(response.ok) {
 						const posts = await response.json();
-						setStore({ userPosts: posts }) // this updates the store?
+						setStore({ userPosts: posts }) 
 					} else{
 						console.error('Error fetching users posts:', response.status);
 					}

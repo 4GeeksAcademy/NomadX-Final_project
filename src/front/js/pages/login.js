@@ -8,12 +8,14 @@ import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { store, actions } = useContext(Context);
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`,{
+        console.log("Login form submitted");
+
+        const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`, {
             method: "POST",
             body: JSON.stringify({
                 email: email,
@@ -22,14 +24,25 @@ export const Login = () => {
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
+        console.log("Login response:", response);
         const data = await response.json()
+        console.log("Login data:", data);
         console.log(data);
+
         if (response.ok) {
-            localStorage.setItem("token", data.access_token)
-            navigate("/Profile-Feed")
+            console.log("Login successful, storing token...");
+            localStorage.setItem("access_token", data.access_token);
+            console.log("Token stored.");
+            window.location.reload(); // Force reload
+            //navigate("/profile-feed"); //Remove navigate if you use reload.
+        } else {
+            console.log("Login failed"); // Log if login fails
         }
-    }
+    };
+
+
+
     return (
         <div className="container_login">
             <div className="welcome-back-header">
@@ -46,8 +59,8 @@ export const Login = () => {
                 </form>
             </div>
             <div class="or-divider">
-                <hr/>
-                    <span>or</span>
+                <hr />
+                <span>or</span>
             </div>
             <div className="button-wrapper">
                 <Link to="/sign_up">
@@ -55,6 +68,6 @@ export const Login = () => {
                 </Link>
             </div>
         </div>
-        
+
     );
 };

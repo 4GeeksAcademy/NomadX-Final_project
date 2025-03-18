@@ -9,7 +9,6 @@ export const Sign_up = () => {
 	const { store, actions } = useContext(Context);
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
-	const [nickname, setNickname] = useState("")
 	const [selectedAvatar, setSelectedAvatar] = useState(null);
 	const navigate = useNavigate()
 
@@ -22,7 +21,6 @@ export const Sign_up = () => {
 			method: "POST",
 			body: JSON.stringify({
 				email: email,
-				nickname: nickname,
 				password: password,
 
 			}),
@@ -48,8 +46,6 @@ export const Sign_up = () => {
 				<form className="signUpForm" onSubmit={handdlesubmmit} >
 					<label for="exampleInputEmail1" className="form-label signUp">Your Email</label>
 					<input type="email" value={email} placeholder="We will never share your email address with anyone." onChange={e => setEmail(e.target.value)} className="form-control me-2" id="exampleInputEmail1" aria-describedby="emailHelp" />
-					<label for="exampleInputPassword1" className="form-label signUp">Create a Nickname</label>
-					<input type="nickname" value={nickname} onChange={e => setNickname(e.target.value)} className="form-control me-2" id="exampleInputNickname1" />
 					<label for="exampleInputPassword1" className="form-label">Set a Password</label>
 					<input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-control me-2" id="exampleInputPassword1" />
 					<button type="submit" className="metallic-button">Sign up</button>
