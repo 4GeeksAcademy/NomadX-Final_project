@@ -36,10 +36,9 @@ def handle_hello():
 def create_user():
 
     email = request.json.get("email", None)
-    nickname = request.json.get("nickname", None)
     password = request.json.get("password", None)
 
-    user = User(email = email,nickname = nickname, is_active= True)
+    user = User(email = email, is_active= True)
     user.set_password(password)
 
     db.session.add(user)
@@ -67,10 +66,19 @@ def generate_token():
 @api.route('/profile', methods=['GET'])
 @jwt_required()
 def get_current_user():
-    user_id= get_jwt_identity()
-    current_user = User.query.filter_by(id = user_id).first()
-    return jsonify(current_user.serialize()),200
+    user_id = get_jwt_identity()
+    current_user = User.query.filter_by(id=user_id).first()
 
+    if current_user:
+        return jsonify(current_user.serialize()), 200
+    else:
+        return jsonify({'message': 'User not found'}), 404 
+    
+
+@api.route('/test', methods=['GET'])
+def test_route():
+    return jsonify({'message': 'Test response'}), 200
+    
 #Cloudinary routes
 
 cloudinary.config(

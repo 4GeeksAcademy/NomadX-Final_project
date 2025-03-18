@@ -8,7 +8,6 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    nickname = db.Column(db.String(120), unique=True, nullable=False)
     encoded_password = db.Column(db.String(500), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     favorites = db.relationship("Favorite",backref="user",lazy=True)
@@ -57,9 +56,10 @@ class Post(db.Model):
             "user_id": self.user_id,
             "latitude": self.latitude,
             "longitude": self.longitude,
+
             "country": self.country,
             "city_name": self.city_name,
-            "user_nickname":self.user.nickname if self.user else None
+
             # do not serialize the password, its a security breach
         }
 class Favorite(db.Model):
