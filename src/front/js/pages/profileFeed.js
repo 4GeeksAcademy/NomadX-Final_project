@@ -69,14 +69,19 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
                     <div className="favorites-title">
                         <h2>My Favorites</h2>
                     </div>
-                    {favorites && favorites.map((fav) => (
+                    {store.favorites && store.favorites.map((fav) => (
                         <div key={fav.post_id}>
-                            {fav.post && (
-                                <>
-                                    <div>
-                                        <img src={fav.post.image_url} />
-                                    </div>
-                                </>
+                            {fav && ( 
+                         <div className="col-md-4 mb-4">
+                         <div className="cardByCity">
+                             <img src={fav.image_url} alt={fav.title} />
+                             <div className="card-body">
+                                 <h5 className="card-title">{fav.title}</h5>
+                                 <p className="card-text">{fav.comment}</p>
+                                 <p>Rating: ★★★★★ </p>
+                             </div>
+                         </div>
+                     </div>
                             )}
                         </div>
                     ))}

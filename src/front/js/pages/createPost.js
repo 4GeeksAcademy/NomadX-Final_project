@@ -199,4 +199,3 @@ console.log(selectedPoint);
         </div >
     );
 };
-

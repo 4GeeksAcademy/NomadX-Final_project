@@ -5,8 +5,8 @@ import "leaflet/dist/leaflet.css";
 import "../../styles/leaflet.css";
 import { Context } from "../store/appContext";
 import { useLocation } from "react-router-dom";
+import { faV } from "@fortawesome/free-solid-svg-icons";
 
-import { Context } from "../store/appContext";
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
@@ -167,7 +167,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   ]);
 
 
-  const { store, actions } = useContext(Context);
+  
   const [userLocation, setUserLocation] = useState(null);
   const [ratings, setRatings] = useState({});
   const [media, setMedia] = useState({});
@@ -176,8 +176,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   const [favorites, setFavorites] = useState({});
   const mapRef = useRef(null);
   const { store, actions } = useContext(Context);
-  const location = useLocation();
-  console.log(location);
+
   
 
 
@@ -247,11 +246,9 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   };
 
   
-  const toggleFavorite = (id) => {
-    const currentFavoritesStatus = !!favorites[id]
-    actions.saveFavorite(id, () => {
-      setFavorites({ ...favorites, [id]: !currentFavoritesStatus });
-    })
+  const toggleFavorite = (id,isFavorite) => {
+    
+    actions.saveFavorite(id,isFavorite,actions.fetchUserFavorites)
     
   };
 
@@ -358,37 +355,13 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               position={[point.latitude, point.longitude]}
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >
-              <Popup minWidth={300} maxWidth={300}>
+             <Popup minWidth={300} maxWidth={300}>
                 <div style={mapStyles.popupContent}>
                   <div style={mapStyles.popupHeader}>{point.city}</div>
                   <div style={mapStyles.popupBody}>
-                    {media[point.id] && (
-                      <div style={mapStyles.mediaContainer}>
-                        {media[point.id].type === "image" ? (
-                          <img 
-                            src={media[point.id].src} 
-                            alt={point.city} 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }} 
-                          />
-                        ) : (
-                          <video 
-                            controls 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          >
-                            <source src={media[point.id].src} type="video/mp4" />
-                            Tu navegador no soporta el formato de video.
-                          </video>
-                        )}
-                      </div>
-                    )}
+                  <div style={mapStyles.mediaContainer}>
+                        <img src={point.image_url}/>
+                        </div>
                     
                     <textarea
                       style={mapStyles.textareaStyle}
@@ -444,13 +417,13 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                     
                     <div style={mapStyles.popupActions}>
                       <button 
-                        onClick={() => toggleFavorite(point.id)} 
+                        onClick={() => toggleFavorite(point.id, store.favorites && store.favorites.find((fav) => fav.post_id === point.id) )} 
                         style={{
                           ...mapStyles.popupButton,
-                          ...(favorites[point.id] ? mapStyles.favoriteButtonActive : mapStyles.favoriteButton)
+                          ...(store.favorites && store.favorites.find((fav) => fav.post_id === point.id) ? mapStyles.favoriteButtonActive : mapStyles.favoriteButton)
                         }}
                       >
-                        {favorites[point.id] ? "★ Favorito" : "☆ Favorito"}
+                        {store.favorites && store.favorites.find((fav) => fav.post_id === point.id) ? "★ Favorito" : "☆ Favorito"}
                       </button>
                     </div>
 

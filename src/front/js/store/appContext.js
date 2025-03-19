@@ -29,7 +29,7 @@ const injectContext = PassedComponent => {
 			 * store, instead use actions, like this:
 			 **/
 			state.actions.fetchUserPosts();
-			state.actions.saveFavorite(); // dont think this one goes here. 
+			state.actions.fetchUserFavorites(); // dont think this one goes here. 
 			state.actions.fetchAllPosts();
 		}, []);
 

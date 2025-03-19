@@ -129,7 +129,6 @@ def set_fav():
 def get_favs():
     user_id = get_jwt_identity()
     favorites = Favorite.query.filter_by(user_id=user_id).all()
-
     fav_posts = [{
         "post_id": fav.post.id,
         "title": fav.post.title,
