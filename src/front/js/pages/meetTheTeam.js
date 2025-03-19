@@ -53,7 +53,7 @@ export const MeetTheTeam = () => {
                     <img src={Carlos} className="team-member-img male" />
                 </div>
                 <div className="member">
-                    <h4>Carlos Gutierrez </h4>
+                    <h4>Carlos Gutiérrez </h4>
                     <p className="coFounder"><i>  Co-Founder</i></p>
                     <br></br>
                     <p>Carlos is the API integration specialist at NomadX, expanding

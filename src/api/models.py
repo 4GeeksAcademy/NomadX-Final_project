@@ -57,7 +57,8 @@ class Post(db.Model):
             "longitude": self.longitude,
             "country": self.country,
             "city_name": self.city_name,
-            # do not serialize the password, its a security breach
+            "rating": self.rating,
+            
         }
     
 
