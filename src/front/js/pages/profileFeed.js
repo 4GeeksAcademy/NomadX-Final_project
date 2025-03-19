@@ -12,7 +12,7 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
 
     const fetchFavorites = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("access_token");
             if (!token) {
                 throw new Error("User not authenticated");
             }
@@ -94,7 +94,7 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
                             <h3>{country || "Post"}</h3>
                             <div className="row">
                                 {posts.map((post) => (
-                                    <div className="col-md-4 mb-4">
+                                    <div className="col-md-4 mb-4" key={post.id}>
                                         <div className="cardByCity">
                                             <img src={post.image_url} alt={post.title} />
                                             <div className="card-body">

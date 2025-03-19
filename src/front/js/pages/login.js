@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/index.css"
 import "../../styles/login.css";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -13,7 +12,9 @@ export const Login = () => {
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`,{
+        console.log("Login form submitted");
+
+        const response = await fetch(`${process.env.BACKEND_URL}/api/sign_in`, {
             method: "POST",
             body: JSON.stringify({
                 email: email,
@@ -22,14 +23,23 @@ export const Login = () => {
             headers: {
                 "Content-Type": "application/json"
             }
-        })
+        });
+        console.log("Login response:", response);
         const data = await response.json()
+        console.log("Login data:", data);
         console.log(data);
+
         if (response.ok) {
-            localStorage.setItem("token", data.access_token)
-            navigate("/profile-feed")
+            console.log("Login successful, storing token...");
+            localStorage.setItem("access_token", data.access_token);
+            console.log("Token stored.");
+            actions.setToken(data.access_token);
+            navigate("/profile-feed"); 
+        } else {
+            console.log("Login failed"); 
         }
-    }
+    };
+
     return (
         <div className="container_login">
             <div className="welcome-back-header">
@@ -38,16 +48,17 @@ export const Login = () => {
             <div className="bottomSection">
                 <h3>Sign In</h3>
                 <form className="loginForm" onSubmit={handleSubmit} >
-                    <label for="exampleInputEmail1" className="form-label">Email address</label>
+                    <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="form-control me-2" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                    <label for="exampleInputPassword1" className="form-label">Password</label>
+                    <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
                     <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-control me-2" id="exampleInputPassword1" />
                     <button type="submit" className="metallic-button">Sign in!</button>
                 </form>
+                {/* link to change password page  */}
             </div>
-            <div class="or-divider">
-                <hr/>
-                    <span>or</span>
+            <div className="or-divider">
+                <hr />
+                <span>or</span>
             </div>
             <div className="button-wrapper">
                 <Link to="/sign_up">
@@ -55,6 +66,6 @@ export const Login = () => {
                 </Link>
             </div>
         </div>
-        
+
     );
 };

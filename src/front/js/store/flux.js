@@ -3,15 +3,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 
 			favorites: [],
-			userPosts: [], // this is for each individual user on their profile feed.
+			userPosts: [], 
 			post: [],
+			token: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
 
+			updateToken: () => {
+				if(localStorage.getItem('access_token')) {
+					setStore({token: localStorage.getItem('access_token')})
+				}
+			},
+			setToken: (token) => {
+				setStore({token: token})
+			},
+
 			saveFavorite: async (postId, isFavorite, onFinish) => {
 
-				const token = localStorage.getItem('token');
+				const token = localStorage.getItem('access_token');
 				if (!token) {
 					console.error('User not authenticated');
 					return;
@@ -60,7 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			fetchUserPosts: async () => {
-				const token = localStorage.getItem('token');
+				const token = localStorage.getItem('access_token');
 				if (!token) {
 					console.error('User not authenticated');
 					return;
@@ -75,7 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					if (response.ok) {
 						const posts = await response.json();
-						setStore({ userPosts: posts }) // this updates the store?
+						setStore({ userPosts: posts }) 
 					} else {
 						console.error('Error fetching users posts:', response.status);
 					}
@@ -84,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			fetchUserFavorites: async () => {
-				const token = localStorage.getItem('token');
+				const token = localStorage.getItem('access_token');
 				if (!token) {
 					console.error('User not authenticated');
 					return;

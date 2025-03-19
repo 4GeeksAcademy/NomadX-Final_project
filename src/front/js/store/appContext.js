@@ -28,6 +28,7 @@ const injectContext = PassedComponent => {
 			 * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
 			 * store, instead use actions, like this:
 			 **/
+			state.actions.updateToken();
 			state.actions.fetchUserPosts();
 			state.actions.fetchUserFavorites(); // dont think this one goes here. 
 			state.actions.fetchAllPosts();

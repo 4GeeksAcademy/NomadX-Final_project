@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/meetTheTeam.css";
 import "../../styles/index.css";
+import ME from "../../img/ME.jpg"
+import Carlos from "../../img/Carlos.jpg"
+import Lucas from "../../img/Lucas.jpg"
 import femaleTemp from "../../img/femaleTemp.jpeg";
 import maleTemp from "../../img/maleTemp.jpeg";
 
@@ -12,7 +15,7 @@ export const MeetTheTeam = () => {
             <br></br>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={femaleTemp} className="team-member-img female" />
+                    <img src={ME} className="team-member-img female" />
                 </div>
                 <div className="member">
                     <h4>Alynne Trujillo</h4>
@@ -29,7 +32,7 @@ export const MeetTheTeam = () => {
             <hr class="featurette-divider"></hr>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={maleTemp} className="team-member-img male" />
+                    <img src={Lucas} className="team-member-img male" />
                 </div>
                 <div className="member">
                     <h4>Lucas Sánchez Magán</h4>
@@ -47,7 +50,7 @@ export const MeetTheTeam = () => {
             <hr class="featurette-divider"></hr>
             <div className="d-md-flex justify-content-start">
                 <div className="img">
-                    <img src={maleTemp} className="team-member-img male" />
+                    <img src={Carlos} className="team-member-img male" />
                 </div>
                 <div className="member">
                     <h4>Carlos Gutierrez </h4>
