@@ -45,11 +45,10 @@ export const HowToUse = () => {
                 <div className="col-md-3 mb-4">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">3. Like, Comment, Mark as Favorite</h5>
+                            <h5 className="card-title">3. Mark Posts as Favorites</h5>
                             <br></br>
                             <p className="card-text">
-                                Engage with content anonymously! Like, comment, or save your favorite posts without
-                                revealing your identity.
+                            Privately mark posts as favorites to save them for later. Your selections are kept anonymous.
                             </p>
                             <Link to="/">
                                 <button type="button" className="metallic-button">Explore Nearby🧭</button>

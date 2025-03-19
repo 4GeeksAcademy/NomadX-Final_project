@@ -24,6 +24,7 @@ const mapStyles = {
     overflow: "hidden",
     width: "300px",
     maxWidth: "300px",
+    fontFamily: "'Open Sans', sans-serif"
   },
   popupHeader: {
     fontSize: "18px",
@@ -31,10 +32,12 @@ const mapStyles = {
     padding: "12px 15px",
     borderBottom: "1px solid #eee",
     backgroundColor: "#fff",
+    fontFamily: "'Open Sans', sans-serif"
   },
   popupBody: {
     padding: "15px",
     backgroundColor: "#fff",
+    fontFamily: "'Open Sans', sans-serif"
   },
   popupMedia: {
     width: "100%",
@@ -60,16 +63,19 @@ const mapStyles = {
     cursor: "pointer",
     fontSize: "13px",
     fontWeight: "500",
+    fontFamily: "'Open Sans', sans-serif"
   },
   favoriteButton: {
     backgroundColor: "#f9f9f9",
     color: "#333",
     border: "1px solid #ddd",
+    fontFamily: "'Open Sans', sans-serif"
   },
   favoriteButtonActive: {
     backgroundColor: "#ffcc00",
     color: "#fff",
     border: "1px solid #ffcc00",
+    fontFamily: "'Open Sans', sans-serif"
   },
   uploadLabel: {
     display: "inline-block",
@@ -360,25 +366,34 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                   <div style={mapStyles.popupHeader}>{point.city}</div>
                   <div style={mapStyles.popupBody}>
                   <div style={mapStyles.mediaContainer}>
-                        <img src={point.image_url}/>
+                  <img 
+                src={point.image_url} 
+                alt={point.title} 
+                style={{
+                width: "100%", 
+                height: "150px",  
+                objectFit: "cover", 
+                borderRadius: "4px"
+                                     }} 
+                                         />
                         </div>
                     
                     <h6>{point.title}</h6>
-                    
+                    <p>{point.comment}</p>
                     <div style={mapStyles.ratings}>
-                      {[1, 2, 3, 4, 5].map((num) => (
-                        <span
-                          key={num}
-                          style={{
-                            ...mapStyles.star,
-                            color: num <= (ratings[point.id] || 0) ? "#ffcc00" : "#ddd"
-                          }}
-                          onClick={() => setRatings({ ...ratings, [point.id]: num })}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
+  {[1, 2, 3, 4, 5].map((num) => (
+    <span
+      key={num}
+      style={{
+        ...mapStyles.star,
+        color: num <= point.rating ? "#ffcc00" : "#ddd"
+      }}
+    >
+      ★
+    </span>
+  ))}
+  
+</div>
 
                     <div>
      
@@ -386,7 +401,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
           
              
                     
-                    <div style={mapStyles.commentSection}>
+                    {/* <div style={mapStyles.commentSection}>
                       <input
                         type="text"
                         style={mapStyles.commentInput}
@@ -403,7 +418,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         </ul>
                       )}
                     </div>
-                    
+                     */}
                     <div style={mapStyles.popupActions}>
                       <button 
                         onClick={() => toggleFavorite(point.id, store.favorites && store.favorites.find((fav) => fav.post_id === point.id) )} 

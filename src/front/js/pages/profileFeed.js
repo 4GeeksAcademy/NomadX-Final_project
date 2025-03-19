@@ -65,30 +65,31 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
     return (
         <div className="profileFeed">
             <div className="content">
-                <div className="favorites-scroll">
+                <div className="favorites-scroll ">
                     <div className="favorites-title">
                         <h2>My Favorites</h2>
                     </div>
+                    <div className="row">
                     {store.favorites && store.favorites.map((fav) => (
                         <div key={fav.post_id}>
                             {fav && ( 
                          <div className="col-md-4 mb-4">
                          <div className="cardByCity">
-                             <img src={fav.image_url} alt={fav.title} />
+                             <img  src={fav.image_url} alt={fav.title} />
                              <div className="card-body">
                                  <h5 className="card-title">{fav.title}</h5>
                                  <p className="card-text">{fav.comment}</p>
-                                 <p>Rating: ★★★★★ </p>
+                                 
                              </div>
                          </div>
                      </div>
                             )}
                         </div>
-                    ))}
+                    ))}</div>
                 </div>
 
                 <div className="postsByCity">
-                    <h2>Posts by Country</h2>
+                    <h2>Posts by City</h2>
                     {Object.entries(postsByCountry).map(([country, posts]) => (
                         <div className="city" key={country}>
                             <h3>{country || "Post"}</h3>
@@ -100,7 +101,10 @@ export const ProfileFeed = ({ onFavoriteChange }) => {
                                             <div className="card-body">
                                                 <h5 className="card-title">{post.title}</h5>
                                                 <p className="card-text">{post.comment}</p>
-                                                <p>Rating: ★★★★★ </p>
+                                                <p>Rating: {
+            '★'.repeat(post.rating) + 
+            '☆'.repeat(5 - post.rating)
+        } </p>
                                             </div>
                                         </div>
                                     </div>

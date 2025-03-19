@@ -16,8 +16,8 @@ export const Tutorial = () => {
             content: "Explore travel stories by location! Discover posts from your current country on the homepage, or use the search bar to find content from anywhere in the world. Simply click to view the feed.",
         },
         {
-            title: "3. Like, Comment & Mark Posts as Favorites",
-            content: "Engage with content anonymously! Like, comment, or save your favorite posts without revealing your identity.",
+            title: "3. Mark Posts as Favorites",
+            content: "Privately mark posts as favorites to save them for later. Your selections are kept anonymous.",
         },
         {
             title: "4. Profile Section",
@@ -35,7 +35,7 @@ export const Tutorial = () => {
             title: "Still have questions?",
             content: "Find answers on our FAQ page.",
         },
-    ];    
+    ];
 
     useEffect(() => {
         const hasSeenTutorial = localStorage.getItem('hasSeenTutorial');
@@ -45,8 +45,8 @@ export const Tutorial = () => {
             console.log(hasSeenTutorial);
         }
     }, []);
-    
-    
+
+
 
     const handleNext = () => {
         if (step < steps.length - 1) {
