@@ -6,6 +6,7 @@ import "../../styles/leaflet.css";
 import { useLocation } from "react-router-dom";
 
 import { Context } from "../store/appContext";
+
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
@@ -377,45 +378,22 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >
               <Popup minWidth={300} maxWidth={300}>
-                <div style={mapStyles.popupContent}>
-                  <div style={mapStyles.popupHeader}>{point.city}</div>
-                  <div style={mapStyles.popupBody}>
-                    {media[point.id] && (
-                      <div style={mapStyles.mediaContainer}>
-                        {media[point.id].type === "image" ? (
-                          <img 
-                            src={media[point.id].src} 
-                            alt={point.city} 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }} 
-                          />
-                        ) : (
-                          <video 
-                            controls 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          >
-                            <source src={media[point.id].src} type="video/mp4" />
-                            Tu navegador no soporta el formato de video.
-                          </video>
-                        )}
-                      </div>
-                    )}
+                              <div style={mapStyles.popupContent}>
+                                <div style={mapStyles.popupHeader}>{point.city}</div>
+                                <div style={mapStyles.popupBody}>
+                                <div style={mapStyles.mediaContainer}>
+                                      <img src={point.image_url}/>
+                                      </div>
+                                      <h6>{point.title}</h6>
                     
-                    <textarea
+                    {/* <textarea
                       style={mapStyles.textareaStyle}
                       value={point.text}
                       onChange={(e) => setPoints(points.map(p => 
                         p.id === point.id ? { ...p, text: e.target.value } : p
                       ))}
                       placeholder="Describe este lugar..."
-                    />
+                    /> */}
                     
                     <div style={mapStyles.ratings}>
                       {[1, 2, 3, 4, 5].map((num) => (
@@ -432,7 +410,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                       ))}
                     </div>
                     
-                    <label style={mapStyles.uploadLabel}>
+                    {/* <label style={mapStyles.uploadLabel}>
                       {media[point.id] ? "Cambiar" : "Añadir"} foto/video
                       <input 
                         type="file" 
@@ -440,7 +418,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         onChange={(e) => handleMediaUpload(e, point.id)} 
                         style={{ display: "none" }}
                       />
-                    </label>
+                    </label> */}
                     
                     <div style={mapStyles.commentSection}>
                       <input

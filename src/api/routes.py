@@ -71,6 +71,26 @@ def get_current_user():
     current_user = User.query.filter_by(id = user_id).first()
     return jsonify(current_user.serialize()),200
 
+# @api.route('/change_password', methods=['POST'])
+# @jwt_required()
+# def change_password():
+#     user_id = get_jwt_identity()
+#     user = User.query.filter_by(id=user_id).first()
+
+#     if not user:
+#         return jsonify({"msg": "User not found"}), 404
+
+#     current_password = request.json.get("current_password", None)
+#     new_password = request.json.get("new_password", None)
+
+#     if not user.check_password(current_password):
+#         return jsonify({"msg": "Incorrect current password"}), 401
+
+#     user.set_password(new_password)
+#     db.session.commit()
+
+#     return jsonify({"msg": "Password has been updated"}), 200
+
 #Cloudinary routes
 
 cloudinary.config(
@@ -100,6 +120,30 @@ def update_posts_image():
     db.session.add(newPost)
     db.session.commit()
     return jsonify({"msg":"post created!"}),200
+
+# @api.route('/post/<int:post_id>/comment', methods=['POST'])
+# @jwt_required()
+# def add_comment(post_id):
+#     user_id = get_jwt_identity()
+#     request_body = request.get_json()
+
+#     if "text" not in request_body or not request_body["text"].strip():
+#         return jsonify({"msg": "Comment text is required"}), 400
+
+#     post = Post.query.get(post_id)
+#     if not post:
+#         return jsonify({"msg": "Post not found"}), 404
+
+#     new_comment = Comment(
+#         text=request_body["text"],
+#         user_id=user_id,
+#         post_id=post_id
+#     )
+
+#     db.session.add(new_comment)
+#     db.session.commit()
+
+#     return jsonify({"msg": "Comment added successfully!", "comment": new_comment.serialize()}), 201
 
 @api.route('/img', methods=["POST"])
 def upload_image():

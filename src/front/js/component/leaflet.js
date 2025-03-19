@@ -265,15 +265,15 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
   };
 
 
-  const addComment = (id) => {
-    if (commentInputs[id] && commentInputs[id].trim()) {
-      setComments({ 
-        ...comments, 
-        [id]: [...(comments[id] || []), commentInputs[id]] 
-      });
-      setCommentInputs({ ...commentInputs, [id]: "" });
-    }
-  };
+  // const addComment = (id) => {
+  //   if (commentInputs[id] && commentInputs[id].trim()) {
+  //     setComments({ 
+  //       ...comments, 
+  //       [id]: [...(comments[id] || []), commentInputs[id]] 
+  //     });
+  //     setCommentInputs({ ...commentInputs, [id]: "" });
+  //   }
+  // };
 
   const handleKeyPress = (e, id) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -281,7 +281,37 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
       addComment(id);
     }
   };
+// const addComment = async (postId) => {
+//     const commentText = document.getElementById(`comment-input-${postId}`).value.trim();
 
+//     if (!commentText) {
+//         alert("El comentario no puede estar vacío");
+//         return;
+//     }
+
+//     try {
+// const response = await fetch(`${process.env.BACKEND_URL}/api/post/${postId}/comment`, {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//                 "Authorization": `Bearer ${localStorage.getItem("token")}`
+//             },
+//             body: JSON.stringify({ text: commentText })
+//         });
+
+//         const data = await response.json();
+
+//         if (response.ok) {
+//             alert("Comentario agregado!");
+//             document.getElementById(`comment-input-${postId}`).value = ""; 
+//         } else {
+//             alert(data.msg);
+//         }
+//     } catch (error) {
+//         console.error("Error al agregar comentario:", error);
+//         alert("Hubo un problema al agregar el comentario");
+//     }
+// };
 
   return (
     <div style={mapStyles.container}>
@@ -363,14 +393,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         <img src={point.image_url}/>
                         </div>
                     
-                    <textarea
-                      style={mapStyles.textareaStyle}
-                      value={point.text}
-                      onChange={(e) => setPoints(points.map(p => 
-                        p.id === point.id ? { ...p, text: e.target.value } : p
-                      ))}
-                      placeholder="Describe este lugar..."
-                    />
+                    <h6>{point.title}</h6>
                     
                     <div style={mapStyles.ratings}>
                       {[1, 2, 3, 4, 5].map((num) => (
@@ -386,8 +409,13 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         </span>
                       ))}
                     </div>
-                    
-                    <label style={mapStyles.uploadLabel}>
+
+                    <div>
+     {/* <input type="text" id={`comment-input-${point.post_id}`} placeholder="Escribe un comentario..." />
+    <button onclick={addComment(point.post_id)} >Comentar</button> */}
+</div>
+          
+                    {/* <label style={mapStyles.uploadLabel}>
                       {media[point.id] ? "Cambiar" : "Añadir"} foto/video
                       <input 
                         type="file" 
@@ -395,7 +423,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         onChange={(e) => handleMediaUpload(e, point.id)} 
                         style={{ display: "none" }}
                       />
-                    </label>
+                    </label> */}
                     
                     <div style={mapStyles.commentSection}>
                       <input
