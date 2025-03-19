@@ -6,6 +6,7 @@ import "../../styles/leaflet.css";
 import { useLocation } from "react-router-dom";
 
 import { Context } from "../store/appContext";
+import { javascript } from "webpack";
 // Estilos CSS integrados para el componente
 const mapStyles = {
   container: {
@@ -377,36 +378,12 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
               icon={createCustomIcon(!!media[point.id], favorites[point.id])}
             >
               <Popup minWidth={300} maxWidth={300}>
-                <div style={mapStyles.popupContent}>
-                  <div style={mapStyles.popupHeader}>{point.city}</div>
-                  <div style={mapStyles.popupBody}>
-                    {media[point.id] && (
-                      <div style={mapStyles.mediaContainer}>
-                        {media[point.id].type === "image" ? (
-                          <img 
-                            src={media[point.id].src} 
-                            alt={point.city} 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }} 
-                          />
-                        ) : (
-                          <video 
-                            controls 
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                            }}
-                          >
-                            <source src={media[point.id].src} type="video/mp4" />
-                            Tu navegador no soporta el formato de video.
-                          </video>
-                        )}
-                      </div>
-                    )}
+                              <div style={mapStyles.popupContent}>
+                                <div style={mapStyles.popupHeader}>{point.city}</div>
+                                <div style={mapStyles.popupBody}>
+                                <div style={mapStyles.mediaContainer}>
+                                      <img src={point.image_url}/>
+                                      </div>
                     
                     <textarea
                       style={mapStyles.textareaStyle}
