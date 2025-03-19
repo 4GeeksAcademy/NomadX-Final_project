@@ -1,0 +1,47 @@
+.container-contact{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 100px;
+    background: linear-gradient(to right, black, #d0d0d0);
+    min-height: 80vh;
+    color: whitesmoke;
+}
+.leftSection, .rightSection{
+    width: 48%;
+    box-sizing: border-box;
+}
+
+.leftSection{
+    padding: 30px;
+}
+
+.rightSection{
+    padding-right: 30px;
+}
+
+.leftSection h1{
+    margin-bottom: 15px;
+}
+
+.leftSection p{
+    margin-bottom: 5px;
+}
+.right-section h2{
+    margin-bottom: 20px;
+}
+.button-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 80px;
+}
+.contact-sections{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 160px;
+
+}
+
+

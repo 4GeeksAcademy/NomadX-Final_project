@@ -1,0 +1,59 @@
+.modal-content {
+    border-radius: 10px; /* Rounded corners for the modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.modal-header {
+    border-bottom: none; 
+}
+
+.modal-title {
+    text-align: center;
+    flex-grow: 1; 
+}
+
+.description-area textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    resize: none; 
+}
+
+.star-rating {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #ffc107; 
+}
+
+.add-media {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #f0f0f0; 
+    border: none;
+    border-radius: 20px; 
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.comment-area input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-footer {
+    border-top: none; 
+    justify-content: center; 
+}
+
+.favorite {
+    padding: 8px 15px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}

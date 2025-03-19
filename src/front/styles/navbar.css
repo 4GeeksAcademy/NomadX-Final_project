@@ -1,0 +1,38 @@
+.navbar {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, black, #d0d0d0);
+    color: whitesmoke;
+    z-index: 1000;
+}
+.brandName{
+    font-size: 30px;
+    padding: 12px;
+    font-family: "Big Shoulders Stencil", sans-serif;
+    font-weight: 400;
+}
+.navbar-brand{
+    size: 50px;
+    margin-right: 0;
+}
+
+.search-bar{
+    background-color: #d0d0d0;
+    border: 2px solid black;
+}
+.dropdown-item:focus {
+    background-color: black; 
+  }
+/* Media query for smaller screens */
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .metallic-button {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .dropdown-menu {
+        font-size: 14px;
+    }
+}

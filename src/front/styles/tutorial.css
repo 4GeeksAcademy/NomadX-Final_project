@@ -1,0 +1,51 @@
+.tutorial-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+  }
+
+  .tutorial-modal {
+    width: 500px;
+    max-width: 90%;
+    text-align: center;
+    background: linear-gradient(135deg, #ddd, #eee, #bbb);
+    border: 2px solid #999; 
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin: 3px;
+    font-weight: 300;
+    text-shadow: 1px 1px 1px #fff;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    position: relative; 
+    overflow: hidden;
+  }
+  .btnToClose{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: black;
+  }
+  .tutorial-modal h5{
+    padding: 10px;
+  }
+
+  .tutorial-buttons {
+    margin-top: 20px;
+  }
+  
+  .tutorial-buttons button {
+    padding: 10px 20px;
+    margin: 10px 10px;
+    background: silver;
+  }

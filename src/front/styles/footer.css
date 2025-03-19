@@ -1,0 +1,9 @@
+.footer{
+    width: 100%; 
+    background: linear-gradient(to right, black, #d0d0d0);
+
+}
+.footer,
+.footer-links .btn{
+    color: whitesmoke;
+}

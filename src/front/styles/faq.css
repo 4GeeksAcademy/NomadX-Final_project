@@ -1,0 +1,34 @@
+
+.faq-for-users{
+    background: linear-gradient(to right, black, #d0d0d0);
+    min-height: 75px; 
+    color: whitesmoke;
+}
+/* min height is causing issues? */
+
+.faq {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.questionsAndAnswers h4,
+.questionsAndAnswers p,
+.questionsAndAnswers ul,
+.questionsAndAnswers li
+.questionsAndAnswers button{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.questionsAndAnswers h4{
+    padding-bottom: 10px;
+}
+.questionsAndAnswers ul{
+    padding-top: 10px;
+}
+.questionsAndAnswers .button-wrapper{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.button-wrapper{
+    margin-top: 80px;
+}
