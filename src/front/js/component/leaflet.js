@@ -363,14 +363,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         <img src={point.image_url}/>
                         </div>
                     
-                    <textarea
-                      style={mapStyles.textareaStyle}
-                      value={point.text}
-                      onChange={(e) => setPoints(points.map(p => 
-                        p.id === point.id ? { ...p, text: e.target.value } : p
-                      ))}
-                      placeholder="Describe este lugar..."
-                    />
+                    <h6>{point.title}</h6>
                     
                     <div style={mapStyles.ratings}>
                       {[1, 2, 3, 4, 5].map((num) => (
@@ -387,7 +380,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                       ))}
                     </div>
                     
-                    <label style={mapStyles.uploadLabel}>
+                    {/* <label style={mapStyles.uploadLabel}>
                       {media[point.id] ? "Cambiar" : "Añadir"} foto/video
                       <input 
                         type="file" 
@@ -395,7 +388,7 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         onChange={(e) => handleMediaUpload(e, point.id)} 
                         style={{ display: "none" }}
                       />
-                    </label>
+                    </label> */}
                     
                     <div style={mapStyles.commentSection}>
                       <input
