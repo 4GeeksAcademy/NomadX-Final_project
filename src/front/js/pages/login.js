@@ -34,10 +34,9 @@ export const Login = () => {
             localStorage.setItem("access_token", data.access_token);
             console.log("Token stored.");
             actions.setToken(data.access_token);
-            //window.location.reload(); // Force reload
-            navigate("/profile-feed"); //Remove navigate if you use reload.
+            navigate("/profile-feed"); 
         } else {
-            console.log("Login failed"); // Log if login fails
+            console.log("Login failed"); 
         }
     };
 
