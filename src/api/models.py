@@ -63,26 +63,7 @@ class Post(db.Model):
             # do not serialize the password, its a security breach
         }
     
-# class Comment(db.Model):
-#     __tablename__ = 'comment'
 
-#     id = db.Column(db.Integer, primary_key=True)
-#     text = db.Column(db.Text, nullable=False)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-#     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-   
-
-#     user = db.relationship("User", backref="comments")
-#     post = db.relationship("Post", backref="comments")
-
-#     def serialize(self):
-#         return {
-#             "id": self.id,
-#             "text": self.text,
-#             "user_id": self.user_id,
-#             "post_id": self.post_id,
-#             "user_nickname": self.user.nickname if self.user else None
-#         }
 class Favorite(db.Model):
     __tablename__ = 'favorite'
 
