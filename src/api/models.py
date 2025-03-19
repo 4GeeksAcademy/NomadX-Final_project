@@ -62,6 +62,8 @@ class Post(db.Model):
             "user_nickname":self.user.nickname if self.user else None
             # do not serialize the password, its a security breach
         }
+    
+
 class Favorite(db.Model):
     __tablename__ = 'favorite'
 

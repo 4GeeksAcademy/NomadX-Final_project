@@ -71,6 +71,8 @@ def get_current_user():
     current_user = User.query.filter_by(id = user_id).first()
     return jsonify(current_user.serialize()),200
 
+
+
 #Cloudinary routes
 
 cloudinary.config(
@@ -100,6 +102,8 @@ def update_posts_image():
     db.session.add(newPost)
     db.session.commit()
     return jsonify({"msg":"post created!"}),200
+
+
 
 @api.route('/img', methods=["POST"])
 def upload_image():

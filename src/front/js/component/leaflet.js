@@ -379,16 +379,12 @@ const MapComponent = ({ mapCenter = [40.7128, -74.006], mapZoom = 4 }) => {
                         </span>
                       ))}
                     </div>
-                    
-                    {/* <label style={mapStyles.uploadLabel}>
-                      {media[point.id] ? "Cambiar" : "Añadir"} foto/video
-                      <input 
-                        type="file" 
-                        accept="image/,video/" 
-                        onChange={(e) => handleMediaUpload(e, point.id)} 
-                        style={{ display: "none" }}
-                      />
-                    </label> */}
+
+                    <div>
+     
+              </div>
+          
+             
                     
                     <div style={mapStyles.commentSection}>
                       <input
