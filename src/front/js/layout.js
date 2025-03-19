@@ -10,6 +10,7 @@ import { Faq } from "./pages/faq";
 import { ContactUs } from "./pages/contactUs";
 import { MeetTheTeam } from "./pages/meetTheTeam";
 import { CreatePost } from "./pages/createPost"
+import { ChangePassword } from "./pages/changePassword";
 import { HowToUse } from "./pages/howToUse";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
@@ -44,6 +45,7 @@ const Layout = () => {
                         <Route element={<ContactUs />} path="/contact-us" />
                         <Route element={<MeetTheTeam />} path="/meet-the-team" />
                         <Route element={<CreatePost mapCenter={mapCenter} mapZoom={mapZoom} />} path="/create-post" />
+                        <Route element={<ChangePassword />} path="/changepassword" />
                         <Route element={<HowToUse />} path="/instructions" />
                         <Route element={<Single />} path="/single" />
                         <Route element={<h1>Not found!</h1>} />

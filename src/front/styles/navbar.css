@@ -7,26 +7,57 @@
     color: whitesmoke;
     z-index: 1000;
 }
-.brandName{
+
+.brandName {
     font-size: 30px;
     padding: 12px;
     font-family: "Big Shoulders Stencil", sans-serif;
     font-weight: 400;
 }
-.navbar-brand{
+
+.navbar-brand {
     size: 50px;
     margin-right: 0;
 }
 
-.search-bar{
+.search-bar {
     background-color: #d0d0d0;
     border: 2px solid black;
 }
+
 .dropdown-item:focus {
-    background-color: black; 
-  }
+    background-color: black;
+}
+
+.navbar-expand-lg .container-fluid {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between; /* Distribute space evenly */
+    align-items: center; /* Vertically align items */
+}
+
+/* Ensure button has enough space */
+.metallic-button {
+    padding: 8px 15px;
+    font-size: 16px;
+    white-space: nowrap;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Adjust "Hi Nomad!" text spacing */
+h6.mx-2 {
+    white-space: nowrap;
+    margin-left: 10px; /* Adjust as needed */
+    margin-right: 10px; /* Adjust as needed */
+}
+
 /* Media query for smaller screens */
-@media (max-width: 768px) { /* Adjust breakpoint as needed */
+@media (max-width: 768px) {
+    .navbar-expand-lg .container-fluid {
+        flex-wrap: wrap;
+        justify-content: flex-start; /* Align items to the start */
+    }
+
     .metallic-button {
         padding: 5px 10px;
         font-size: 14px;
@@ -34,5 +65,22 @@
 
     .dropdown-menu {
         font-size: 14px;
+    }
+
+    .metallic-button.mx-2 {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .search-bar {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    h6.mx-2 {
+        font-size: 14px; /* Reduce font size */
+        margin-left: 5px; /* Reduce margins */
+        margin-right: 5px;
+        display: block; /* ensure it is visible */
     }
 }

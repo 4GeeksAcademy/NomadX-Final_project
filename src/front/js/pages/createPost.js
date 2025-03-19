@@ -114,7 +114,7 @@ export const CreatePost = ({ mapCenter, mapZoom }) => {
                 }),
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("token")
+                    "Authorization": "Bearer " + localStorage.getItem("access_token")
                 }
             })
             const data = await response.json()
@@ -138,7 +138,7 @@ console.log(selectedPoint);
                 <aside className="writingTopics">
                     <h5><u>Travel Categories</u></h5>
                     <div className="categoriesAndButtons">
-                        {topics.slice(0, 10).map((topic, index) => (
+                        {topics.slice(0, 9).map((topic, index) => (
                             <button
                                 className={`topic-buttons ${selectedTopic === topic ? 'active' : ''}`}
                                 key={index}

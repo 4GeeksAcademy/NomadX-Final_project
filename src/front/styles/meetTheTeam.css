@@ -13,9 +13,12 @@
 .coFounder{
     color:  #CD7F32
 }
+.member p{
+    padding-right: 40px;
+}
 .team-member-img{
-    width: 85px;
-    height: 85px;
+    width: 200px;
+    height: 200;
     object-fit: cover;
 }
 .team-member-img.female{
